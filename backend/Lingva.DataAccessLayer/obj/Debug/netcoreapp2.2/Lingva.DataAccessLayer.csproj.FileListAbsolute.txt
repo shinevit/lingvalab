@@ -1,0 +1,6 @@
+C:\Projects\lingvalab\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.deps.json
+C:\Projects\lingvalab\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.dll
+C:\Projects\lingvalab\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.csprojAssemblyReference.cache
+C:\Projects\lingvalab\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Projects\lingvalab\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.AssemblyInfoInputs.cache
+C:\Projects\lingvalab\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.AssemblyInfo.cs

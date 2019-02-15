@@ -9,3 +9,17 @@ C:\Projects\lingvalab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAP
 C:\Projects\lingvalab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.AssemblyInfoInputs.cache
 C:\Projects\lingvalab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.AssemblyInfo.cs
 C:\Projects\lingvalab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.RazorTargetAssemblyInfo.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\bin\Debug\netcoreapp2.2\Lingva.WebAPI.deps.json
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\bin\Debug\netcoreapp2.2\Lingva.WebAPI.runtimeconfig.json
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\bin\Debug\netcoreapp2.2\Lingva.WebAPI.runtimeconfig.dev.json
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\bin\Debug\netcoreapp2.2\Lingva.WebAPI.dll
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\bin\Debug\netcoreapp2.2\Lingva.WebAPI.pdb
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.csprojAssemblyReference.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.csproj.CoreCompileInputs.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.RazorAssemblyInfo.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.RazorAssemblyInfo.cs
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.AssemblyInfoInputs.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.AssemblyInfo.cs
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.RazorTargetAssemblyInfo.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.dll
+F:\Проекты C#\LingvaLab\backend\Lingva.WebAPI\obj\Debug\netcoreapp2.2\Lingva.WebAPI.pdb

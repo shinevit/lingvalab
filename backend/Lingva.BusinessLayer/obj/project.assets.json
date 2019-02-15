@@ -477,7 +477,7 @@
       ]
     },
     "Microsoft.NETCore.DotNetAppHost/2.2.0": {
-      "sha512": "OK/H8p9Ig6mLMITjXJ4VOewrJg/TU+dAPHE4BdMWMv+8COzBehf7XF1+DofKkmqdHpO2cJoS5Sc9PEZ6PKCbsg==",
+      "sha512": "qIrVLupwT2NYTrf7KM7Nh+mJr36V5MITVRjyGOByVVCwGmQgQmI/6bjZYQv+QdExi4Cm87eCKJX9FdT6nc00Xg==",
       "type": "package",
       "path": "microsoft.netcore.dotnetapphost/2.2.0",
       "files": [
@@ -687,33 +687,30 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vradc\\.nuget\\packages\\": {},
+    "C:\\Users\\Sergey\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\lingvalab\\backend\\Lingva.BusinessLayer\\Lingva.BusinessLayer.csproj",
+      "projectUniqueName": "F:\\Проекты C#\\LingvaLab\\backend\\Lingva.BusinessLayer\\Lingva.BusinessLayer.csproj",
       "projectName": "Lingva.BusinessLayer",
-      "projectPath": "C:\\Projects\\lingvalab\\backend\\Lingva.BusinessLayer\\Lingva.BusinessLayer.csproj",
-      "packagesPath": "C:\\Users\\vradc\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\lingvalab\\backend\\Lingva.BusinessLayer\\obj\\",
+      "projectPath": "F:\\Проекты C#\\LingvaLab\\backend\\Lingva.BusinessLayer\\Lingva.BusinessLayer.csproj",
+      "packagesPath": "C:\\Users\\Sergey\\.nuget\\packages\\",
+      "outputPath": "F:\\Проекты C#\\LingvaLab\\backend\\Lingva.BusinessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\vradc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Sergey\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://artifactory.bddevops.io/artifactory/api/nuget/BD-nuget": {},
-        "http://artifactory.cfnp.local:8081/artifactory/api/nuget/BD-nuget": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Users\\Sergey\\Desktop\\Packages\\Xunit": {}
       },
       "frameworks": {
         "netcoreapp2.2": {

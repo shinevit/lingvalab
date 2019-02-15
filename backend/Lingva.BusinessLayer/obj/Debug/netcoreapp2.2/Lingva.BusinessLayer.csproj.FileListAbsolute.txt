@@ -2,3 +2,8 @@ F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp
 F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.csproj.CoreCompileInputs.cache
 F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.AssemblyInfoInputs.cache
 F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.AssemblyInfo.cs
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.deps.json
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.dll
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.pdb
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.dll
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.pdb

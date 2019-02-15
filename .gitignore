@@ -1,0 +1,6 @@
+*.txt
+packages/
+TestResults/
+bin/
+obj/
+.vs/

@@ -1,0 +1,3 @@
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.csproj.CoreCompileInputs.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.AssemblyInfoInputs.cache
+F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.AssemblyInfo.cs

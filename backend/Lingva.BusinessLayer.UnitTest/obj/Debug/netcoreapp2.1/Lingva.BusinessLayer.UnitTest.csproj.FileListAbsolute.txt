@@ -1,6 +1,0 @@
-F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.1\Lingva.BusinessLayer.UnitTest.csprojAssemblyReference.cache
-F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.1\Lingva.BusinessLayer.UnitTest.csproj.CoreCompileInputs.cache
-F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.1\Lingva.BusinessLayer.UnitTest.AssemblyInfoInputs.cache
-F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.1\Lingva.BusinessLayer.UnitTest.AssemblyInfo.cs
-F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.1\Lingva.BusinessLayer.UnitTest.deps.json
-F:\Проекты C#\LingvaLab\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.1\Lingva.BusinessLayer.UnitTest.dll

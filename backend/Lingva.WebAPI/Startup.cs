@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using AutoMapper;
 using Lingva.DataAccessLayer.Context;
 using Microsoft.EntityFrameworkCore;
+using Lingva.DataAccessLayer.Repositories;
 
 namespace Lingva.WebAPI
 {
@@ -42,10 +43,8 @@ namespace Lingva.WebAPI
 
             services.AddScoped<IDictionaryService, DictionaryService>();
             services.AddScoped<ITranslaterService, TranslaterService>();
+            services.AddScoped<ILivesearchService, LivesearchService>();
             
-            //services.AddTransient<IDictionaryService>();
-            //services.AddTransient<ITranslaterService>();
-
             // services.AddCors();
             services.AddCors(options =>
             {

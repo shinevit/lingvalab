@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Lingva.BusinessLayer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using AutoMapper;
+using Lingva.DataAccessLayer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.WebAPI
 {
@@ -24,7 +28,23 @@ namespace Lingva.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            // получаем строку подключения из файла конфигурации
+            string connection = Configuration.GetConnectionString("LingvaConnection");
+            services.AddDbContext<DBContext>(options => options.UseSqlServer(connection));
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.Configure<StorageOptions>(Configuration.GetSection("StorageConfig"));
+
+            services.AddAutoMapper();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddScoped<ITranslaterService, TranslaterService>();
+            
+            //services.AddTransient<IDictionaryService>();
+            //services.AddTransient<ITranslaterService>();
 
             // services.AddCors();
             services.AddCors(options =>
@@ -48,7 +68,7 @@ namespace Lingva.WebAPI
 
             app.UseCors("CorsPolicy"); // TODO: add required
 
-
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

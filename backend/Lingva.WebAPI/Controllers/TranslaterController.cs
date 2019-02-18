@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Lingva.BusinessLayer.Services;
-using Lingva.BusinessLayer.Translater;
-using Lingva.DataAccessLayer.Context;
+using Lingva.BusinessLayer.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -13,25 +11,87 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class TranslaterController : ControllerBase
     {
-        private readonly ITranslaterService _translaterService;
+        private readonly ITranslaterGoogleService _translaterGoogleService;
+        private readonly ITranslaterYandexService _translaterYandexService;
 
-        public TranslaterController(ITranslaterService translaterService)
+        public TranslaterController(ITranslaterGoogleService translaterGoogleService, ITranslaterYandexService translaterYandexService)
         {
-            _translaterService = translaterService;           
+            _translaterGoogleService = translaterGoogleService;
+            _translaterYandexService = translaterYandexService;
         }
 
-        // GET: api/Translater/paper/en/ru
-        [HttpGet("{text}/{originalLanguage}/{translationLanguage}")]
-        public async Task<IActionResult> GetTranslation([FromRoute] string text, [FromRoute] string originalLanguage, [FromRoute] string translationLanguage)
+        // GET: api/Translater/g/time/en/ru
+        [HttpGet("g/{text}/{originalLanguage}/{translationLanguage}")]
+        public async Task<IActionResult> GetTranslationGoogle([FromRoute] string text, [FromRoute] string originalLanguage, [FromRoute] string translationLanguage)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-           
+
             try
             {
-                string strTranslation = await Task.Run(() => _translaterService.Translate(text, originalLanguage, translationLanguage));
+                string strTranslation = await Task.Run(() => _translaterGoogleService.Translate(text, originalLanguage, translationLanguage));
+                return Ok(strTranslation);
+            }
+            catch
+            {
+                return NotFound(text);
+            }
+        }
+
+        // GET: api/Translater/g/list/time/en/ru
+        [HttpGet("g/list/{text}/{originalLanguage}/{translationLanguage}")]
+        public async Task<IActionResult> GetTranslationVariantsGoogle([FromRoute] string text, [FromRoute] string originalLanguage, [FromRoute] string translationLanguage)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                string[] strTranslation = await Task.Run(() => _translaterGoogleService.GetTranslationVariants(text, originalLanguage, translationLanguage));
+                return Ok(strTranslation);
+            }
+            catch
+            {
+                return NotFound(text);
+            }
+        }
+
+        // GET: api/Translater/y/time/en/ru
+        [HttpGet("y/{text}/{originalLanguage}/{translationLanguage}")]
+        public async Task<IActionResult> GetTranslationYandex([FromRoute] string text, [FromRoute] string originalLanguage, [FromRoute] string translationLanguage)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                string strTranslation = await Task.Run(() => _translaterYandexService.Translate(text, originalLanguage, translationLanguage));
+                return Ok(strTranslation);
+            }
+            catch
+            {
+                return NotFound(text);
+            }
+        }
+
+        // GET: api/Translater/y/list/time/en/ru
+        [HttpGet("y/list/{text}/{originalLanguage}/{translationLanguage}")]
+        public async Task<IActionResult> GetTranslationVariantsYandex([FromRoute] string text, [FromRoute] string originalLanguage, [FromRoute] string translationLanguage)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                string[] strTranslation = await Task.Run(() => _translaterYandexService.GetTranslationVariants(text, originalLanguage, translationLanguage));
                 return Ok(strTranslation);
             }
             catch

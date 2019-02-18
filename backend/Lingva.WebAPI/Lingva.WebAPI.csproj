@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>aa7142be-c864-42fa-8714-90824b0d1eb0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +17,6 @@
   <ItemGroup>
     <Folder Include="Infrastructure\Security\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>

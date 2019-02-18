@@ -12,7 +12,7 @@ namespace Lingva.DataAccessLayer.Context
         public DbSet<DictionaryRecord> Dictionary { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Language> Languages { get; set; }
-        public DbSet<Phrase> Phrases { get; set; }
+        public DbSet<Word> Words { get; set; }
 
         public DBContext(DbContextOptions<DBContext> options)
             : base(options)
@@ -22,15 +22,7 @@ namespace Lingva.DataAccessLayer.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DictionaryRecord>()
-                   .HasOne(m => m.TranslationLanguage)
-                   .WithMany(t => t.TranslationDictionary)
-                   .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<UserSetItem>()
-                   .HasOne(m => m.UserSet)
-                   .WithMany(t => t.UserSetItems)
-                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

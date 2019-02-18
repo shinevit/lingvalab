@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
 {
-    public class DictionaryRecordViewDTO
+    public class DictionaryRecordCreatingDTO
     {
+        public int User { get; set; }
         public string OriginalPhrase { get; set; }
         public string TranslationText { get; set; }
         public string TranslationLanguage { get; set; }

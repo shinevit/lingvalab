@@ -9,11 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using AutoMapper;
-using Lingva.DataAccessLayer.Context;
-using Microsoft.EntityFrameworkCore;
-using Lingva.DataAccessLayer.Repositories;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.WebAPI.Extensions;
 
 namespace Lingva.WebAPI
 {
@@ -29,29 +26,21 @@ namespace Lingva.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // получаем строку подключения из файла конфигурации
-            string connection = Configuration.GetConnectionString("LingvaConnection");
-            services.AddDbContext<DBContext>(options => options.UseSqlServer(connection));
+            services.ConfigureCors();
+            services.ConfigureSqlContext(Configuration);
+            services.ConfigureOptions(Configuration);
+            services.ConfigureAutoMapper();
+            services.ConfigureLoggerService();
+            services.ConfigureUnitOfWork();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.Configure<StorageOptions>(Configuration.GetSection("StorageConfig"));
-
-            services.AddAutoMapper();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddScoped<ITranslaterGoogleService, TranslaterGoogleService>();
+            services.AddScoped<ITranslaterYandexService, TranslaterYandexService>();
             services.AddScoped<ITranslaterService, TranslaterService>();
             services.AddScoped<ILivesearchService, LivesearchService>();
             
-            // services.AddCors();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://example.com"));
-            });
-
             // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
         }
 
@@ -66,7 +55,7 @@ namespace Lingva.WebAPI
             }
 
             app.UseCors("CorsPolicy"); // TODO: add required
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

@@ -3,8 +3,6 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
-using Lingva.DataAccessLayer.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
@@ -14,7 +12,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         private Repository<DictionaryRecord> _dictionaryRecords;
         private Repository<User> _users;
-        private Repository<Phrase> _phrases;
+        private Repository<Word> _phrases;
         private Repository<Language> _languages;
 
         private bool disposed = false;
@@ -50,13 +48,13 @@ namespace Lingva.DataAccessLayer.Repositories
             }
         }
 
-        public IRepository<Phrase> Phrases
+        public IRepository<Word> Words
         {
             get
             {
                 if (_phrases == null)
                 {
-                    _phrases = new Repository<Phrase>(_context);
+                    _phrases = new Repository<Word>(_context);
                 }
 
                 return _phrases;

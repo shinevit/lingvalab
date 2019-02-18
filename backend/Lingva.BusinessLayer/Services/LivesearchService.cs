@@ -1,15 +1,26 @@
-﻿using System;
+﻿using Lingva.BusinessLayer.Contracts;
+using Lingva.DataAccessLayer.Repositories;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Lingva.BusinessLayer.Services
 {
     public class LivesearchService : ILivesearchService
     {
-        public IEnumerable Find(string substring)
+        private readonly IUnitOfWork _unitOfWork;
+        
+        public LivesearchService(IUnitOfWork unitOfWork)
         {
-            return new int[] { 2, 5, 6 };
+            _unitOfWork = unitOfWork;
+        }
+
+        public IEnumerable Find(string substring, int quantity)
+        {
+            var result = _unitOfWork.Words.GetList(quantity, w => w.Name.Contains(substring));
+            return result;
         }
     }
 }

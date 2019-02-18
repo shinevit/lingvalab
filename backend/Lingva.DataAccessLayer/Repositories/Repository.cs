@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
 using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
+using System.Collections.Generic;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
@@ -23,9 +25,19 @@ namespace Lingva.DataAccessLayer.Repositories
             return _entities.AsNoTracking();
         }
 
+        public IQueryable<T> GetList(int quantity, Expression<Func<T, bool>> predicator)
+        {
+            return _entities.Where(predicator).Take(quantity).AsNoTracking();
+        }
+
         public T Get(int id)
         {
             return _entities.Find(id);
+        }
+
+        public T Get(Expression<Func<T, bool>> predicator)
+        {
+            return _entities.Where(predicator).FirstOrDefault();
         }
 
         public void Create(T entity)
@@ -46,8 +58,11 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Delete(T entity)
         {
-            _entities.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _entities.Attach(entity);
+            }
+            _entities.Remove(entity);
         }
     }
 }

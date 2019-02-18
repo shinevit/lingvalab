@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/dictionary/1",
+      "launchUrl": "api/dictionary",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "Lingva": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/dictionary/1",
+      "launchUrl": "api/dictionary",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

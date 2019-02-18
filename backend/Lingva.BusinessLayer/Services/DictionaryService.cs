@@ -1,5 +1,4 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Dto;
+﻿using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -30,34 +29,22 @@ namespace Lingva.BusinessLayer.Services
             return dictionaryRecord;
         }
 
-        public void AddDictionaryRecord(CreateDictionaryRecordDTO createDictionaryRecordDTO)
+        public void AddDictionaryRecord(DictionaryRecord dictionaryRecord)
         {
-            DictionaryRecord dictionaryRecord = CreateDictionaryRecord(createDictionaryRecordDTO);
-            _unitOfWork.Dictionary.Create(dictionaryRecord);
-            try
+            AddWord(dictionaryRecord.OriginalPhraseName);
+            if (!ExistDictionaryRecord(dictionaryRecord))
             {
+                _unitOfWork.Dictionary.Create(dictionaryRecord);
                 _unitOfWork.Save();
-            }
-            catch
-            {
-                return;
             }
         }
 
-        public void UpdateDictionaryRecord(int id, CreateDictionaryRecordDTO createDictionaryRecordDTO)
+        public void UpdateDictionaryRecord(int id, DictionaryRecord dictionaryRecordUpdate)
         {
-            DictionaryRecord dictionaryRecord = GetDictionaryRecord(id);
-            //_unitOfWork.Entry(dictionaryRecord).State = EntityState.Modified;//??
+            DictionaryRecord dictionaryRecord = _unitOfWork.Dictionary.Get(id);
+            dictionaryRecord.TranslationText = dictionaryRecordUpdate.TranslationText;
             _unitOfWork.Dictionary.Update(dictionaryRecord);
-
-            try
-            {
-                _unitOfWork.Save();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return;
-            }
+            _unitOfWork.Save();
         }
        
         public void DeleteDictionaryRecord(int id)
@@ -70,59 +57,36 @@ namespace Lingva.BusinessLayer.Services
             }
 
             _unitOfWork.Dictionary.Delete(dictionaryRecord);
+            _unitOfWork.Save();
+        }
 
-            try
-            {
-                _unitOfWork.Save();
-            }
-            catch
+        private void AddWord(string word)
+        {
+            if (ExistWord(word))
             {
                 return;
             }
-        }
 
-        private DictionaryRecord CreateDictionaryRecord(CreateDictionaryRecordDTO createDictionaryRecordDTO)
-        {
-            DictionaryRecord dictionaryRecord = new DictionaryRecord();
-
-            FillDictionaryRecord(dictionaryRecord, createDictionaryRecordDTO);
-
-            return dictionaryRecord;
-        }
-
-        private DictionaryRecord GetDictionaryRecord(int id, CreateDictionaryRecordDTO createDictionaryRecordDTO)
-        {
-            DictionaryRecord dictionaryRecord = _unitOfWork.Dictionary.Get(id);
-            if (dictionaryRecord == null)
+            Word newWord = new Word
             {
-                return null;
-            }
-
-            FillDictionaryRecord(dictionaryRecord, createDictionaryRecordDTO);
-
-            return dictionaryRecord;
+                Name = word,
+                LanguageName = "en",
+            };
+            _unitOfWork.Words.Create(newWord);
+            _unitOfWork.Save();
         }
 
-        private void FillDictionaryRecord(DictionaryRecord dictionaryRecord, CreateDictionaryRecordDTO createDictionaryRecordDTO)
+        private bool ExistWord(string word)
         {
-            //User owner = _unitOfWork.Users//??
-            //              .Where(c => c.Id == createDictionaryRecordDTO.Owner)
-            //              .FirstOrDefault();
+            return _unitOfWork.Words.Get(c => c.Name == word) != null;
+        }
 
-            //Phrase phrase = _unitOfWork.Phrases
-            //                .Where(c => c.Name == createDictionaryRecordDTO.OriginalPhrase)
-            //                .FirstOrDefault();
-
-            //Language language = _unitOfWork.Languages
-            //                    .Where(c => c.Name == createDictionaryRecordDTO.TranslationLanguage)
-            //                    .FirstOrDefault();
-
-            //dictionaryRecord.Owner = owner;
-            //dictionaryRecord.OriginalPhrase = phrase;
-            dictionaryRecord.TranslationText = createDictionaryRecordDTO.TranslationText;
-            //dictionaryRecord.TranslationLanguage = language;
-            dictionaryRecord.Context = createDictionaryRecordDTO.Context;
-            dictionaryRecord.Picture = createDictionaryRecordDTO.Picture;
+        private bool ExistDictionaryRecord(DictionaryRecord dictionaryRecord)
+        {           
+            return _unitOfWork.Dictionary.Get(c => c.UserId == dictionaryRecord.UserId
+                                        && c.OriginalPhraseName == dictionaryRecord.OriginalPhraseName
+                                        && c.TranslationText == dictionaryRecord.TranslationText
+                                        && c.TranslationLanguageName == dictionaryRecord.TranslationLanguageName) != null;
         }
     }
 }

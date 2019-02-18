@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lingva.DataAccessLayer.Entities
 {
-    public class Language
+    public class Word
     {
         [Key]
-        [StringLength(3)]
+        [StringLength(100)]
         public string Name { get; set; }
+        [Required]
+        [StringLength(3)]
+        public string LanguageName { get; set; }
 
-        public virtual IEnumerable<Word> Words { get; set; }
-        public virtual IEnumerable<DictionaryRecord> TranslationDictionary { get; set; }
+        public virtual IEnumerable<DictionaryRecord> DictionaryRecords { get; set; }
     }
 }

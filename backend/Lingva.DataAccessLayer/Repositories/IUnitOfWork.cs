@@ -1,5 +1,4 @@
 ﻿using Lingva.DataAccessLayer.Entities;
-using Lingva.DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +10,7 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         IRepository<DictionaryRecord> Dictionary { get; }
         IRepository<User> Users { get; }
-        IRepository<Phrase> Phrases { get; }
+        IRepository<Word> Words { get; }
         IRepository<Language> Languages { get; }
 
         void Save();

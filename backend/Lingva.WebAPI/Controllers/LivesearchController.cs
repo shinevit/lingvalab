@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Lingva.BusinessLayer.Services;
-using Microsoft.AspNetCore.Http;
+using Lingva.BusinessLayer.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lingva.WebAPI.Controllers
@@ -20,9 +19,9 @@ namespace Lingva.WebAPI.Controllers
             _livesearchService = livesearchService;
         }
 
-        // GET: api/Livesearch/pa
-        [HttpGet("{substring}")]
-        public async Task<IActionResult> GetTranslation([FromRoute] string substring)
+        // GET: api/Livesearch/pa/5
+        [HttpGet("{substring}/{qantityOfResult}")]
+        public async Task<IActionResult> GetTranslation([FromRoute] string substring, [FromRoute] int qantityOfResult)
         {
             if (!ModelState.IsValid)
             {
@@ -31,7 +30,7 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                IEnumerable resultArr = await Task.Run(() => _livesearchService.Find(substring));
+                var resultArr = await Task.Run(() =>_livesearchService.Find(substring, qantityOfResult));
                 return Ok(resultArr);
             }
             catch

@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using AutoMapper;
-using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
-using Lingva.BusinessLayer.Services;
-using Lingva.DataAccessLayer.Dto;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.WebAPI.Dto;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -56,7 +55,7 @@ namespace Lingva.WebAPI.Controllers
 
         // POST: api/Dictionary
         [HttpPost]
-        public async Task<IActionResult> PostDictionaryRecord([FromBody] CreateDictionaryRecordDTO record)
+        public async Task<IActionResult> PostDictionaryRecord([FromBody] DictionaryRecordCreatingDTO dictionaryRecordCreatingDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -65,19 +64,20 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                await Task.Run(() => _dictionaryService.AddDictionaryRecord(record));
+                DictionaryRecord dictionaryRecord  = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
+                await Task.Run(() => _dictionaryService.AddDictionaryRecord(dictionaryRecord));
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return CreatedAtAction("GetTranslation", record);
+            return Ok();
         }
 
         // PUT: api/Dictionary/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDictionaryRecord([FromRoute] int id, [FromBody] CreateDictionaryRecordDTO record)
+        public async Task<IActionResult> PutDictionaryRecord([FromRoute] int id, [FromBody] DictionaryRecordCreatingDTO dictionaryRecordCreatingDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -86,14 +86,15 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                await Task.Run(() => _dictionaryService.UpdateDictionaryRecord(id, record));
+                DictionaryRecord dictionaryRecord = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
+                await Task.Run(() => _dictionaryService.UpdateDictionaryRecord(id, dictionaryRecord));
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return CreatedAtAction("GetTranslation", record);
+            return Ok();
         }
 
         // DELETE: api/Dictionary/5

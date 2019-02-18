@@ -14,17 +14,15 @@ namespace Lingva.DataAccessLayer.Entities
         [Required]
         public int UserId { get; set; }
         [Required]
-        public string OriginalPhraseName { get; set; }
+        public string WordName { get; set; }
         [Required]
         [StringLength(200)]
-        public string TranslationText { get; set; }
+        public string Translation { get; set; }
         [Required]
         [StringLength(3)]
-        public string TranslationLanguageName { get; set; }
+        public string LanguageName { get; set; }
         [StringLength(200)]
         public string Context { get; set; }
         public string Picture { get; set; }
-
-        public virtual IEnumerable<UserSetItem> UserSetItems { get; set; }
     }
 }

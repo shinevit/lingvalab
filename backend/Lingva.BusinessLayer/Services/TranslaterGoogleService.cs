@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.BusinessLayer.Services
 {
-    public class TranslaterGoogleService : ITranslaterGoogleService
+    public class TranslaterGoogleService : ITranslaterService
     {
         private readonly IOptions<StorageOptions> _storageOptions;
 

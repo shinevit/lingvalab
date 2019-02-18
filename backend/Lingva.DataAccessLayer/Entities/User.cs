@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace Lingva.DataAccessLayer.Entities
         public string Login { get; set; }
         public string Password { get; set; }
 
-        public virtual IEnumerable<UserSet> UserSets { get; set; }
+        [ForeignKey("UserId")]
         public virtual IEnumerable<DictionaryRecord> UserDictionary { get; set; }
     }
 }

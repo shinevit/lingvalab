@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lingva.BusinessLayer.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using Lingva.WebAPI.Dto;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -13,10 +15,12 @@ namespace Lingva.WebAPI.Controllers
     public class LivesearchController : ControllerBase
     {
         private readonly ILivesearchService _livesearchService;
+        private readonly IMapper _mapper;
 
-        public LivesearchController(ILivesearchService livesearchService)
+        public LivesearchController(ILivesearchService livesearchService, IMapper mapper)
         {
             _livesearchService = livesearchService;
+            _mapper = mapper;
         }
 
         // GET: api/Livesearch/pa/5
@@ -28,15 +32,18 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            IEnumerable resultArr;
+
             try
             {
-                var resultArr = await Task.Run(() =>_livesearchService.Find(substring, qantityOfResult));
-                return Ok(resultArr);
+                resultArr = await Task.Run(() =>_livesearchService.Find(substring, qantityOfResult));
             }
             catch
             {
                 return NotFound(substring);
             }
+
+            return Ok(_mapper.Map<IEnumerable<WordViewDTO>>(resultArr));
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Lingva.WebAPI.Dto
 {
     public class DictionaryRecordViewDTO
     {
-        public string OriginalPhrase { get; set; }
-        public string TranslationText { get; set; }
-        public string TranslationLanguage { get; set; }
+        public string Word { get; set; }
+        public string Translation { get; set; }
+        public string Language { get; set; }
         public string Context { get; set; }
         public string Picture { get; set; }
     }

@@ -13,13 +13,16 @@ namespace Lingva.WebAPI
         public MappingProfile()
         {
             CreateMap<DictionaryRecord, DictionaryRecordViewDTO>()
-            .ForMember("TranslationLanguage", opt => opt.MapFrom(c => c.TranslationLanguageName))
-            .ForMember("OriginalPhrase", opt => opt.MapFrom(c => c.OriginalPhraseName));
+            .ForMember("Language", opt => opt.MapFrom(c => c.LanguageName))
+            .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
 
             CreateMap<DictionaryRecordCreatingDTO, DictionaryRecord>()
             .ForMember("UserId", opt => opt.MapFrom(c => c.User))
-            .ForMember("TranslationLanguageName", opt => opt.MapFrom(c => c.TranslationLanguage))
-            .ForMember("OriginalPhraseName", opt => opt.MapFrom(c => c.OriginalPhrase));
+            .ForMember("LanguageName", opt => opt.MapFrom(c => c.Language))
+            .ForMember("WordName", opt => opt.MapFrom(c => c.Word));
+
+            CreateMap<DictionaryRecord, WordViewDTO>()
+            .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
         }
     }
 }

@@ -11,52 +11,52 @@ namespace Lingva.BusinessLayer.Services
 {
     public class DictionaryService : IDictionaryService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWorkDictionary _unitOfWork;
 
-        public DictionaryService(IUnitOfWork unitOfWork)
+        public DictionaryService(IUnitOfWorkDictionary unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<DictionaryRecord> GetDictionary()
         {
-            return _unitOfWork.Dictionary.GetList();
+            return _unitOfWork.DictionaryRecords.GetList();
         }
 
         public DictionaryRecord GetDictionaryRecord(int id)
         {
-            DictionaryRecord dictionaryRecord = _unitOfWork.Dictionary.Get(id);
+            DictionaryRecord dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
             return dictionaryRecord;
         }
 
         public void AddDictionaryRecord(DictionaryRecord dictionaryRecord)
         {
-            AddWord(dictionaryRecord.OriginalPhraseName);
+            AddWord(dictionaryRecord.WordName);
             if (!ExistDictionaryRecord(dictionaryRecord))
             {
-                _unitOfWork.Dictionary.Create(dictionaryRecord);
+                _unitOfWork.DictionaryRecords.Create(dictionaryRecord);
                 _unitOfWork.Save();
             }
         }
 
         public void UpdateDictionaryRecord(int id, DictionaryRecord dictionaryRecordUpdate)
         {
-            DictionaryRecord dictionaryRecord = _unitOfWork.Dictionary.Get(id);
-            dictionaryRecord.TranslationText = dictionaryRecordUpdate.TranslationText;
-            _unitOfWork.Dictionary.Update(dictionaryRecord);
+            DictionaryRecord dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
+            dictionaryRecord.Translation = dictionaryRecordUpdate.Translation;
+            _unitOfWork.DictionaryRecords.Update(dictionaryRecord);
             _unitOfWork.Save();
         }
        
         public void DeleteDictionaryRecord(int id)
         {
-            DictionaryRecord dictionaryRecord = _unitOfWork.Dictionary.Get(id);
+            DictionaryRecord dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
 
             if (dictionaryRecord == null)
             {
                 return;
             }
 
-            _unitOfWork.Dictionary.Delete(dictionaryRecord);
+            _unitOfWork.DictionaryRecords.Delete(dictionaryRecord);
             _unitOfWork.Save();
         }
 
@@ -83,10 +83,10 @@ namespace Lingva.BusinessLayer.Services
 
         private bool ExistDictionaryRecord(DictionaryRecord dictionaryRecord)
         {           
-            return _unitOfWork.Dictionary.Get(c => c.UserId == dictionaryRecord.UserId
-                                        && c.OriginalPhraseName == dictionaryRecord.OriginalPhraseName
-                                        && c.TranslationText == dictionaryRecord.TranslationText
-                                        && c.TranslationLanguageName == dictionaryRecord.TranslationLanguageName) != null;
+            return _unitOfWork.DictionaryRecords.Get(c => c.UserId == dictionaryRecord.UserId
+                                        && c.WordName == dictionaryRecord.WordName
+                                        && c.Translation == dictionaryRecord.Translation
+                                        && c.LanguageName == dictionaryRecord.LanguageName) != null;
         }
     }
 }

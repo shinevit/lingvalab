@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace Lingva.DataAccessLayer.Entities
         [StringLength(3)]
         public string LanguageName { get; set; }
 
+        [ForeignKey("OriginalPhraseName")]
         public virtual IEnumerable<DictionaryRecord> DictionaryRecords { get; set; }
     }
 }

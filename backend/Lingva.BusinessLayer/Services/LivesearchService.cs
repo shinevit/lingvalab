@@ -10,16 +10,16 @@ namespace Lingva.BusinessLayer.Services
 {
     public class LivesearchService : ILivesearchService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWorkDictionary _unitOfWork;
         
-        public LivesearchService(IUnitOfWork unitOfWork)
+        public LivesearchService(IUnitOfWorkDictionary unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         public IEnumerable Find(string substring, int quantity)
         {
-            var result = _unitOfWork.Words.GetList(quantity, w => w.Name.Contains(substring));
+            var result = _unitOfWork.DictionaryRecords.GetList(quantity, w => w.WordName.Contains(substring));
             return result;
         }
     }

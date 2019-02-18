@@ -9,39 +9,39 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryDictionaryRecord : IRepository<DictionaryRecord>
+    public class RepositoryWord : IRepository<Word>
     {
         private readonly DictionaryContext _context;
 
-        private DbSet<DictionaryRecord> _entities;
+        private DbSet<Word> _entities;
 
-        public RepositoryDictionaryRecord(DictionaryContext context)
+        public RepositoryWord(DictionaryContext context)
         {
             _context = context;
-            _entities = context.Set<DictionaryRecord>();
+            _entities = context.Set<Word>();
         }
 
-        public IQueryable<DictionaryRecord> GetList()
+        public IQueryable<Word> GetList()
         {
             return _entities.AsNoTracking();
         }
 
-        public IQueryable<DictionaryRecord> GetList(int quantity, Expression<Func<DictionaryRecord, bool>> predicator)
+        public IQueryable<Word> GetList(int quantity, Expression<Func<Word, bool>> predicator)
         {
             return _entities.Where(predicator).Take(quantity).AsNoTracking();
         }
 
-        public DictionaryRecord Get(object id)
+        public Word Get(object name)
         {
-            return _entities.Find((int)id);
+            return _entities.Find(name.ToString());
         }
 
-        public DictionaryRecord Get(Expression<Func<DictionaryRecord, bool>> predicator)
+        public Word Get(Expression<Func<Word, bool>> predicator)
         {
             return _entities.Where(predicator).FirstOrDefault();
         }
 
-        public void Create(DictionaryRecord entity)
+        public void Create(Word entity)
         {
             if (entity == null)
             {
@@ -51,13 +51,13 @@ namespace Lingva.DataAccessLayer.Repositories
             _entities.Add(entity);
         }
 
-        public void Update(DictionaryRecord entity)
+        public void Update(Word entity)
         {
             _entities.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(DictionaryRecord entity)
+        public void Delete(Word entity)
         {
             if (_context.Entry(entity).State == EntityState.Detached)
             {

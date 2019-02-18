@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWorkDictionary : IUnitOfWork
     {
-        void Save();
+        IRepository<DictionaryRecord> DictionaryRecords { get; }
+        IRepository<Word> Words { get; }
     }
 }

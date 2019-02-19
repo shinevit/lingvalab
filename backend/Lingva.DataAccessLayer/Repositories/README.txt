@@ -1,2 +1,3 @@
 ﻿
-Should use Repositories as singleton object by DI container
+Should use Repositories as singleton object by DI container on the Web project layer
+

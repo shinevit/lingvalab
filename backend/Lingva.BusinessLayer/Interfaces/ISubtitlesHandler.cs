@@ -9,6 +9,6 @@ namespace Lingva.BusinessLayer.Interfaces
     public interface ISubtitlesHandler
     {
         void AddSubtitles(SubtitlesRowDTO[] subDTO, string subtitlesName, int filmId);
-        SubtitlesRowDTO[] Parse(Stream subtitles, Encoding encoding);
+        SubtitlesRowDTO[] Parse(Stream subtitles);
     }
 }

@@ -46,12 +46,13 @@ namespace Lingva.BusinessLayer.Services
 
         }
 
-        public SubtitlesRowDTO[] Parse(Stream subtitles, Encoding encoding)
+        public SubtitlesRowDTO[] Parse(Stream subtitles)
         {
+            var encoding = DetectEncoding(subtitles);
+
+
             var parser = new SubtitlesParser.Classes.Parsers.SrtParser();
-            List<SubtitleItem> items;
-            items = parser.ParseStream(subtitles, encoding);
-            subtitles.Close();
+            List<SubtitleItem> items = parser.ParseStream(subtitles, encoding);
 
             SubtitlesRowDTO[] subDTO = items.Select((n, index) => new SubtitlesRowDTO()
             {
@@ -61,6 +62,20 @@ namespace Lingva.BusinessLayer.Services
                 EndTime = new TimeSpan(0, 0, 0, 0, n.EndTime),
             }).ToArray();
             return subDTO;
+        }
+        private Encoding DetectEncoding(Stream stream)
+        {
+            Ude.CharsetDetector cdet = new Ude.CharsetDetector();
+            cdet.Feed(stream);
+            cdet.DataEnd();
+            if (cdet.Charset != null)
+            {
+                return Encoding.GetEncoding(cdet.Charset);
+            }
+            else
+            {
+                throw new FormatException("Encoding unrecognized");
+            }
         }
     }
 }

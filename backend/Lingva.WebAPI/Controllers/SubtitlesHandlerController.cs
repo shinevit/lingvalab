@@ -27,7 +27,7 @@ namespace Lingva.WebAPI.Controllers
         {
             var stream = subtitlesFile.OpenReadStream();
 
-            var result = _parserService.Parse(stream, Encoding.UTF8);
+            var result = _parserService.Parse(stream);
             _parserService.AddSubtitles(result, subtitlesFile.FileName, 1);
 
             return result;

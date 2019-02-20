@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Lingva.BusinessLayer.Contracts;
+using Lingva.BusinessLayer.Interfaces;
 using Lingva.WebAPI.Extensions;
 using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
@@ -35,7 +36,7 @@ namespace Lingva.WebAPI
             services.ConfigureLoggerService();
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
-
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EfRepository<>));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IDictionaryService, DictionaryService>();
@@ -58,7 +59,7 @@ namespace Lingva.WebAPI
 
             services.AddSingleton<IRepository<Word>, RepositoryWord>();
             services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
-
+            services.AddScoped<ISubtitlesHandler, SubtitlesHandlerService>();
             // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
         }
 

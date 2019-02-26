@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Enums\" />
     <Folder Include="Extensions\" />
     <Folder Include="Utility\" />
   </ItemGroup>

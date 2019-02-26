@@ -37,9 +37,16 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
+            services.AddSingleton<IRepository<Word>, RepositoryWord>();
+            services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
+
             //services.AddSingleton<RepositoryWord>();
             //services.AddSingleton<RepositoryDictionaryRecord>();
 
+            //services.AddSingleton<Func<Type, IRepository<object>>>(serviceProvider => key =>
+            //{
+            //    return (IRepository<object>)serviceProvider.GetService<IRepository<Type>>();
+            //});
         }
 
         public static void ConfigureLoggerService(this IServiceCollection services)

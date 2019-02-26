@@ -13,6 +13,7 @@ using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Extensions;
 using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
+using Lingva.BusinessLayer.Models.Enums;
 
 namespace Lingva.WebAPI
 {
@@ -36,28 +37,25 @@ namespace Lingva.WebAPI
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
             
             services.AddTransient<TranslaterGoogleService>();
             services.AddTransient<TranslaterYandexService>();
-            services.AddTransient<Func<string, ITranslaterService>>(serviceProvider => key =>
+            services.AddTransient<Func<TranslaterServices, ITranslaterService>>(serviceProvider => key =>
             {
                 switch (key)
                 {
-                    case "g":
-                        return serviceProvider.GetService<TranslaterGoogleService>();
-                    case "y":
+                    case TranslaterServices.Yandex:
                         return serviceProvider.GetService<TranslaterYandexService>();
+                    case TranslaterServices.Google:
+                        return serviceProvider.GetService<TranslaterGoogleService>();
                     default:
                         return null;
                 }
             });
-
-            services.AddSingleton<IRepository<Word>, RepositoryWord>();
-            services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
 
             // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
         }

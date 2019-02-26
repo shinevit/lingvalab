@@ -13,10 +13,15 @@ namespace Lingva.DataAccessLayer.Entities
         [StringLength(100)]
         public string Name { get; set; }
         [Required]
-        [StringLength(3)]
+        [StringLength(2)]
         public string LanguageName { get; set; }
+        public virtual Language Language { get; set; }
 
-        [ForeignKey("OriginalPhraseName")]
-        public virtual IEnumerable<DictionaryRecord> DictionaryRecords { get; set; }
+        public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
+
+        public Word()
+        {
+            UserDictionaryRecords = new List<DictionaryRecord>();
+        }
     }
 }

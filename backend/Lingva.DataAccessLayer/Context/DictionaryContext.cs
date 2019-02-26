@@ -17,16 +17,16 @@ namespace Lingva.DataAccessLayer.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Language>()
-            //       //.HasOne(m => m.TranslationDictionary)
-            //       .HasMany(t => t.TranslationDictionary)
-            //       .WithOne(c => c.LanguageName)
-            //       .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<DictionaryRecord>()
+                   .HasOne(c => c.Language)
+                   .WithMany(t => t.UserDictionaryRecords)                  
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

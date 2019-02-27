@@ -8,7 +8,7 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public interface IUnitOfWorkDictionary : IUnitOfWork
     {
-        IRepository<DictionaryRecord> DictionaryRecords { get; }
-        IRepository<Word> Words { get; }
+        IRepositoryDictionaryRecord DictionaryRecords { get; }
+        IRepositoryWord Words { get; }
     }
 }

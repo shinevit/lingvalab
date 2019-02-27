@@ -56,8 +56,6 @@ namespace Lingva.WebAPI
                         return null;
                 }
             });
-
-            // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,7 +68,7 @@ namespace Lingva.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy"); // TODO: add required
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMvc();

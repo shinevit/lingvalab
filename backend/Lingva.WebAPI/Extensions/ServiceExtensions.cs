@@ -15,7 +15,7 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
             string connection = config.GetConnectionString("LingvaConnection");
-            services.AddDbContext<DictionaryContext>(options => options.UseSqlServer(connection), ServiceLifetime.Singleton);
+            services.AddDbContext<DictionaryContext>(options => options.UseSqlServer(connection));
         }
 
         public static void ConfigureCors(this IServiceCollection services)
@@ -32,21 +32,13 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
-            services.AddSingleton<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
+            services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IRepository<Word>, RepositoryWord>();
-            services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
-
-            //services.AddSingleton<RepositoryWord>();
-            //services.AddSingleton<RepositoryDictionaryRecord>();
-
-            //services.AddSingleton<Func<Type, IRepository<object>>>(serviceProvider => key =>
-            //{
-            //    return (IRepository<object>)serviceProvider.GetService<IRepository<Type>>();
-            //});
+            services.AddScoped<IRepositoryWord, RepositoryWord>();
+            services.AddScoped<IRepositoryDictionaryRecord, RepositoryDictionaryRecord>();
         }
 
         public static void ConfigureLoggerService(this IServiceCollection services)

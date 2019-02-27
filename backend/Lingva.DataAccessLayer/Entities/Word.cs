@@ -13,7 +13,7 @@ namespace Lingva.DataAccessLayer.Entities
         [StringLength(100)]
         public string Name { get; set; }
         [Required]
-        [StringLength(2)]
+        [StringLength(3)]
         public string LanguageName { get; set; }
         public virtual Language Language { get; set; }
 

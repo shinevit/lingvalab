@@ -11,9 +11,6 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositoryDictionaryRecord : Repository<DictionaryRecord>, IRepositoryDictionaryRecord
     {
-        //protected readonly DictionaryContext _context;
-        //protected readonly DbSet<DictionaryRecord> _entities;
-
         public RepositoryDictionaryRecord(DictionaryContext context) : base(context)
         {
 

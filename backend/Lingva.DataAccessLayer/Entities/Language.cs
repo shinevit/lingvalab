@@ -10,7 +10,7 @@ namespace Lingva.DataAccessLayer.Entities
     public class Language
     {
         [Key]
-        [StringLength(2)]
+        [StringLength(3)]
         public string Name { get; set; }
 
         public virtual ICollection<Word> Words { get; set; }

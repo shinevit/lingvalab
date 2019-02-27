@@ -68,7 +68,7 @@ namespace Lingva.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy");
+            app.UseCors("CorsPolicy"); // TODO: add required
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMvc();

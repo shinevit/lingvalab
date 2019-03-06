@@ -14,6 +14,8 @@ using Lingva.WebAPI.Dto;
 using Lingva.WebAPI.Helpers;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Services;
+using Lingva.DataAccessLayer;
+using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -38,9 +40,9 @@ namespace Lingva.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateUserDto userDto)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticateUserDto userDto)
         {
-            var user = _userService.Authenticate(userDto.Username, userDto.Password);
+            var user = await Task.Run(() => _userService.Authenticate(userDto.Username, userDto.Password));
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -71,53 +73,49 @@ namespace Lingva.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody]AuthenticateUserDto userDto)
-        {            
+        public async Task<IActionResult> Register([FromBody]AuthenticateUserDto userDto)
+        {
             var user = _mapper.Map<User>(userDto);
 
             try
-            {               
-                _userService.Create(user, userDto.Password);
+            {
+                await Task.Run(() => _userService.Create(user, userDto.Password));
                 return Ok();
             }
             catch (LingvaException ex)
-            {               
+            {
                 return BadRequest(new { message = ex.Message });
             }
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userService.GetAll();
+            var users = await Task.Run(() => _userService.GetAll());
             var userDtos = _mapper.Map<IList<AuthenticateUserDto>>(users);
             return Ok(userDtos);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var user = _userService.GetById(id);
-            var userDto = _mapper.Map<AuthenticateUserDto>(user);
-            return Ok(userDto);
+            return await GetUserInfo(id);
         }
 
         [HttpGet("me")]
-        public IActionResult GetMyInfo()
+        public async Task<IActionResult> GetMyInfo()
         {
-            var user = _userService.GetById(UserService.CurrentUserId(this));
-            var userDto = _mapper.Map<AuthenticateUserDto>(user);
-            return Ok(userDto);
+            return await GetUserInfo(UserService.GetLoggedInUserId(this));
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]AuthenticateUserDto userDto)
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody]AuthenticateUserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            user.Id = id;
+            user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
             try
             {
-                _userService.Update(user, userDto.Password);
+                await Task.Run(() => _userService.Update(user, userDto.Password));
                 return Ok();
             }
             catch (LingvaException ex)
@@ -127,10 +125,17 @@ namespace Lingva.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _userService.Delete(id);
+            await Task.Run(() => _userService.Delete(id));
             return Ok();
+        }
+
+        private async Task<IActionResult> GetUserInfo(int id)
+        {
+            var user = await Task.Run(() => _userService.GetById(id));
+            var userDto = _mapper.Map<AuthenticateUserDto>(user);
+            return Ok(userDto);
         }
 
     }

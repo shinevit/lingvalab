@@ -23,6 +23,9 @@ namespace Lingva.WebAPI
 
             CreateMap<DictionaryRecord, WordViewDTO>()
             .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
+
+            CreateMap<User, AuthenticateUserDto>();
+            CreateMap<AuthenticateUserDto, User>();
         }
     }
 }

@@ -4,17 +4,20 @@ using System.Text;
 
 using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
-using Lingva.
+using Lingva.DataAccessLayer.Context;
+using System.Linq;
+using Lingva.DataAccessLayer;
+using Lingva.DataAccessLayer.Repositories;
 
 namespace Lingva.BusinessLayer.Services
 {
     public class UserService : IUserService
     {
-        private DataContext _context;
+        private IUnitOfWorkUser _unitOfWork;
 
-        public UserService(DataContext context)
+        public UserService(IUnitOfWorkUser unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public User Authenticate(string username, string password)
@@ -22,7 +25,7 @@ namespace Lingva.BusinessLayer.Services
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.Users.SingleOrDefault(x => x.Username == username);
+            var user = _unitOfWork.Users.Get(x => x.Username == username);
 
             if (user == null)
                 return null;
@@ -35,48 +38,49 @@ namespace Lingva.BusinessLayer.Services
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users;
+            return _unitOfWork.Users.GetList();
         }
 
         public User GetById(int id)
         {
-            return _context.Users.Find(id);
+            return _unitOfWork.Users.Get(id);
         }
 
         public User Create(User user, string password)
         {
-
             if (string.IsNullOrWhiteSpace(password))
                 throw new LingvaException("Password is required");
 
-            if (_context.Users.Any(x => x.Username == user.Username))
+            if (_unitOfWork.Users.Get(x => x.Username == user.Username)!=null)
                 throw new LingvaException("Username \"" + user.Username + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;
+
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            _unitOfWork.Users.Create(user);
+
+            user.PasswordHash = null;
+            user.PasswordSalt = null;
 
             return user;
         }
 
         public void Update(User userParam, string password = null)
         {
-            var user = _context.Users.Find(userParam.Id);
+            var user = _unitOfWork.Users.Get(userParam.Id);
 
             if (user == null)
                 throw new LingvaException("User not found");
 
             if (userParam.Username != user.Username)
             {
-                if (_context.Users.Any(x => x.Username == userParam.Username))
+                if (_unitOfWork.Users.Get(x => x.Username == userParam.Username)!=null)
                     throw new LingvaException("Username " + userParam.Username + " is already taken");
             }
-
 
             user.FirstName = userParam.FirstName;
             user.LastName = userParam.LastName;
@@ -91,23 +95,16 @@ namespace Lingva.BusinessLayer.Services
                 user.PasswordSalt = passwordSalt;
             }
 
-            _context.Users.Update(user);
-            _context.SaveChanges();
+            _unitOfWork.Users.Update(user);
         }
 
         public void Delete(int id)
         {
-            var user = _context.Users.Find(id);
-            if (user != null)
-            {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
-            }
+            _unitOfWork.Users.Delete(_unitOfWork.Users.Get(id));
         }
 
-        public int LoggedInUserId(Microsoft.AspNetCore.Mvc.ControllerBase controllerBase)
+        public static int GetLoggedInUserId(Microsoft.AspNetCore.Mvc.ControllerBase controllerBase)
         {
-
             return int.Parse(controllerBase.User.Claims.First(i => i.Type.Equals(System.Security.Claims.ClaimTypes.Name)).Value);
         }
 
@@ -140,5 +137,6 @@ namespace Lingva.BusinessLayer.Services
 
             return true;
         }
+
     }
 }

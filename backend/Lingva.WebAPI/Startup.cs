@@ -12,6 +12,7 @@ using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Extensions;
 using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
+using Lingva.WebAPI.Helpers;
 
 namespace Lingva.WebAPI
 {
@@ -35,7 +36,7 @@ namespace Lingva.WebAPI
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.ConfigureJwt(Configuration);
 
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
@@ -74,6 +75,7 @@ namespace Lingva.WebAPI
             app.UseCors("CorsPolicy"); // TODO: add required
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

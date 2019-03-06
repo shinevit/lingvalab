@@ -17,5 +17,14 @@ namespace Lingva.DataAccessLayer.Entities
         public virtual IEnumerable<Word> Words { get; set; }
         [ForeignKey("TranslationLanguageName")]
         public virtual IEnumerable<DictionaryRecord> TranslationDictionary { get; set; }
+        public virtual ICollection<Film> Films { get; set; }
+        public virtual ICollection<Subtitle> Subtitles { get; set; }
+        public Language()
+        {
+            Words = new List<Word>();
+            TranslationDictionary = new List<DictionaryRecord>();
+            Subtitles = new List<Subtitle>();
+            Films = new List<Film>();
+        }
     }
 }

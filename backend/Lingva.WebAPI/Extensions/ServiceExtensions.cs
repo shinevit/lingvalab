@@ -7,6 +7,7 @@ using Lingva.BusinessLayer;
 using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using System;
+using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -34,6 +35,7 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
             services.AddSingleton<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
+            services.AddSingleton<IUnitOfWorkParser, UnitOfWorkParser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
@@ -41,6 +43,11 @@ namespace Lingva.WebAPI.Extensions
             //services.AddSingleton<RepositoryWord>();
             //services.AddSingleton<RepositoryDictionaryRecord>();
 
+            //services.AddScoped<IRepositoryDictionaryRecord, RepositoryDictionaryRecord>();
+            services.AddScoped<IRepositoryWord, RepositoryWord>();
+            services.AddScoped<IRepositorySubtitle, RepositorySubtitle>();
+            services.AddScoped<IRepositorySubtitleRow, RepositorySubtitleRow>();
+            services.AddScoped<IRepositoryFilm, RepositoryFilm>();
         }
 
         public static void ConfigureLoggerService(this IServiceCollection services)

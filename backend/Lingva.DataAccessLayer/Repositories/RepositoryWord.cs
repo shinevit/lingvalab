@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryWord : IRepository<Word>
+    public class RepositoryWord : IRepositoryWord
     {
         private readonly DictionaryContext _context;
 

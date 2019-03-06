@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.DTO;
 using Lingva.BusinessLayer.Interfaces;
 using Lingva.BusinessLayer.SubtitlesParser.Classes;
@@ -11,13 +12,13 @@ using Lingva.DataAccessLayer.Repositories;
 
 namespace Lingva.BusinessLayer.Services
 {
-    public class SubtitlesHandlerService:ISubtitlesHandler
+    public class SubtitlesHandlerService : ISubtitlesHandlerService
     {
-        private readonly IGenericRepository<Subtitles> _subtitlesRepository;
-        private readonly IGenericRepository<SubtitlesRow> _subtitlesRowRepository;
+        private readonly IGenericRepository<Subtitle> _subtitlesRepository;
+        private readonly IGenericRepository<SubtitleRow> _subtitlesRowRepository;
 
-        public SubtitlesHandlerService(IGenericRepository<Subtitles> subtitlesRepository,
-            IGenericRepository<SubtitlesRow> subtitlesRowRepository)
+        public SubtitlesHandlerService(IGenericRepository<Subtitle> subtitlesRepository,
+            IGenericRepository<SubtitleRow> subtitlesRowRepository)
         {
             _subtitlesRepository = subtitlesRepository;
             _subtitlesRowRepository = subtitlesRowRepository;
@@ -26,16 +27,16 @@ namespace Lingva.BusinessLayer.Services
         public void AddSubtitles(SubtitlesRowDTO[] subDTO, string subtitlesName, int filmId)
         {
           
-            _subtitlesRepository.Create(new Subtitles()
+            _subtitlesRepository.Create(new Subtitle()
             {
-                Name = subtitlesName,
+                Path = subtitlesName,
                 FilmId = filmId
             });
 
-            int subId = _subtitlesRepository.Get().FirstOrDefault(p => p.Name == subtitlesName).Id;
+            int subId = _subtitlesRepository.Get().FirstOrDefault(p => p.Path == subtitlesName).Id;
             subDTO.ToList().ForEach(n => n.SubtitlesId = subId);
 
-            _subtitlesRowRepository.CreateRange(subDTO.Select(n => new SubtitlesRow()
+            _subtitlesRowRepository.CreateRange(subDTO.Select(n => new SubtitleRow()
             {
                 LineNumber = n.LineNumber,
                 Value = n.Value,

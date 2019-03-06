@@ -41,7 +41,7 @@ namespace Lingva.WebAPI
 
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
-            
+            services.AddTransient<ISubtitlesHandlerService, SubtitlesHandlerService>();
             services.AddTransient<TranslaterGoogleService>();
             services.AddTransient<TranslaterYandexService>();
             services.AddTransient<Func<string, ITranslaterService>>(serviceProvider => key =>
@@ -59,7 +59,7 @@ namespace Lingva.WebAPI
 
             services.AddSingleton<IRepository<Word>, RepositoryWord>();
             services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
-            services.AddScoped<ISubtitlesHandler, SubtitlesHandlerService>();
+            services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
             // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
         }
 

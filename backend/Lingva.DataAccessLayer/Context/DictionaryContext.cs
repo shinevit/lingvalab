@@ -25,21 +25,10 @@ namespace Lingva.DataAccessLayer.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<Film>().HasData(
-                new Film[]
-                {
-                    new Film{ Id=1, Name="Focus"},
-                    new Film{ Id=2, Name="Game"},
-
-                });
-            base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<Language>()
-            //       //.HasOne(m => m.TranslationDictionary)
-            //       .HasMany(t => t.TranslationDictionary)
-            //       .WithOne(c => c.LanguageName)
-            //       .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<DictionaryRecord>()
+                   .HasOne(c => c.Language)
+                   .WithMany(t => t.UserDictionaryRecords)                  
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

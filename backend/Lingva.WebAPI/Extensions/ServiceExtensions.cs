@@ -16,7 +16,7 @@ namespace Lingva.WebAPI.Extensions
         {
             string connection = config.GetConnectionString("LingvaConnection");
             services.AddDbContext<DictionaryContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(connection), ServiceLifetime.Singleton);
+                options.UseLazyLoadingProxies().UseSqlServer(connection));
         }
 
         public static void ConfigureCors(this IServiceCollection services)
@@ -33,14 +33,13 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
-            services.AddSingleton<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
+            services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
-            //services.AddSingleton<RepositoryWord>();
-            //services.AddSingleton<RepositoryDictionaryRecord>();
-
+            services.AddScoped<IRepositoryWord, RepositoryWord>();
+            services.AddScoped<IRepositoryDictionaryRecord, RepositoryDictionaryRecord>();
         }
 
         public static void ConfigureLoggerService(this IServiceCollection services)

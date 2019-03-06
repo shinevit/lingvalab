@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IRepository<T> : IRepositoryDefault
+    public interface IRepository<T>
         where T : class
     {
         IQueryable<T> GetList();

@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="UDE.CSharp" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Enums\" />
     <Folder Include="Extensions\" />
     <Folder Include="Utility\" />
   </ItemGroup>

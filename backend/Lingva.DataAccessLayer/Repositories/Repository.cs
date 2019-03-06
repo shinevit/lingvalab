@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public abstract class Repository<T> : IRepository<T>
+    public abstract class Repository<T> : IRepository<T> 
         where T : class
     {
         protected readonly DictionaryContext _context;

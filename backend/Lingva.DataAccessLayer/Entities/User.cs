@@ -20,7 +20,11 @@ namespace Lingva.DataAccessLayer.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual IEnumerable<DictionaryRecord> UserDictionary { get; set; }
+        public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
+
+        public User()
+        {
+            UserDictionaryRecords = new List<DictionaryRecord>();
+        }
     }
 }

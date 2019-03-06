@@ -10,11 +10,11 @@ namespace Lingva.DataAccessLayer.Repositories
 
         private bool disposed = false;
 
-        private readonly IRepository<User> _users;
+        private readonly IRepositoryUser _users;
 
-        public IRepository<User> Users { get => _users;}
+        public IRepositoryUser Users { get => _users;}
 
-        public UnitOfWorkUser(DictionaryContext context, IRepository<User> userRepository)
+        public UnitOfWorkUser(DictionaryContext context, IRepositoryUser userRepository)
         {
             _context = context;
             _users = userRepository;

@@ -9,17 +9,10 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    class RepositoryUser : Repository<User>, IUserRepository
+    class RepositoryUser : Repository<User>, IRepositoryUser
     {
-        private DbSet<User> _entities;
-
-        private readonly DictionaryContext _context;
-
-        public RepositoryUser(DictionaryContext context)
+        public RepositoryUser(DictionaryContext context) : base(context)
         {
-            _context = context;
-            _entities = context.Set<User>();
         }
-
     }
 }

@@ -8,6 +8,9 @@ using Lingva.DataAccessLayer.Context;
 using System.Linq;
 using Lingva.DataAccessLayer;
 using Lingva.DataAccessLayer.Repositories;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Lingva.BusinessLayer.Services
 {
@@ -62,10 +65,7 @@ namespace Lingva.BusinessLayer.Services
             user.PasswordSalt = passwordSalt;
 
             _unitOfWork.Users.Create(user);
-
-            user.PasswordHash = null;
-            user.PasswordSalt = null;
-
+                       
             return user;
         }
 
@@ -108,6 +108,23 @@ namespace Lingva.BusinessLayer.Services
             return int.Parse(controllerBase.User.Claims.First(i => i.Type.Equals(System.Security.Claims.ClaimTypes.Name)).Value);
         }
 
+        public string GetUserToken(User user, string secret)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+            return tokenString;
+        }
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");

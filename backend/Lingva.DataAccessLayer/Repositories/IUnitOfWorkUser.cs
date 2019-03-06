@@ -5,6 +5,6 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public interface IUnitOfWorkUser: IUnitOfWork
     {
-        IRepository<User> Users { get; }
+        IRepositoryUser Users { get; }
     }
 }

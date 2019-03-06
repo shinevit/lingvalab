@@ -85,14 +85,13 @@ namespace Lingva.WebAPI.Extensions
                         var userId = int.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
                         if (user == null)
-                        {
-                            // return unauthorized if user no longer exists
+                        {                            
                             context.Fail("Unauthorized");
                         }
                         return Task.CompletedTask;
                     }
                 };
-                x.RequireHttpsMetadata = false;
+                x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {

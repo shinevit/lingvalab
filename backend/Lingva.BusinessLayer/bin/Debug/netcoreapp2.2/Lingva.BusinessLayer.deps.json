@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "b36818a78e1460eed609d6d51b385bb3652a4f45"
+    "signature": "38fc9d5ba8f71dff37af9e90bcd083c09e53b0ad"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,7 +9,8 @@
       "Lingva.BusinessLayer/1.0.0": {
         "dependencies": {
           "Lingva.DataAccessLayer": "1.0.0",
-          "Microsoft.NETCore.App": "2.2.0"
+          "Microsoft.NETCore.App": "2.2.0",
+          "UDE.CSharp": "1.1.0"
         },
         "runtime": {
           "Lingva.BusinessLayer.dll": {}
@@ -39,6 +40,14 @@
       "NETStandard.Library/2.0.3": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0"
+        }
+      },
+      "UDE.CSharp/1.1.0": {
+        "runtime": {
+          "lib/Ude.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.1.0.0"
+          }
         }
       },
       "Lingva.DataAccessLayer/1.0.0": {
@@ -102,6 +111,13 @@
       "sha512": "sha512-st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
+    },
+    "UDE.CSharp/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mKyO4ttC5t5bu7qHVhMSQRDThinQVhzCIO+lMB1Mdwc1UTWp+sQX6BVVWhHeGjFIRJ/09x+AcUlpfF6HUzZFxA==",
+      "path": "ude.csharp/1.1.0",
+      "hashPath": "ude.csharp.1.1.0.nupkg.sha512"
     },
     "Lingva.DataAccessLayer/1.0.0": {
       "type": "project",

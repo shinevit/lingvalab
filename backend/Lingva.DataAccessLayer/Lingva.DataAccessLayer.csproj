@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\FilmRepository.cs" />
+    <Compile Remove="Repositories\SubtitlesRepository.cs" />
+    <Compile Remove="Repositories\SubtitlesRowRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

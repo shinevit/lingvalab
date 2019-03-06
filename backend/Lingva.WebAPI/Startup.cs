@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Lingva.BusinessLayer.Contracts;
+using Lingva.BusinessLayer.Interfaces;
 using Lingva.WebAPI.Extensions;
 using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
@@ -37,7 +38,7 @@ namespace Lingva.WebAPI
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
@@ -56,13 +57,17 @@ namespace Lingva.WebAPI
                         return null;
                 }
             });
+          
+            services.AddSingleton<IRepository<Word>, RepositoryWord>();
+            services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
+            services.AddScoped<ISubtitlesHandler, SubtitlesHandlerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             // loggerFactory.AddProvider(); // TODO: use Serilog
-
+          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

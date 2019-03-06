@@ -13,6 +13,9 @@ namespace Lingva.DataAccessLayer.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Word> Words { get; set; }
+        public DbSet<Film> Films { get; set; }
+        public DbSet<Subtitles> Subtitles { get; set; }
+        public DbSet<SubtitlesRow> SubtitlesRows { get; set; }
 
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)

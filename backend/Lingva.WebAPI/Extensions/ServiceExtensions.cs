@@ -15,7 +15,8 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
             string connection = config.GetConnectionString("LingvaConnection");
-            services.AddDbContext<DictionaryContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<DictionaryContext>(options =>
+                options.UseLazyLoadingProxies().UseSqlServer(connection));
         }
 
         public static void ConfigureCors(this IServiceCollection services)

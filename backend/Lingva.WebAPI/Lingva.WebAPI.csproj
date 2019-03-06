@@ -14,8 +14,12 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Security\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lingva.BusinessLayer\Lingva.BusinessLayer.csproj" />
+    <ProjectReference Include="..\Lingva.DataAccessLayer\Lingva.DataAccessLayer.csproj" />
   </ItemGroup>
 
 </Project>

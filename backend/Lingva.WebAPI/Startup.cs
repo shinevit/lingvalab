@@ -1,17 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Lingva.BusinessLayer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
-
-using AutoMapper;
-using Lingva.WebAPI.Helpers;
-
+using Microsoft.Extensions.Logging;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.WebAPI.Extensions;
+using Lingva.DataAccessLayer.Repositories;
+using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.WebAPI
 {
@@ -27,65 +27,53 @@ namespace Lingva.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();            
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddAutoMapper();
+            services.ConfigureCors();
+            services.ConfigureSqlContext(Configuration);
+            services.ConfigureOptions(Configuration);
+            services.ConfigureAutoMapper();
+            services.ConfigureLoggerService();
+            services.ConfigureUnitOfWork();
+            services.ConfigureRepositories();
 
-            
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddTransient<IDictionaryService, DictionaryService>();
+            services.AddTransient<ILivesearchService, LivesearchService>();
             
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
+            services.AddTransient<TranslaterGoogleService>();
+            services.AddTransient<TranslaterYandexService>();
+            services.AddTransient<Func<string, ITranslaterService>>(serviceProvider => key =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
+                switch (key)
                 {
-                    OnTokenValidated = context =>
-                    {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                        var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
-                        if (user == null)
-                        {
-                        // return unauthorized if user no longer exists
-                        context.Fail("Unauthorized");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
+                    case "g":
+                        return serviceProvider.GetService<TranslaterGoogleService>();
+                    case "y":
+                        return serviceProvider.GetService<TranslaterYandexService>();
+                    default:
+                        return null;
+                }
             });
 
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            services.AddSingleton<IRepository<Word>, RepositoryWord>();
+            services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
+
+            // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            // loggerFactory.AddProvider(); // TODO: use Serilog
 
-            app.UseAuthentication();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
+            app.UseCors("CorsPolicy"); // TODO: add required
+            app.UseStaticFiles();
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

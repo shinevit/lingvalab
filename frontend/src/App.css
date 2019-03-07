@@ -1,0 +1,94 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.logo {
+  max-height: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 30px;
+}
+
+.logo-col {
+  text-align: left;
+  align-items: left;
+  justify-content: left;
+}
+
+.App-header {
+  background-color:#055451;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding-bottom: 20px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.page-body {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
+  font-size: 18px;
+  text-align: center;
+  color: blue;
+}
+
+.head-toolbar {
+  align-items: right;
+  justify-content: right;
+  margin-right: 15px;
+}
+
+.FooterDiv {
+  font-size: 30px;
+  text-align: center;
+  color: darkgreen;
+}
+
+.weather-window {
+  margin-top: 30px;
+}
+
+.btn{
+  margin-right: 5px;
+}
+
+.btn-toolbar {
+  margin-top: 30px;
+}
+
+.active-text-video :hover {
+  background-color: yellow;  
+  cursor: pointer;
+}
+
+.media-page-container {
+  margin-top: 20px;
+}
+
+.top-bar {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

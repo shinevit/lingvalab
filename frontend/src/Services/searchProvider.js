@@ -17,8 +17,8 @@ class SearchProvider extends Component {
             groups : data,
             requestStatus: request.status         
         }
-        
         return this.state;
+        
     }
 }
 

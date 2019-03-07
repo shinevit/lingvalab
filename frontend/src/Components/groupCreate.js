@@ -35,7 +35,7 @@ class GroupCreateWindow extends React.Component {
         return (
         <>
             <Button variant="success" onClick={this.handleShow}>
-                <FontAwesomeIcon icon="plus" /> Create new Group
+                <FontAwesomeIcon icon="plus" /> Create new Event
             </Button>
 
             <Modal show={this.state.show} onHide={this.handleClose}>
@@ -65,13 +65,14 @@ class GroupAddForm extends Component {
             <Form onSubmit={this.props.window.props.addMethod}>                
                 <Form.Group controlId="newGroup">
                     <InputGroup>
-                        <Form.Control type="text" name="groupName" placeholder="Enter Group Name"/>
+                        <Form.Control type="text" name="groupName" placeholder="Enter Group Name"/>                        
                         <InputGroup.Append>
                             <Button variant="primary" type="submit" onClick={this.props.window.handleClose}>
                             Add
                             </Button>
                         </InputGroup.Append>                             
-                    </InputGroup>  
+                    </InputGroup>
+                    <Form.Control type="text" name="dsecription" placeholder="Description..."/>  
                 </Form.Group>
             </Form>
         );

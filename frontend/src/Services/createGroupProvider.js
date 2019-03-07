@@ -9,7 +9,7 @@ class CreateGroupProvider extends Component {
 
     AddGroup = async (event) => {        
         const inputGroupName = event.target.elements.groupName.value;        
-        const apiUrl = "http://localhost:58368/api/values";
+        const apiUrl = "ttps://localhost:44341/api/groupcollection";
 
         var response = await fetch(apiUrl, {
             method: 'POST',

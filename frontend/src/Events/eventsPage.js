@@ -97,6 +97,7 @@ class SingleEvent extends Component {
     GetSingleEvent = async (eventId) => {        
         let getter = new EventProvider();
         let response = await getter.GetSearchResults(eventId);
+        console.log(response);
         let group =                 
                 <Row>
                     <Col lg={6}>

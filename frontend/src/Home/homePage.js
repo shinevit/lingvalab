@@ -59,8 +59,7 @@ class HomePage extends Component {
         let getter = new EventProvider();
         let response = await getter.GetSearchResults(eventId);        
            
-        console.log("Home");
-        console.log(response.data);        
+        window.location.assign(`/events/${response.data.id}`)        
     }
 
     render() {

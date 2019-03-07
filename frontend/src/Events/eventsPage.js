@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Switch, Route, NavLink } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -16,7 +17,18 @@ const dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 
 const dummyImage250 = "https://via.placeholder.com/250x250.png";
 
-class EventsPage extends Component {
+class EventsPage extends Component{
+    render(){
+        return <div>
+                    <Switch>
+                        <Route exact path="/events" component={MultipleEvents} />
+                        <Route path="/events/:id" component={SingleEvent} />
+                    </Switch>
+                </div>;
+    }
+}
+
+class MultipleEvents extends Component {
 
     constructor(props) {
         super(props);
@@ -24,8 +36,7 @@ class EventsPage extends Component {
             events: <div>Empty</div>                          
         }
         
-        this.GetAllEvents = this.GetAllEvents.bind(this);
-        this.GetSingleEvent = this.GetSingleEvent.bind(this);
+        this.GetAllEvents = this.GetAllEvents.bind(this);        
     }
 
     GetAllEvents = async () => {
@@ -36,12 +47,14 @@ class EventsPage extends Component {
         response.data.map(
             (element, elementKey) => {
                 groups.push(
-                    <Col lg={4} key={elementKey}>
-                        <h4>{element.title}</h4>
-                        <img onClick={(e) => this.GetSingleEvent(element.id)}
-                            src={dummyImage250}
-                            alt={element.groupName} 
-                        />
+                    <Col lg={4} key={elementKey}>                        
+                        <NavLink to={`/events/${element.id}`}>
+                            <h4>{element.title}</h4>
+                            <img 
+                                src={dummyImage250}
+                                alt={element.groupName} 
+                            />
+                        </NavLink>                        
                         <p> 
                             {element.description}
                         </p>
@@ -55,12 +68,36 @@ class EventsPage extends Component {
         });
     }
 
-    GetSingleEvent = async (eventId) => {
-        let getter = new EventProvider();
-        let response = await getter.GetSearchResults(eventId);        
-        let groups;
+    componentDidMount() {
+        this.GetAllEvents();
+    }
 
-        groups =                 
+    render() {
+        return(
+            <div>
+                <h3>Events</h3>    
+                {this.state.events}                
+            </div>
+        )
+    }
+}
+
+class SingleEvent extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            events: <div>Empty</div>,
+            eventId: this.props.match.params.id                          
+        }
+        
+        this.GetSingleEvent = this.GetSingleEvent.bind(this);
+    }
+
+    GetSingleEvent = async (eventId) => {        
+        let getter = new EventProvider();
+        let response = await getter.GetSearchResults(eventId);
+        let group =                 
                 <Row>
                     <Col lg={6}>
                     <h3>Welcome to {response.data.title}</h3>
@@ -84,16 +121,16 @@ class EventsPage extends Component {
                 </Row>            
 
         this.setState({
-            events: groups
+            events: group
         });
     }
 
     componentDidMount() {
-        this.GetAllEvents();
+        this.GetSingleEvent(this.state.eventId);
     }
 
-    render() {
-        return(
+    render() {                
+        return(            
             <div>
                 <h3>Events</h3>    
                 {this.state.events}                
@@ -101,5 +138,6 @@ class EventsPage extends Component {
         )
     }
 }
+
 
 export default EventsPage;

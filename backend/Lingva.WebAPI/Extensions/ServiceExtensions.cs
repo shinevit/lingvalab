@@ -13,6 +13,8 @@ using System.Text;
 using Lingva.WebAPI.Helpers;
 using Lingva.BusinessLayer.Contracts;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Lingva.BusinessLayer.Services;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -40,12 +42,19 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
+            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryWord, RepositoryWord>();
             services.AddScoped<IRepositoryDictionaryRecord, RepositoryDictionaryRecord>();
+            services.AddScoped<IRepositoryUser, RepositoryUser>();           
+        }
+
+        public static void ConfigureDependencyInjection(this IServiceCollection services)
+        {
+            services.AddTransient<IUserService, UserService>();
         }
 
         public static void ConfigureLoggerService(this IServiceCollection services)
@@ -85,12 +94,12 @@ namespace Lingva.WebAPI.Extensions
                         var userId = int.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
                         if (user == null)
-                        {                            
+                        {                           
                             context.Fail("Unauthorized");
                         }
                         return Task.CompletedTask;
                     }
-                };
+                };                
                 x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -103,6 +112,12 @@ namespace Lingva.WebAPI.Extensions
                 };
             });
         }
+
+        public static void ConfigureMVC(this IServiceCollection services)
+        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
+
     }
 
 }

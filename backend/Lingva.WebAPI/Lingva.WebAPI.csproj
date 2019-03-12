@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Security\" />
-    <Folder Include="Helpers\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>

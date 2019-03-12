@@ -9,11 +9,10 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryWord : Repository<Word>, IRepositoryWord
+    public class RepositoryUser : Repository<User>, IRepositoryUser
     {
-        public RepositoryWord(DictionaryContext context) : base(context)
+        public RepositoryUser(DictionaryContext context) : base(context)
         {
-
-        }       
+        }
     }
 }

@@ -1,29 +1,24 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
 using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class UnitOfWorkDictionary : IUnitOfWorkDictionary
+    public class UnitOfWorkUser:IUnitOfWorkUser
     {
         private static DictionaryContext _context;
 
         private bool disposed = false;
 
-        private readonly IRepositoryDictionaryRecord _dictionaryRecords;
-        private readonly IRepositoryWord _words;
+        private readonly IRepositoryUser _users;
 
-        public UnitOfWorkDictionary(DictionaryContext context, IRepositoryWord words, IRepositoryDictionaryRecord dictionaryRecords)
+        public IRepositoryUser Users { get => _users;}
+
+        public UnitOfWorkUser(DictionaryContext context, IRepositoryUser userRepository)
         {
             _context = context;
-            _dictionaryRecords = dictionaryRecords;
-            _words = words;
+            _users = userRepository;
         }
-
-        public IRepositoryDictionaryRecord DictionaryRecords { get => _dictionaryRecords; }
-        public IRepositoryWord Words { get => _words; }
 
         public void Save()
         {

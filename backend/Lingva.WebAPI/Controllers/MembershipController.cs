@@ -17,11 +17,11 @@ namespace UsersManagementBackEnd.Controllers
     public class MembershipController : Controller
     {
         private EventMemberService _memberService = new EventMemberService();
-
+         
         [HttpPost("join/{groupID}/{tokenString}")]
         public IActionResult JoinGroup( int groupID,string tokenString)
         {
-            //getting user.ID
+            //getting user.ID.
             var token = new JwtSecurityToken(jwtEncodedString: tokenString);
             var user = new User { Id = Convert.ToInt32(token.Claims.First().Value) };
 

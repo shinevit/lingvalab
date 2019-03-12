@@ -23,6 +23,7 @@ namespace Lingva.DataAccessLayer.Context
             Database.EnsureCreated();
         }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -34,12 +35,6 @@ namespace Lingva.DataAccessLayer.Context
 
                 });
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<Language>()
-            //       //.HasOne(m => m.TranslationDictionary)
-            //       .HasMany(t => t.TranslationDictionary)
-            //       .WithOne(c => c.LanguageName)
-            //       .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

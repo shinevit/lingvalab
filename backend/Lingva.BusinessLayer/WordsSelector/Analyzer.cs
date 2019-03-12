@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Lingva.BusinessLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Lingva.BusinessLayer.WordsSelector
 {
     public class Analyzer
     {
-        IDataProvider _dataProvider;
+        ICommonWord _dataProvider;
         char[] splitSymbol = new char[] { ' ', '.', ',', ':', '?', '!', '\n', '\r' };
 
-        public Analyzer(IDataProvider dataProvider)
+        public Analyzer(ICommonWord dataProvider)
         {
             _dataProvider = dataProvider;
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lingva.DataAccessLayer.Repositories
+namespace Lingva.BusinessLayer.Interfaces
 {
     public interface ICommonWord : IDisposable
     {

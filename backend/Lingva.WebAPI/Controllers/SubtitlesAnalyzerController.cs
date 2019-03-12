@@ -9,6 +9,10 @@ using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Lingva.BusinessLayer.WordsSelector;
+using Lingva.BusinessLayer.Interfaces;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -16,21 +20,22 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class SubtitlesAnalyzerController : ControllerBase
     {
-        public List<Word> PostAnalyze(HttpPostedFileBase upload)
+        public List<BusinessLayer.WordsSelector.Word> PostAnalyze(IFormFile upload)
         {
             if (upload == null)
             {
                 return null;
             }
 
-            string allText;
-            using (StreamReader txt = new StreamReader(upload))
+            string allText; 
+            using (StreamReader txt = new StreamReader(upload.OpenReadStream()))
             {
                 allText = txt.ReadToEnd();
             }
 
-            Analyzer analyzer = new Analyzer( );//TODO: add ICommonWord
-            List<Word> words = analyzer.ParseToWords(allText);
+            ICommonWord conection = new CommonWord();
+            Analyzer analyzer = new Analyzer(conection);
+            List<BusinessLayer.WordsSelector.Word> words = analyzer.ParseToWords(allText);
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 

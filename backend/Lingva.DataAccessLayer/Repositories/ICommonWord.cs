@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lingva.BusinessLayer.WordsSelector
+namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IDataProvider : IDisposable
+    public interface ICommonWord : IDisposable
     {
         List<string> GetAllSimpleWords();
         bool AreExist(string word);

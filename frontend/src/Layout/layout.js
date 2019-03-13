@@ -10,6 +10,8 @@ import ReduxTest from '../Media/reduxTest';
 import HomePage from '../Home/homePage';
 import HomePageUnsigned from '../Home/homePageUnsigned';
 import EventsPage from '../Events/eventsPage';
+import {LoginPage} from '../Login'
+import {RegisterPage} from '../RegisterPage'
 
 const logged_in = true;
 
@@ -42,8 +44,10 @@ class Layout extends Component{
         return(
           <main>      
             <Switch>
-              <Route exact path='/' component={HomePageUnsigned}/>                    
-              <Route path='/' component={AboutUs}/>                      
+              <Route exact path='/' component={HomePageUnsigned}/>
+              <Route exact path='/login' component={LoginPage}/>   
+              <Route exact path='/register' component={RegisterPage}/>                       
+              <Route path='/about' component={AboutUs}/>                      
             </Switch>
           </main>
         )

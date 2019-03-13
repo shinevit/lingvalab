@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import VideoPlayer from '../Components/videoPlayer';
 
 class HomePageUnsigned extends Component {
-    constructor(props, context) {
-        super(props, context);    
-           
-    }
-
     render() {
         return (
             <div className="media-page-container">                

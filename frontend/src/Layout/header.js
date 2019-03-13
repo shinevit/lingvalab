@@ -73,7 +73,7 @@ class HeaderUnsigned extends Component {
                 </Col>
                 <Col>                
                     <ButtonToolbar className="head-toolbar">                                        
-                        <Button href="/" onClick={this.props.loginMethod} >Login</Button>
+                        <Button href="/login">Login</Button>
                         <Button href="/about">About Us</Button>                            
                     </ButtonToolbar>
                 </Col>

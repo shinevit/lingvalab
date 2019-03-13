@@ -49,8 +49,7 @@ namespace Lingva.BusinessLayer.Services
         public SubtitlesRowDTO[] Parse(Stream subtitles)
         {
             var encoding = DetectEncoding(subtitles);
-
-
+            
             var parser = new SubtitlesParser.Classes.Parsers.SrtParser();
             List<SubtitleItem> items = parser.ParseStream(subtitles, encoding);
 
@@ -61,6 +60,7 @@ namespace Lingva.BusinessLayer.Services
                 StartTime = new TimeSpan(0, 0, 0, 0, n.StartTime),
                 EndTime = new TimeSpan(0, 0, 0, 0, n.EndTime),
             }).ToArray();
+
             return subDTO;
         }
         private Encoding DetectEncoding(Stream stream)

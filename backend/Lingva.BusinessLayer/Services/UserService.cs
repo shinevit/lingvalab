@@ -51,11 +51,14 @@ namespace Lingva.BusinessLayer.Services
 
         public User Create(User user, string password)
         {
+            
             if (string.IsNullOrWhiteSpace(password))
                 throw new LingvaException("Password is required");
 
-            if (_unitOfWork.Users.Get(x => x.Username == user.Username)!=null)
+            if (_unitOfWork.Users.Get(x => x.Username == user.Username) != null)
+            {
                 throw new LingvaException("Username \"" + user.Username + "\" is already taken");
+            }
 
             byte[] passwordHash, passwordSalt;
 
@@ -65,7 +68,8 @@ namespace Lingva.BusinessLayer.Services
             user.PasswordSalt = passwordSalt;
 
             _unitOfWork.Users.Create(user);
-                       
+            _unitOfWork.Save();
+
             return user;
         }
 
@@ -78,7 +82,7 @@ namespace Lingva.BusinessLayer.Services
 
             if (userParam.Username != user.Username)
             {
-                if (_unitOfWork.Users.Get(x => x.Username == userParam.Username)!=null)
+                if (_unitOfWork.Users.Get(x => x.Username == userParam.Username) != null)
                     throw new LingvaException("Username " + userParam.Username + " is already taken");
             }
 

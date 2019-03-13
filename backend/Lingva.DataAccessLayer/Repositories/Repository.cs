@@ -11,8 +11,8 @@ namespace Lingva.DataAccessLayer.Repositories
     public abstract class Repository<T> : IRepository<T> 
         where T : class
     {
-        protected readonly DictionaryContext _context;
-        protected readonly DbSet<T> _entities;
+        protected DictionaryContext _context;
+        protected DbSet<T> _entities;
 
         public Repository(DictionaryContext context)
         {
@@ -47,7 +47,7 @@ namespace Lingva.DataAccessLayer.Repositories
                 throw new ArgumentNullException("Tried to insert null entity!");
             }
 
-            _entities.Add(entity);
+            _entities.Add(entity);           
         }
 
         public virtual void Update(T entity)

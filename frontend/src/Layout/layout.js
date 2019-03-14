@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import '../App.css';
+import './bootstrap.css';
 import Header from './header';
 import Footer from './footer';
-import PageBody from './eventSearch';
 import AboutUs from '../About/aboutUs';
 import MediaPage from '../Media/mediaPage';
 import ReduxTest from '../Media/reduxTest';
 import HomePage from '../Home/homePage';
 import HomePageUnsigned from '../Home/homePageUnsigned';
 import EventsPage from '../Events/eventsPage';
-
-const logged_in = true;
 
 class Layout extends Component{
 
@@ -50,9 +48,7 @@ class Layout extends Component{
       }
     }
 
-    render() {
-      console.log("LAYOUT");
-      console.log(this.state.userLoggedIn);
+    render() {      
         return(
             <div>
                 <Header layout={this}/>

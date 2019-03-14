@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import CarouselMain from '../Components/carouselMain';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,6 +7,7 @@ import GroupCreateWindow from '../Components/groupCreate';
 import CreateGroupProvider from '../Services/createGroupProvider';
 import SearchForm from '../Components/searchForm';
 import EventProvider from '../Services/eventProvider';
+import OMDBImageGetter from '../Services/OMDBImageGetter';
 
 const dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -21,17 +21,15 @@ const dummyImage250 = "https://via.placeholder.com/250x250.png";
 
 const topGroupsDummy = {
     groups: [
-        {groupName: "The GlAmOuR Twilight Vampirez!!!11", movieName: "The Twilight Saga", memberCount: 1000},
-        {groupName: "Harley 'n' the Cowboy", movieName: "Harley Davidson and the Marlboro Man", memberCount: 1000}
+        {id: 1, groupName: "The Twilight Fans!!!", movieName: "The Twilight Saga", memberCount: 1000},
+        {id: 2, groupName: "Harley 'n' the Cowboy", movieName: "Harley Davidson and the Marlboro Man", memberCount: 1000}
     ]
 };
 
-const carouselImagesDummy = {
-    slides: [
+const carouselImagesDummy = [
         {imgUrl: "https://via.placeholder.com/800x400.png", imgHead: "Image 1", imgText: "Image 1 text"},
         {imgUrl: "https://via.placeholder.com/800x400.png", imgHead: "Image 2", imgText: "Image 2 text"}
-    ]
-};
+];
 
 class HomePage extends Component {
     constructor(props, context) {
@@ -39,18 +37,31 @@ class HomePage extends Component {
            
         this.SendAddRequest = this.SendAddRequest.bind(this);
         this.SendSearchRequest = this.SendSearchRequest.bind(this);
+        this.GetGroupsView = this.GetGroupsView.bind(this);
+        
+        this.state = {
+            topGroups: topGroupsDummy,
+            groupsViewList: topGroupsDummy,
+            //carousel: <CarouselMain images={carouselImagesDummy} />
+            carousel: <div>NO CAROUSEL</div>
+        }        
     }
+    
+    GroupsViewEmpty = 
+        <Row>
+            <h3>
+                Sorry. No groups yet
+                <GroupCreateWindow addMethod={this.SendAddRequest}/>
+            </h3>
+        </Row>
 
     SendAddRequest = async (event) => {
         event.preventDefault();
         let sender = new CreateGroupProvider();
         let response = await sender.AddGroup(event);
+        let data = await response.json();
         
-        if (response.responseStatus === 200) {
-            console.log("ADDED!"); 
-        } else {
-            console.log("NOT ADDED!");
-        }                   
+        console.log(response.data);
     }
 
     SendSearchRequest = async (event) => {
@@ -60,6 +71,52 @@ class HomePage extends Component {
         let response = await getter.GetSearchResults(eventId);        
            
         window.location.assign(`/events/${response.data.id}`)        
+    }
+
+    GetGroupsView = async () => {
+        let eventViews = [];                
+
+        await topGroupsDummy.groups.map(
+           async (element, elementKey) => {
+
+                eventViews.push(
+                    <EventInfo key={elementKey} info={element} />
+                );
+
+                return true;
+            }
+        )
+        
+        this.setState({
+            eventsView: eventViews,
+        });        
+    }
+
+    UpdateCarousel = async () => {
+        let imagesForCarousel = [];
+        let getter = new OMDBImageGetter();
+
+        await topGroupsDummy.groups.map(
+            async (element, elementKey) => {
+                let response = await getter.GetImageURLByName(element.movieName)
+
+                imagesForCarousel.push(
+                    {imgUrl: response, imgHead: "Image 1", imgText: "Image 1 text"}
+                ); 
+                return true;
+            }
+        )
+
+        let caro = <CarouselMain images={carouselImagesDummy} />
+
+        this.setState({                        
+            carousel: caro         
+        });
+    }
+
+    componentDidMount() {
+        this.GetGroupsView();
+        this.UpdateCarousel();
     }
 
     render() {
@@ -73,46 +130,66 @@ class HomePage extends Component {
                         <SearchForm searchMethod={this.SendSearchRequest} />
                     </Col>                    
                 </Row>
-                <CarouselMain images={carouselImagesDummy} />
+                {this.state.carousel}
                 <Row>
                     <Col lg={4}>
-                        <h4>Top Groups</h4>
-                        <TopGroupsList groupList={topGroupsDummy} />
+                        <TopGroupsList groupList={this.state.topGroups} />
                     </Col>
-                    <Col lg={4}>
-                        <h4>Group Name</h4>
-                        <img 
-                            src={dummyImage250}
-                            alt="Group Name" 
-                        />
+                    <Col lg={8}>
+                        {this.state.eventsView}
                     </Col>                    
-                    <Col lg={4}>
-                        <h4>Description</h4>
-                        <p>
-                            {dummyText}
-                        </p>
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col lg={4}>
-                        <h4>English Clubs</h4>
-                    </Col>
-                    <Col lg={4}>
-                        <h4>Events</h4>
-                        <img 
-                            src={dummyImage250}
-                            alt="Events" 
-                        />
-                    </Col>                    
-                    <Col lg={4}>
-                        <h4>Description</h4>
-                        <p>
-                            {dummyText}
-                        </p>
-                    </Col>
                 </Row>
             </div>
+        )
+    }
+}
+
+class EventInfo extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            groupId : this.props.info.id,
+            posterURL: dummyImage250,
+            groupName: this.props.info.groupName,
+            movieName: this.props.info.movieName                                  
+        }
+        
+        this.GetSingleEvent = this.GetSingleEvent.bind(this);        
+    }
+
+    GetSingleEvent = async () => {        
+        let getter = new OMDBImageGetter();
+        let response = await getter.GetImageURLByName(this.state.movieName);            
+
+        this.setState({
+            posterURL: response
+        });
+    }
+
+    componentDidMount() {
+        this.GetSingleEvent();
+    }
+
+    render() {                
+        return(
+            <Row>
+                <Col lg={6}>
+                <div onClick={(e) => {window.location.assign(`/events/${this.state.groupId}`)}}>
+                    <h4>{this.state.groupName}</h4>
+                    <img 
+                        src={this.state.posterURL}
+                        alt={this.state.movieName} 
+                    />
+                </div>                    
+                </Col>                    
+                <Col lg={6}>
+                    <h4>Description</h4>
+                    <p>
+                        {dummyText}
+                    </p>
+                </Col>   
+            </Row>
         )
     }
 }

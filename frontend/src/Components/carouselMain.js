@@ -2,12 +2,20 @@ import React, {Component} from 'react';
 import Carousel from 'react-bootstrap/Carousel'
 
 class CarouselMain extends Component {
-    render() {
+
+    render() {        
+        let temp = this.props.images;
+
+        temp.map(
+            (element, elementKey) => {                
+                 return true;
+             }
+         )
 
         let slides = [];
         
-        this.props.images.slides.map(
-            (element, elementKey) => {
+        temp.map(
+            (element, elementKey) => {                               
                 slides.push(
                     <Carousel.Item key={elementKey}>
                         <img                            
@@ -25,7 +33,7 @@ class CarouselMain extends Component {
             }
         )
 
-        return(
+        return(            
             <Carousel interval="1000" indicators="false">
                 {slides}
             </Carousel>

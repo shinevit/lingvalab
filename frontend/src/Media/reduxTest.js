@@ -43,22 +43,22 @@ import {connect, Provider} from 'react-redux';
 // console.log(store.getState());
 
 const initialState = {
-    firstName: 'Oleg',
-    secondName: 'Pavlov'
+    firstName: 'Ivan',
+    secondName: 'Ivanov'
 }
 
-const ACTION_CHANGE_FISRT_NAME = 'ACTION_CHANGE_FISRT_NAME';
-const ACTION_CHANGE_SECOND_NAME = 'ACTION_CHANGE_SECOND_NAME';
+// const ACTION_CHANGE_FISRT_NAME = 'ACTION_CHANGE_FISRT_NAME';
+// const ACTION_CHANGE_SECOND_NAME = 'ACTION_CHANGE_SECOND_NAME';
 
-const actionChangeFirstName = {
-    type: ACTION_CHANGE_FISRT_NAME,
-    payload: null
-};
+// const actionChangeFirstName = {
+//     type: ACTION_CHANGE_FISRT_NAME,
+//     payload: null
+// };
 
-const actionChangeSecondName = {
-    type: ACTION_CHANGE_SECOND_NAME,
-    payload: null
-};
+// const actionChangeSecondName = {
+//     type: ACTION_CHANGE_SECOND_NAME,
+//     payload: null
+// };
 
 const rootReducer = (state = initialState, action) => {
     return state;
@@ -66,7 +66,7 @@ const rootReducer = (state = initialState, action) => {
 
 const store = createStore(rootReducer);
 
-console.log(store.getState());
+//console.log(store.getState());
 
 class ReduxForm extends Component {
     render() {
@@ -81,7 +81,7 @@ class ReduxForm extends Component {
 
 
 const MapStateToProps = (state) => {
-    console.log(state);
+    //console.log(state);
     return {
         firstName: state.firstName,
         secondName: state.secondName

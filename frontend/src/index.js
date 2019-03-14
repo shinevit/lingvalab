@@ -4,6 +4,10 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Layout from './Layout/layout';
 import { BrowserRouter } from 'react-router-dom';
+import config from 'react-global-configuration';
+import apiSettings from './Config/apiSettings';
+
+config.set(apiSettings);
 
 ReactDOM.render(
     <BrowserRouter>

@@ -48,10 +48,7 @@ class Header extends Component {
         }
     }
 
-    render(){                
-        console.log("Header");
-        console.log(this.state.userLoggedIn);
-
+    render(){
         return(
             <div className="App">
                 <header className="App-header">
@@ -95,8 +92,7 @@ class HeaderSigned extends Component {
                     <ButtonToolbar className="head-toolbar">
                         <Button href="/home">Home</Button>
                         <Button href="/events">Events</Button>
-                        <Button href="/media">Media</Button>
-                        <Button href="/redux_test">Redux Test</Button>
+                        <Button href="/media">Media</Button>                        
                         <Button href="/" onClick={this.props.loginMethod}>Log off</Button>
                     </ButtonToolbar>
                 </Col>

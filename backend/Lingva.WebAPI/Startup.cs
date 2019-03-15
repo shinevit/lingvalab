@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.Interfaces;
 using Lingva.WebAPI.Extensions;
 using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
@@ -26,8 +25,7 @@ namespace Lingva.WebAPI
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+                
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
@@ -63,8 +61,7 @@ namespace Lingva.WebAPI
             services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
             services.AddScoped<ISubtitlesHandler, SubtitlesHandlerService>();
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+                
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // loggerFactory.AddProvider(); // TODO: use Serilog
@@ -74,7 +71,7 @@ namespace Lingva.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy"); // TODO: add required
+            app.UseCors("CorsPolicy"); 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();

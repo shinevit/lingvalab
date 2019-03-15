@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lingva.BusinessLayer.DTO;
-using Lingva.BusinessLayer.Interfaces;
+using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

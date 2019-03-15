@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Lingva.BusinessLayer.DTO;
-using Lingva.BusinessLayer.Interfaces;
+using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.SubtitlesParser.Classes;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;

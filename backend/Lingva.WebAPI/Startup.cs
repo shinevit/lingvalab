@@ -10,10 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.Interfaces;
 using Lingva.WebAPI.Extensions;
 using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
+using Lingva.DataAccessLayer.InitializeWithTestData;
 
 namespace Lingva.WebAPI
 {
@@ -26,19 +26,18 @@ namespace Lingva.WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
-            services.ConfigureLoggerService();
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
             services.AddScoped(typeof(IGenericRepository<>), typeof(EfRepository<>));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddScoped<IWordService, WordService>();
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
             services.AddTransient<ISubtitlesHandlerService, SubtitlesHandlerService>();
@@ -60,14 +59,10 @@ namespace Lingva.WebAPI
             services.AddSingleton<IRepository<Word>, RepositoryWord>();
             services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
-            // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // loggerFactory.AddProvider(); // TODO: use Serilog
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -77,6 +72,9 @@ namespace Lingva.WebAPI
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            DbInitializer.InitializeParserWords(app);
         }
+       
     }
 }

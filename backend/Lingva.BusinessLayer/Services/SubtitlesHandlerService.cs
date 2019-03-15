@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.DTO;
-using Lingva.BusinessLayer.Interfaces;
 using Lingva.BusinessLayer.SubtitlesParser.Classes;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
@@ -14,56 +13,58 @@ namespace Lingva.BusinessLayer.Services
 {
     public class SubtitlesHandlerService : ISubtitlesHandlerService
     {
-        private readonly IGenericRepository<Subtitle> _subtitlesRepository;
-        private readonly IGenericRepository<SubtitleRow> _subtitlesRowRepository;
+        private readonly IUnitOfWorkParser _unitOfWork;
 
-        public SubtitlesHandlerService(IGenericRepository<Subtitle> subtitlesRepository,
-            IGenericRepository<SubtitleRow> subtitlesRowRepository)
+        public SubtitlesHandlerService(IUnitOfWorkParser unitOfWork)
         {
-            _subtitlesRepository = subtitlesRepository;
-            _subtitlesRowRepository = subtitlesRowRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public void AddSubtitles(SubtitlesRowDTO[] subDTO, string subtitlesName, int filmId)
+        public void AddSubtitles(SubtitleRow[] subDTO, string path, int? filmId)  
         {
-          
-            _subtitlesRepository.Create(new Subtitle()
+            _unitOfWork.Subtitles.Create(new Subtitle()
             {
-                Path = subtitlesName,
-                FilmId = filmId
+                Path = path,
+                FilmId = filmId,
+                LanguageName = "en"
             });
 
-            int subId = _subtitlesRepository.Get().FirstOrDefault(p => p.Path == subtitlesName).Id;
-            subDTO.ToList().ForEach(n => n.SubtitlesId = subId);
+            int subId = _unitOfWork.Subtitles.Get(p => p.Path == path).Id;
+            subDTO.ToList().ForEach(n => n.SubtitleId = subId);
 
-            _subtitlesRowRepository.CreateRange(subDTO.Select(n => new SubtitleRow()
+            var subtitles = subDTO.Select(n => new SubtitleRow()
             {
-                LineNumber = n.LineNumber,
                 Value = n.Value,
-                SubtitlesId = (int)n.SubtitlesId,
+                SubtitleId = (int)n.SubtitleId,
                 StartTime = n.StartTime,
                 EndTime = n.EndTime
-            }));
+            });
 
+            foreach (var sub in subDTO)
+            {
+                _unitOfWork.SubtitleRows.Create(sub);
+            }
+
+            _unitOfWork.Save();
         }
 
         public SubtitlesRowDTO[] Parse(Stream subtitles)
         {
             var encoding = DetectEncoding(subtitles);
 
-
             var parser = new SubtitlesParser.Classes.Parsers.SrtParser();
             List<SubtitleItem> items = parser.ParseStream(subtitles, encoding);
 
-            SubtitlesRowDTO[] subDTO = items.Select((n, index) => new SubtitlesRowDTO()
+            SubtitlesRowDTO[] subDTO = items.Select(n => new SubtitlesRowDTO()
             {
-                LineNumber = index + 1,
-                Value = String.Join(null, n.Lines),
+                Value = String.Join(" ", n.Lines),
                 StartTime = new TimeSpan(0, 0, 0, 0, n.StartTime),
                 EndTime = new TimeSpan(0, 0, 0, 0, n.EndTime),
             }).ToArray();
+
             return subDTO;
         }
+
         private Encoding DetectEncoding(Stream stream)
         {
             Ude.CharsetDetector cdet = new Ude.CharsetDetector();

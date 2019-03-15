@@ -6,7 +6,7 @@ namespace Lingva.BusinessLayer.DTO
 {
     public class SubtitlesRowDTO
     {
-        public int? SubtitlesId { get; set; }
+        public int? SubtitleId { get; set; }
 
         public int LineNumber { get; set; }
 

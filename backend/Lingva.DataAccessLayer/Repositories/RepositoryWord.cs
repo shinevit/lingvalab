@@ -11,49 +11,48 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositoryWord : IRepositoryWord
     {
-        private readonly DictionaryContext _context;
-
-        private DbSet<Word> _entities;
+        private DictionaryContext _context;
+        
+        private const string ERR_ARG_NULL_EXP = "Tried to insert null Word entity!";
 
         public RepositoryWord(DictionaryContext context)
         {
             _context = context;
-            _entities = context.Set<Word>();
         }
 
         public IQueryable<Word> GetList()
         {
-            return _entities.AsNoTracking();
+            return _context.Words.AsNoTracking();
         }
 
         public IQueryable<Word> GetList(int quantity, Expression<Func<Word, bool>> predicator)
         {
-            return _entities.Where(predicator).Take(quantity).AsNoTracking();
+            return _context.Words.Where(predicator).Take(quantity).AsNoTracking();
         }
 
         public Word Get(object name)
         {
-            return _entities.Find(name.ToString());
+            return _context.Words.Find(name.ToString());
         }
 
         public Word Get(Expression<Func<Word, bool>> predicator)
         {
-            return _entities.Where(predicator).FirstOrDefault();
+            return _context.Words.Where(predicator).FirstOrDefault();
         }
 
         public void Create(Word entity)
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("Tried to insert null entity!");
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
             }
 
-            _entities.Add(entity);
+            _context.Words.Add(entity);
         }
 
         public void Update(Word entity)
         {
-            _entities.Attach(entity);
+            _context.Words.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
 
@@ -61,9 +60,9 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             if (_context.Entry(entity).State == EntityState.Detached)
             {
-                _entities.Attach(entity);
+                _context.Words.Attach(entity);
             }
-            _entities.Remove(entity);
+            _context.Words.Remove(entity);
         }
     }
 }

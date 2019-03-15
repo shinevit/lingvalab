@@ -13,16 +13,21 @@ namespace Lingva.DataAccessLayer.Entities
 
         [Required]
         public int UserId { get; set; }
+
         [Required]
         public string WordName { get; set; }
+
         [Required]
         [StringLength(200)]
         public string Translation { get; set; }
+
         [Required]
         [StringLength(3)]
         public string LanguageName { get; set; }
+
         [StringLength(200)]
         public string Context { get; set; }
+
         public string Picture { get; set; }
     }
 }

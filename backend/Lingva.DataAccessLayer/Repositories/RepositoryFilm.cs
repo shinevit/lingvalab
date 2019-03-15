@@ -1,5 +1,6 @@
 ﻿using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,44 +11,57 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositoryFilm : IRepositoryFilm
     {
+        private DictionaryContext _context;
+
+        private const string ERR_ARG_NULL_EXP = "Tried to insert null Film entity!";
         public RepositoryFilm(DictionaryContext context)
         {
-
+            _context = context;
         }
-
-        public void Create(Film entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Film entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Film Get(object id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Film Get(Expression<Func<Film, bool>> predicator)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public IQueryable<Film> GetList()
         {
-            throw new NotImplementedException();
+            return _context.Films.AsNoTracking();
         }
 
         public IQueryable<Film> GetList(int quantity, Expression<Func<Film, bool>> predicator)
         {
-            throw new NotImplementedException();
+            return _context.Films.Where(predicator).Take(quantity).AsNoTracking();
+        }
+
+        public Film Get(object id)
+        {
+            return _context.Films.Find((int)id);
+        }
+
+        public Film Get(Expression<Func<Film, bool>> predicator)
+        {
+            return _context.Films.Where(predicator).FirstOrDefault();
+        }
+
+        public void Create(Film entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
+            }
+
+            _context.Films.Add(entity);
         }
 
         public void Update(Film entity)
         {
-            throw new NotImplementedException();
+            _context.Films.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(Film entity)
+        {
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _context.Films.Attach(entity);
+            }
+            _context.Films.Remove(entity);
         }
     }
 }

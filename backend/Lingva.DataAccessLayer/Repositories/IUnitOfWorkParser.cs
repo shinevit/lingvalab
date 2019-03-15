@@ -8,6 +8,6 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         IRepositorySubtitle Subtitles { get; }
         IRepositorySubtitleRow SubtitleRows { get; }
-        IRepositoryWord Words { get; }
+        IRepositoryParserWord Words { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Lingva.BusinessLayer.DTO;
+using Lingva.DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ namespace Lingva.BusinessLayer.Contracts
 {
     public interface ISubtitlesHandlerService
     {
-        void AddSubtitles(SubtitlesRowDTO[] subDTO, string subtitlesName, int filmId);
-        SubtitlesRowDTO[] Parse(Stream subtitles);
+        void AddSubtitles(SubtitlesRowDTO[] subDTO, string path, int? filmId);
+        SubtitleRow[] Parse(Stream subtitles);
     }
 }

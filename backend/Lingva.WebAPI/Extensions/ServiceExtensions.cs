@@ -34,25 +34,24 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
-            services.AddSingleton<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
-            services.AddSingleton<IUnitOfWorkParser, UnitOfWorkParser>();
+            services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
+            services.AddScoped<IUnitOfWorkParser, UnitOfWorkParser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
-            //services.AddSingleton<RepositoryWord>();
-            //services.AddSingleton<RepositoryDictionaryRecord>();
-
-            //services.AddScoped<IRepositoryDictionaryRecord, RepositoryDictionaryRecord>();
             services.AddScoped<IRepositoryWord, RepositoryWord>();
+            services.AddScoped<IRepositorySimpleEnWord, RepositorySimpleEnWord>();
+            services.AddScoped<IRepositoryDictionaryEnWord, RepositoryDictionaryEnWord>();
+            
+            services.AddScoped<IRepositoryFilm, RepositoryFilm>();
             services.AddScoped<IRepositorySubtitle, RepositorySubtitle>();
             services.AddScoped<IRepositorySubtitleRow, RepositorySubtitleRow>();
-            services.AddScoped<IRepositoryFilm, RepositoryFilm>();
-        }
+            services.AddScoped<IRepositoryParserWord, RepositoryParserWord>();
 
-        public static void ConfigureLoggerService(this IServiceCollection services)
-        {
-            //services.AddSingleton<ILoggerFactory, LoggerManager>();
+            services.AddScoped<IRepositoryRole, RepositoryRole>();
+            services.AddScoped<IRepositoryGroup, RepositoryGroup>();
+            services.AddScoped<IRepositoryEvent, RepositoryEvent>();
         }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)

@@ -13,47 +13,46 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         private readonly DictionaryContext _context;
 
-        private DbSet<DictionaryRecord> _entities;
+        private const string ERR_ARG_NULL_EXP = "Tried to insert null DictionaryRecord entity!";
 
         public RepositoryDictionaryRecord(DictionaryContext context)
         {
             _context = context;
-            _entities = context.Set<DictionaryRecord>();
         }
 
         public IQueryable<DictionaryRecord> GetList()
         {
-            return _entities.AsNoTracking();
+            return _context.Dictionary.AsNoTracking();
         }
 
         public IQueryable<DictionaryRecord> GetList(int quantity, Expression<Func<DictionaryRecord, bool>> predicator)
         {
-            return _entities.Where(predicator).Take(quantity).AsNoTracking();
+            return _context.Dictionary.Where(predicator).Take(quantity).AsNoTracking();
         }
 
         public DictionaryRecord Get(object id)
         {
-            return _entities.Find((int)id);
+            return _context.Dictionary.Find((int)id);
         }
 
         public DictionaryRecord Get(Expression<Func<DictionaryRecord, bool>> predicator)
         {
-            return _entities.Where(predicator).FirstOrDefault();
+            return _context.Dictionary.Where(predicator).FirstOrDefault();
         }
 
         public void Create(DictionaryRecord entity)
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("Tried to insert null entity!");
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
             }
 
-            _entities.Add(entity);
+            _context.Dictionary.Add(entity);
         }
 
         public void Update(DictionaryRecord entity)
         {
-            _entities.Attach(entity);
+            _context.Dictionary.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
 
@@ -61,9 +60,9 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             if (_context.Entry(entity).State == EntityState.Detached)
             {
-                _entities.Attach(entity);
+                _context.Dictionary.Attach(entity);
             }
-            _entities.Remove(entity);
+            _context.Dictionary.Remove(entity);
         }
     }
 }

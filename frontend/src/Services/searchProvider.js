@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import config from 'react-global-configuration';
 
 class SearchProvider extends Component {
     
@@ -7,11 +8,11 @@ class SearchProvider extends Component {
         requestStatus: undefined                  
     }       
     
-    GetSearchResults = async (event) => {                
+    GetSearchResults = async (event) => {
+        const URL = config.get('backendAPIUrlEvents');                
         const groupName = event.target.elements.groupName.value;               
-        const request = await fetch(`https://localhost:44341/api/groupcollection${groupName}`);                       
-        const data = await request.json();
-        
+        const request = await fetch(`${URL}${groupName}`);                       
+        const data = await request.json();        
 
         this.state = {
             groups : data,

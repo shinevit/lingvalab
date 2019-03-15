@@ -3,6 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { NavLink } from 'react-router-dom';
 
 library.add(faVideo);
 
@@ -18,8 +19,10 @@ class TopGroupsList extends Component {
             (element, elementKey) => {
                 groups.push(
                     <ListGroup.Item key={elementKey}>
-                        {element.groupName}<br/>
-                        <FontAwesomeIcon icon="video" /> {element.movieName}
+                        <NavLink to={`/events/${element.id}`}>
+                            {element.groupName}<br/>
+                            <FontAwesomeIcon icon="video" /> {element.movieName}
+                        </NavLink>
                     </ListGroup.Item>
                 )
                 return true;

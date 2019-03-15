@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import config from 'react-global-configuration';
 
 class EventProvider extends Component {
     
@@ -7,10 +8,9 @@ class EventProvider extends Component {
         requestStatus: undefined                  
     }       
     
-    GetSearchResults = async (event = null) => {        
-        //const groupName = event.target.elements.groupName.value;
+    GetSearchResults = async (event = null) => {
         let request;
-        let url = `https://localhost:44341/api/groupcollection`;
+        let url = config.get('backendAPIUrlEvents');        
 
         if (event === null) {
             request = await fetch(url);

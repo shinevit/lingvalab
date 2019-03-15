@@ -1,4 +1,4 @@
-﻿using Lingva.BusinessLayer.Contracts;
+﻿using Lingva.BusinessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

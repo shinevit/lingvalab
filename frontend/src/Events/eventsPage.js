@@ -6,14 +6,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import EventProvider from '../Services/eventProvider';
 import VideoPlayer from '../Components/videoPlayer';
-
-const dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                     nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                     reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                     deserunt mollit anim id est laborum.`;
+import OMDBImageGetter from '../Services/OMDBImageGetter';
 
 const dummyImage250 = "https://via.placeholder.com/250x250.png";
 
@@ -47,18 +40,7 @@ class MultipleEvents extends Component {
         response.data.map(
             (element, elementKey) => {
                 groups.push(
-                    <Col lg={4} key={elementKey}>                        
-                        <NavLink to={`/events/${element.id}`}>
-                            <h4>{element.title}</h4>
-                            <img 
-                                src={dummyImage250}
-                                alt={element.groupName} 
-                            />
-                        </NavLink>                        
-                        <p> 
-                            {element.description}
-                        </p>
-                    </Col>
+                    <EventWindow key={elementKey} data={element} />
                 )
                 return true;
             }
@@ -79,6 +61,51 @@ class MultipleEvents extends Component {
                 {this.state.events}                
             </div>
         )
+    }
+}
+
+class EventWindow extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            movieName: this.props.data.title,
+            posterURL: dummyImage250,
+            id: this.props.data.id,
+            description: this.props.data.description
+        }
+        
+        this.GetPoster = this.GetPoster.bind(this);        
+    }
+
+    GetPoster = async () => {        
+        let getter = new OMDBImageGetter();
+        let response = await getter.GetImageURLByName(this.state.movieName);            
+
+        this.setState({
+            posterURL: response
+        });
+    }
+
+    componentDidMount() {
+        this.GetPoster(this.state.movieName);
+    }
+
+    render() {
+        return(
+            <Col lg={4}>                        
+                <NavLink to={`/events/${this.state.id}`}>
+                    <h4>{this.state.title}</h4>
+                    <img 
+                        src={this.state.posterURL}
+                        alt={this.state.title} 
+                    />
+                </NavLink>                        
+                <p> 
+                    {this.props.data.description}
+                </p>
+            </Col>
+        );
     }
 }
 
@@ -115,7 +142,7 @@ class SingleEvent extends Component {
                             Our Movie
                         </h4>
                         <h5>
-                            Santa Barbara
+                            {response.data.title}
                         </h5>
                         <VideoPlayer />
                     </Col>

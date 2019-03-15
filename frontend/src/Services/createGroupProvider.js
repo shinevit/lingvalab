@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import config from 'react-global-configuration';
 
 class CreateGroupProvider extends Component {
     
@@ -8,8 +9,9 @@ class CreateGroupProvider extends Component {
     }
 
     AddGroup = async (event) => {        
-        const inputGroupName = event.target.elements.groupName.value;        
-        const apiUrl = "htps://localhost:44341/api/groupcollection";
+        const inputGroupName = event.target.elements.groupName.value;
+        const groupDescription = event.target.elements.description.value        
+        const apiUrl = config.get('backendAPIUrlEvents');
 
         var response = await fetch(apiUrl, {
             method: 'POST',
@@ -18,9 +20,12 @@ class CreateGroupProvider extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name: inputGroupName,                
+                title: inputGroupName,
+                description: groupDescription                
             })
         })
+
+        console.log(response);
 
         const data = await response.json();
 

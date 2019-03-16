@@ -10,20 +10,20 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         private static DictionaryContext _context;
 
-        private readonly IRepository<DictionaryRecord> _dictionaryRecords;
-        private readonly IRepository<Word> _words;
-
         private bool disposed = false;
 
-        public UnitOfWorkDictionary(DictionaryContext context, IRepository<Word> words, IRepository<DictionaryRecord> dictionaryRecords)
+        private readonly IRepositoryDictionaryRecord _dictionaryRecords;
+        private readonly IRepositoryWord _words;
+
+        public UnitOfWorkDictionary(DictionaryContext context, IRepositoryWord words, IRepositoryDictionaryRecord dictionaryRecords)
         {
             _context = context;
             _dictionaryRecords = dictionaryRecords;
             _words = words;
         }
 
-        public IRepository<DictionaryRecord> DictionaryRecords { get => _dictionaryRecords; }
-        public IRepository<Word> Words { get => _words; }
+        public IRepositoryDictionaryRecord DictionaryRecords { get => _dictionaryRecords; }
+        public IRepositoryWord Words { get => _words; }
 
         public void Save()
         {

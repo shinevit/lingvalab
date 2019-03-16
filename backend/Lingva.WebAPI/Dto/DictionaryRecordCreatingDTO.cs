@@ -7,7 +7,7 @@ namespace Lingva.WebAPI.Dto
 {
     public class DictionaryRecordCreatingDTO
     {
-        public int User { get; set; }
+        public int UserId { get; set; }
         public string Word { get; set; }
         public string Translation { get; set; }
         public string Language { get; set; }

@@ -27,7 +27,7 @@ namespace Lingva.DataAccessLayer.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

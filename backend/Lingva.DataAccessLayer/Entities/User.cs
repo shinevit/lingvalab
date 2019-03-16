@@ -14,11 +14,19 @@ namespace Lingva.DataAccessLayer.Entities
 
         [Required]
         [StringLength(50)]
-        public string Login { get; set; }
-
-        public string Password { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Username { get; set; }
+        [MaxLength(16)]
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual IEnumerable<DictionaryRecord> UserDictionary { get; set; }
+        public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
+
+        public User()
+        {
+            UserDictionaryRecords = new List<DictionaryRecord>();
+        }
     }
 }

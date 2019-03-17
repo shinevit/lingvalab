@@ -11,13 +11,11 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositoryDictionaryRecord : Repository<DictionaryRecord>, IRepositoryDictionaryRecord
     {
-        private readonly DictionaryContext _context;
-
         private const string ERR_ARG_NULL_EXP = "Tried to insert null DictionaryRecord entity!";
 
         public RepositoryDictionaryRecord(DictionaryContext context)
+            :base(context)
         {
-            _context = context;
         }
 
         public IQueryable<DictionaryRecord> GetList()

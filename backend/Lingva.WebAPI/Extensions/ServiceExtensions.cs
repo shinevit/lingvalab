@@ -14,6 +14,8 @@ using Lingva.BusinessLayer.Contracts;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
+using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
+using Lingva.WebAPI.Helpers;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -58,6 +60,7 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositorySubtitle, RepositorySubtitle>();
             services.AddScoped<IRepositorySubtitleRow, RepositorySubtitleRow>();
             services.AddScoped<IRepositoryParserWord, RepositoryParserWord>();
+            services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
 
             services.AddScoped<IRepositoryRole, RepositoryRole>();
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();

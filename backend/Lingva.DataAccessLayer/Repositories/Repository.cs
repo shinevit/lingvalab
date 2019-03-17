@@ -11,8 +11,8 @@ namespace Lingva.DataAccessLayer.Repositories
     public abstract class Repository<T> : IRepository<T> 
         where T : class
     {
-        protected readonly DictionaryContext _context;
-        protected readonly DbSet<T> _entities;
+        protected DictionaryContext _context;
+        protected DbSet<T> _entities;
 
         public Repository(DictionaryContext context)
         {

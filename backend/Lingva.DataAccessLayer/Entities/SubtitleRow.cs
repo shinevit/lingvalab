@@ -15,6 +15,8 @@ namespace Lingva.DataAccessLayer.Entities
         [StringLength(200)]
         public string Value { get; set; }
 
+        public int LineNumber { get; set; }
+
         public int? SubtitleId { get; set; }
 
         public TimeSpan StartTime { get; set; }

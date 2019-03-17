@@ -20,7 +20,7 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork = unitOfWork;
         }
 
-        public void AddSubtitles(SubtitleRow[] subDTO, string path, int? filmId)  
+        public void AddSubtitles(SubtitlesRowDTO[] subDTO, string path, int? filmId)  
         {
             _unitOfWork.Subtitles.Create(new Subtitle()
             {
@@ -42,7 +42,7 @@ namespace Lingva.BusinessLayer.Services
 
             foreach (var sub in subDTO)
             {
-                _unitOfWork.SubtitleRows.Create(sub);
+                _unitOfWork.SubtitleRows.Create((SubtitleRow)sub);
             }
 
             _unitOfWork.Save();

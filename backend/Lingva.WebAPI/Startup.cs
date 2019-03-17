@@ -14,8 +14,9 @@ using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Helpers;
 using Lingva.BusinessLayer.Models.Enums;
-
 using Lingva.DataAccessLayer.InitializeWithTestData;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Lingva.WebAPI
 {
     public class Startup
@@ -58,8 +59,7 @@ namespace Lingva.WebAPI
           
             services.AddSingleton<IRepository<Word>, RepositoryWord>();
             services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
-            services.AddScoped<ISubtitlesHandler, SubtitlesHandlerService>();
-            // services.AddSingleton<IDinnerRepository, DinnerRepository>(); // Todo: Folow this rule for Repositories
+            services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

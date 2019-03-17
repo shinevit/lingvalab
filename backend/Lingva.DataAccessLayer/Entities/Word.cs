@@ -21,8 +21,6 @@ namespace Lingva.DataAccessLayer.Entities
         [ForeignKey("OriginalPhraseName")]
         public virtual IEnumerable<DictionaryRecord> DictionaryRecords { get; set; }
 
-        public virtual Language Language { get; set; }
-
         public Word()
         {
             DictionaryRecords = new List<DictionaryRecord>();

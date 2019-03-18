@@ -22,9 +22,12 @@ namespace Lingva.WebAPI.Extensions
     {
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
-            string connection = config.GetConnectionString("LingvaConnection");
+            string configStringValue = config.GetConnectionString("LingvaConnection");
+            string configVariableName = configStringValue.GetVariableName();
+            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
+
             services.AddDbContext<DictionaryContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(connection));
+                options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue));
         }
 
         public static void ConfigureCors(this IServiceCollection services)

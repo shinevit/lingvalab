@@ -21,11 +21,11 @@ namespace Lingva.BusinessLayer.Services
 
         public IEnumerable<ParserWord> GetAll()
         {
-            return _unitOfWork.Words.GetList();
+            return _unitOfWork.ParserWords.GetList();
         }
         public ParserWord GetParserWordByName(string name)
         {
-            ParserWord word = _unitOfWork.Words.Get(name);
+            ParserWord word = _unitOfWork.ParserWords.Get(name);
             return word;
         }
 
@@ -81,7 +81,7 @@ namespace Lingva.BusinessLayer.Services
 
         public bool ExistsWord(string wordName)
         {
-            return _unitOfWork.Words.Get(c => c.Name == wordName) != null;
+            return _unitOfWork.ParserWords.Get(c => c.Name == wordName) != null;
         }
 
         private bool TryParseWords(string line, out string[] words)
@@ -115,7 +115,7 @@ namespace Lingva.BusinessLayer.Services
                 SubtitleRowId = subtitleRowId
             };
 
-            _unitOfWork.Words.Create(newWord);
+            _unitOfWork.ParserWords.Create(newWord);
             _unitOfWork.Save();
 
             return true;

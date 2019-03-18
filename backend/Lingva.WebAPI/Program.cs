@@ -23,7 +23,8 @@ namespace Lingva.WebAPI
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://localhost:4000")
+                .UseUrls("http://localhost:5000")
+                .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .Build();
     }
 }

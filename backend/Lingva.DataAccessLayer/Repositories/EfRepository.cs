@@ -9,8 +9,8 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class EfRepository<TEntity>:IGenericRepository<TEntity> where TEntity : class
     {
-        DictionaryContext _context;
-        DbSet<TEntity> _dbSet;
+        protected DictionaryContext _context;
+        protected DbSet<TEntity> _dbSet;
 
         public EfRepository(DictionaryContext context)
         {

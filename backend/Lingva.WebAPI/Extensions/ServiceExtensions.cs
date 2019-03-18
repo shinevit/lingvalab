@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
 using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
+using Lingva.DataAccessLayer.InitializeWithTestData;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -24,6 +25,7 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
             string connection = config.GetConnectionString("LingvaConnection");
+
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(connection));
         }
@@ -44,10 +46,13 @@ namespace Lingva.WebAPI.Extensions
         {
             services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
             services.AddScoped<IUnitOfWorkParser, UnitOfWorkParser>();
+            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EfRepository<>));
+
             services.AddScoped<IRepositoryWord, RepositoryWord>();
             services.AddScoped<IRepositoryDictionaryRecord, RepositoryDictionaryRecord>();
             services.AddScoped<IRepositoryUser, RepositoryUser>();
@@ -122,7 +127,5 @@ namespace Lingva.WebAPI.Extensions
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
-
     }
-
 }

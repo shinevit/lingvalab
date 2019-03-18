@@ -9,14 +9,14 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryRole: IRepositoryRole
+    public class RepositoryRole: Repository<Role>, IRepositoryRole
     {
         private DictionaryContext _context;
 
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Role entity!";
         public RepositoryRole(DictionaryContext context)
+            :base(context)
         {
-            _context = context;
         }
 
         public IQueryable<Role> GetList()

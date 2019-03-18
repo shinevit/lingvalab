@@ -28,7 +28,7 @@ namespace Lingva.DataAccessLayer.Repositories
             return _context.Dictionary.Where(predicator).Take(quantity).AsNoTracking();
         }
 
-        public DictionaryRecord Get(object id)
+        public override DictionaryRecord Get(object id)
         {
             return _context.Dictionary.Find((int)id);
         }

@@ -36,12 +36,10 @@ namespace Lingva.WebAPI
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(EfRepository<>));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.ConfigureMVC();
 
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
-            services.AddTransient<ISubtitlesHandlerService, SubtitlesHandlerService>();
             services.AddTransient<TranslaterGoogleService>();
             services.AddTransient<TranslaterYandexService>();
             services.AddTransient<Func<TranslaterServices, ITranslaterService>>(serviceProvider => key =>
@@ -56,10 +54,8 @@ namespace Lingva.WebAPI
                         return null;
                 }
             });
-          
-            services.AddSingleton<IRepository<Word>, RepositoryWord>();
-            services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
+            services.AddScoped<IWordService, WordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +73,7 @@ namespace Lingva.WebAPI
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-
+            
             DbInitializer.InitializeParserWords(app);
         }
        

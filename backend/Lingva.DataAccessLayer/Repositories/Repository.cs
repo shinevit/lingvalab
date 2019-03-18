@@ -47,6 +47,11 @@ namespace Lingva.DataAccessLayer.Repositories
                 throw new ArgumentNullException("Tried to insert null entity!");
             }
 
+            if (_entities == null)
+            {
+                throw new ArgumentNullException("Tried to work with null entity set!");
+            }
+
             _entities.Add(entity);
         }
 

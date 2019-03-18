@@ -9,15 +9,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositorySubtitle : IRepositorySubtitle
+    public class RepositorySubtitle : Repository<Subtitle>, IRepositorySubtitle
     {
-        private DictionaryContext _context;
-
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Subtitle entity!";
 
         public RepositorySubtitle(DictionaryContext context)
+            :base(context)
         {
-            _context = context;
         }
 
         public IQueryable<Subtitle> GetList()

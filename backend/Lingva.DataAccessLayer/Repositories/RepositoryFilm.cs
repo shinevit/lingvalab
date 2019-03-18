@@ -9,14 +9,13 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryFilm : IRepositoryFilm
+    public class RepositoryFilm : Repository<Film>, IRepositoryFilm 
     {
-        private DictionaryContext _context;
-
+        protected DictionaryContext _context;
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Film entity!";
         public RepositoryFilm(DictionaryContext context)
+           :base(context)
         {
-            _context = context;
         }
         
         public IQueryable<Film> GetList()
@@ -29,7 +28,7 @@ namespace Lingva.DataAccessLayer.Repositories
             return _context.Films.Where(predicator).Take(quantity).AsNoTracking();
         }
 
-        public Film Get(object id)
+        public override Film Get(object id)
         {
             return _context.Films.Find((int)id);
         }

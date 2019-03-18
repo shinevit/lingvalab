@@ -9,15 +9,15 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryWord : IRepositoryWord
+    public class RepositoryWord : Repository<Word>, IRepositoryWord
     {
         private DictionaryContext _context;
         
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Word entity!";
 
         public RepositoryWord(DictionaryContext context)
+            :base(context)
         {
-            _context = context;
         }
 
         public IQueryable<Word> GetList()

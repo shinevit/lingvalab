@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryDictionaryEnWord : IRepositoryDictionaryEnWord
+    public class RepositoryDictionaryEnWord : Repository<DictionaryEnWord>, IRepositoryDictionaryEnWord
     {
+        public RepositoryDictionaryEnWord(DictionaryContext context)
+            :base(context)
+        {
+        }
         public void Create(DictionaryEnWord entity)
         {
             throw new NotImplementedException();

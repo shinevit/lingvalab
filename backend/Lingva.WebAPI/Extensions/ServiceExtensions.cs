@@ -24,10 +24,12 @@ namespace Lingva.WebAPI.Extensions
     {
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
-            string connection = config.GetConnectionString("LingvaConnection");
+            string configStringValue = config.GetConnectionString("LingvaConnection");
+            string configVariableName = configStringValue.GetVariableName();
+            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
 
             services.AddDbContext<DictionaryContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(connection));
+                options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue));
         }
 
         public static void ConfigureCors(this IServiceCollection services)
@@ -60,7 +62,7 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositoryWord, RepositoryWord>();
             services.AddScoped<IRepositorySimpleEnWord, RepositorySimpleEnWord>();
             services.AddScoped<IRepositoryDictionaryEnWord, RepositoryDictionaryEnWord>();
-            
+
             services.AddScoped<IRepositoryFilm, RepositoryFilm>();
             services.AddScoped<IRepositorySubtitle, RepositorySubtitle>();
             services.AddScoped<IRepositorySubtitleRow, RepositorySubtitleRow>();

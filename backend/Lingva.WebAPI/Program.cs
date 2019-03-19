@@ -26,5 +26,7 @@ namespace Lingva.WebAPI
                 .UseUrls("http://localhost:5000")
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .Build();
+
     }
+
 }

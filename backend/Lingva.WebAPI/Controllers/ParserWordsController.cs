@@ -18,12 +18,12 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class ParserWordsController : ControllerBase
     {
-        private readonly IWordService _wordService;
+        private readonly IParserWordService _wordService;
         private readonly IMapper _mapper;
 
-        private const string ERR_ID_NOT_FOUND = "There is no ParserWord object with id = ";
+        private const string ERR_ID_NOT_FOUND = "There is no ParserWord object with Name = ";
 
-        public ParserWordsController(IWordService wordService, IMapper mapper)
+        public ParserWordsController(IParserWordService wordService, IMapper mapper)
         {
             _wordService = wordService;
             _mapper = mapper;
@@ -31,30 +31,30 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/parser/car
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetWord(string name) 
+        public async Task<IActionResult> GetParserWord(string name) 
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            ParserWord word = _wordService.GetParserWordByName(name);
+            ParserWord word = _wordService.GetParserWord(name);
             
             if (word == null)
             {
-                return NotFound(ERR_ID_NOT_FOUND + $"{name}");
+                return NotFound(ERR_ID_NOT_FOUND + $"\"{name}>\"");
             }
 
-            return Ok(_mapper.Map<WordDTO>(word));
+            return Ok(_mapper.Map<WordParserDTO>(word));
         }
 
         // GET: api/parser
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ParserWord>>> GetParserWords()
+        public async Task<ActionResult<IEnumerable<ParserWord>>> GetAllParserWords()
         {
-            var parserWords = _wordService.GetAll();
+            var parserWords = _wordService.GetAllParserWords();
 
-            return Ok(_mapper.Map<IEnumerable<WordDTO>>(parserWords));
+            return Ok(_mapper.Map<IEnumerable<WordParserDTO>>(parserWords));
         }
 
         // PUT: api/parser/en/3

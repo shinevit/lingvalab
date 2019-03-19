@@ -35,6 +35,11 @@ namespace Lingva.WebAPI
                 .ForMember("Value", opt => opt.MapFrom(c => c.Value))
                 .ForMember("Language", opt => opt.MapFrom(c => c.LanguageName));
 
+            CreateMap<ParserWord, WordParserDTO>()
+                .ForMember("Name", opt => opt.MapFrom(w => w.Name))
+                .ForMember("LanguageName", opt => opt.MapFrom(w => w.LanguageName))
+                .ForMember("SubtitleRowId", opt => opt.MapFrom(w => w.SubtitleRowId));
+
             CreateMap<User, AuthenticateUserDto>();
             CreateMap<AuthenticateUserDto, User>();
         }

@@ -55,7 +55,7 @@ namespace Lingva.WebAPI
                 }
             });
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
-            services.AddScoped<IWordService, WordService>();
+            services.AddScoped<IParserWordService, ParserWordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

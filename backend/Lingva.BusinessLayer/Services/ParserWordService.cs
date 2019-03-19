@@ -4,29 +4,43 @@ using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Lingva.BusinessLayer.Services
 {
-    public class WordService: IWordService
+    public class ParserWordService: IParserWordService
     {
         private readonly IUnitOfWorkParser _unitOfWork;
 
         private readonly string[] _separators = { " ", ",", ".", "!", "?", ";", ":", "<i>", "<h>" };
 
-        public WordService(IUnitOfWorkParser unitOfWork)
+        public ParserWordService(IUnitOfWorkParser unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<ParserWord> GetAll()
+        public ParserWord GetParserWordWhere(Expression<Func<ParserWord, bool>> predicate)
+        {
+            return _unitOfWork.ParserWords.Get(predicate);
+        }
+
+        public ParserWord GetParserWord(string name)
+        {
+            if (String.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            ParserWord parserWord = _unitOfWork.ParserWords.Get(name);
+
+            return parserWord;
+        }
+
+        public IQueryable<ParserWord> GetAllParserWords()
         {
             return _unitOfWork.ParserWords.GetList();
-        }
-        public ParserWord GetParserWordByName(string name)
-        {
-            ParserWord word = _unitOfWork.ParserWords.Get(name);
-            return word;
         }
 
         public bool AddWordsFromRow(SubtitleRow row)
@@ -48,7 +62,7 @@ namespace Lingva.BusinessLayer.Services
 
                 foreach (string word in words)
                 {
-                    AddWord(word, language, row.Id );
+                    AddParserWord(word, language, row.Id );
                 }
             }
             
@@ -72,16 +86,67 @@ namespace Lingva.BusinessLayer.Services
 
                 foreach (string word in words)
                 {
-                    AddWord(word, language, rowId);
+                    AddParserWord(word, language, rowId);
                 }
             }
 
             return add;
         }
 
-        public bool ExistsWord(string wordName)
+        public bool ExistsParserWord(string name)
         {
-            return _unitOfWork.ParserWords.Get(c => c.Name == wordName) != null;
+            if (String.IsNullOrEmpty(name))
+            {
+                return false;
+            }
+
+            return _unitOfWork.ParserWords.Get(c => c.Name == name) != null;
+        }
+
+       
+
+        public void AddParserWord(ParserWord word)
+        {
+            AddParserWord(word.Name);
+
+            if (!ExistsParserWord(word.Name))
+            {
+                _unitOfWork.ParserWords.Create(word);
+                _unitOfWork.Save();
+            }
+        }
+
+        public void UpdateParserWord(ParserWord parserWord)
+        {
+            if(parserWord == null || String.IsNullOrEmpty(parserWord.Name))
+            {
+                return;
+            }
+
+            ParserWord wordToUpdate = _unitOfWork.ParserWords.Get(parserWord.Name);
+
+            wordToUpdate.LanguageName = parserWord.LanguageName;
+            wordToUpdate.SubtitleRowId = parserWord.SubtitleRowId;
+            _unitOfWork.ParserWords.Update(wordToUpdate);
+            _unitOfWork.Save();
+        }
+
+        public void DeleteParserWord(string name)
+        {
+            if(String.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
+            ParserWord parserWord = _unitOfWork.ParserWords.Get(name);
+
+            if (parserWord == null)
+            {
+                return;
+            }
+
+            _unitOfWork.ParserWords.Delete(parserWord);
+            _unitOfWork.Save();
         }
 
         private bool TryParseWords(string line, out string[] words)
@@ -101,9 +166,9 @@ namespace Lingva.BusinessLayer.Services
 
             return true;
         }
-        private bool AddWord(string word, string language = "en", int? subtitleRowId = null)
+        private bool AddParserWord(string word, string language = "en", int? subtitleRowId = null)
         {
-            if (ExistsWord(word))
+            if (ExistsParserWord(word))
             {
                 return false;
             }

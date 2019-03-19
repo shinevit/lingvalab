@@ -30,7 +30,6 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public ParserWord Get(object name)
         {
-            //ParserWord result = _words.Find(name.ToString());
             var result = _context.ParserWords.Where(w => w.Name == name.ToString()).Select(w => w).FirstOrDefault();
 
             return result;

@@ -18,12 +18,14 @@ function login(username, password) {
         userService.login(username, password)
             .then(
                 user => { 
-                    dispatch(success(user));
-                    history.push('/home ');                    
+                    dispatch(success(user));                     
+                    sessionStorage.userLoggedIn = true;
+                    window.location.assign(`/home`);                     
                 },
                 error => {
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
+                   
                 }
             );
     };
@@ -46,7 +48,7 @@ function register(user) {
             .then(
                 user => { 
                     dispatch(success());
-                    history.push('/login');
+                    window.location.assign(`/login`);  
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

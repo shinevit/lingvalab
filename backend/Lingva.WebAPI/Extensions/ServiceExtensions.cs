@@ -15,6 +15,7 @@ using Lingva.BusinessLayer.Contracts;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
+using Microsoft.IdentityModel.Protocols;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -25,7 +26,7 @@ namespace Lingva.WebAPI.Extensions
             string configStringValue = config.GetConnectionString("LingvaConnection");
             string configVariableName = configStringValue.GetVariableName();
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
-
+                       
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue));
         }

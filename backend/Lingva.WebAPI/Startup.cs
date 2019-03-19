@@ -70,7 +70,7 @@ namespace Lingva.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseCors("CorsPolicy"); 
             app.UseStaticFiles();
             app.UseHttpsRedirection();

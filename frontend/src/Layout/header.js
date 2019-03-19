@@ -26,6 +26,7 @@ class Header extends Component {
                 userLoggedIn: false
             });
             sessionStorage.userLoggedIn = false;
+            sessionStorage.user=null;
             this.props.layout.setState({
                 userLoggedIn: false
             });

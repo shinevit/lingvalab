@@ -54,7 +54,9 @@ namespace Lingva.WebAPI.Controllers
         {
             var parserWords = _wordService.GetAllParserWords();
 
-            return Ok(_mapper.Map<IEnumerable<WordParserDTO>>(parserWords));
+            IQueryable<WordParserDTO> wordsDto = _mapper.Map<IQueryable<WordParserDTO>>(parserWords);
+
+            return Ok(wordsDto);
         }
 
         // PUT: api/parser/en/3

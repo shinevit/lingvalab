@@ -42,40 +42,4 @@ namespace Lingva.DataAccessLayer.InitializeWithTestData
             context.Save();
         }
     }
-
-    //public class DbInitializer//: IDbInitializer
-    //{
-    //    IUnitOfWorkParser _unit;
-
-    //    public DbInitializer(IUnitOfWorkParser unit)
-    //    {
-    //        _unit = unit;
-    //    }
-    //    public void InitializeParserWords()
-    //    {
-    //        if (_unit.ParserWords.Any())
-    //        {
-    //            return;
-    //        }
-
-    //        var parserWords = new ParserWord[]
-    //        {
-    //            new ParserWord { Name = "car"},
-    //            new ParserWord { Name = "time"},
-    //            new ParserWord { Name = "beatiful"},
-    //            new ParserWord { Name = "flower"},
-    //            new ParserWord { Name = "clean"},
-    //            new ParserWord { Name = "rain"},
-    //            new ParserWord { Name = "table"},
-    //            new ParserWord { Name = "strong"},
-    //        };
-
-    //        foreach (ParserWord word in parserWords)
-    //        {
-    //            _unit.ParserWords.Create(word);
-    //        }
-
-    //        _unit.Save();
-    //    }
-    //}
 }

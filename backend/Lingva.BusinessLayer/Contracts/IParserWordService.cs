@@ -13,13 +13,15 @@ namespace Lingva.BusinessLayer.Contracts
 
         ParserWord GetParserWord(string name);
 
-        IQueryable<ParserWord> GetAllParserWords();
+        IEnumerable<ParserWord> GetAllParserWords();
 
-        bool AddWordsFromRow(SubtitleRow row);
+        bool AddParserWordsFromSubtitleRow(SubtitleRow row);
 
-        bool AddWordFromPhrase(string phrase, string language = "en", int? rowId = null);
+        bool AddParserWordsFromPhrase(string phrase, string language = "en", int? rowId = null);
 
-        void AddParserWord(ParserWord word);
+        bool AddParserWord(string word, string language = "en", int? subtitleRowId = null);
+
+        bool AddWord(ParserWord word);
 
         void UpdateParserWord(ParserWord parserWord);
 

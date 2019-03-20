@@ -18,56 +18,21 @@ namespace Lingva.DataAccessLayer.Repositories
         {
         }
 
-        public IQueryable<ParserWord> GetList()
-        {
-            return _context.ParserWords.AsNoTracking();
-        }
-
-        public IQueryable<ParserWord> GetList(int quantity, Expression<Func<ParserWord, bool>> predicator)
-        {
-            return _context.ParserWords.Where(predicator).Take(quantity).AsNoTracking();
-        }
-
-        public ParserWord Get(object name)
+        public override ParserWord Get(object name)
         {
             var result = _context.ParserWords.Where(w => w.Name == name.ToString()).Select(w => w).FirstOrDefault();
 
             return result;
         }
 
-        public ParserWord Get(Expression<Func<ParserWord, bool>> predicator)
-        {
-            return _context.ParserWords.Where(predicator).FirstOrDefault();
-        }
-
-        public void Create(ParserWord entity)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
-            }
-
-            _context.ParserWords.Add(entity);
-        }
-
-        public void Update(ParserWord entity)
-        {
-            _context.ParserWords.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
-        }
-
-        public void Delete(ParserWord entity)
-        {
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                _context.ParserWords.Attach(entity);
-            }
-            _context.ParserWords.Remove(entity);
-        }
-
         public bool Any()
         {
             return _context.ParserWords.Any();
+        }
+
+        public bool Exists(string wordName)
+        {
+            return _context.ParserWords.Any(w => w.Name == wordName);
         }
     }
 }

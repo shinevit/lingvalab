@@ -7,6 +7,8 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public interface IRepositoryParserWord : IRepository<ParserWord>
     {
+        bool Exists(string wordName);
+
         bool Any();
     }
 }

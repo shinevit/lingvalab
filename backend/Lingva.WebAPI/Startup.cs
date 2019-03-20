@@ -70,10 +70,10 @@ namespace Lingva.WebAPI
 
             app.UseCors("CorsPolicy"); // TODO: add required
             app.UseStaticFiles();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-
+            
             DbInitializer.InitializeParserWords(app);
         }
        

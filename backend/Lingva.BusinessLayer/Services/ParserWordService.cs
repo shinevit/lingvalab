@@ -38,12 +38,12 @@ namespace Lingva.BusinessLayer.Services
             return parserWord;
         }
 
-        public IQueryable<ParserWord> GetAllParserWords()
+        public IEnumerable<ParserWord> GetAllParserWords()
         {
             return _unitOfWork.ParserWords.GetList();
         }
 
-        public bool AddWordsFromRow(SubtitleRow row)
+        public bool AddParserWordsFromSubtitleRow(SubtitleRow row)
         {
             if (row == null || string.IsNullOrEmpty(row.Value))
             {
@@ -69,7 +69,7 @@ namespace Lingva.BusinessLayer.Services
             return add;
         }
 
-        public bool AddWordFromPhrase(string phrase, string language = "en", int? rowId = null)
+        public bool AddParserWordsFromPhrase(string phrase, string language = "en", int? rowId = null)
         {
             if (string.IsNullOrEmpty(phrase))
             {
@@ -92,28 +92,34 @@ namespace Lingva.BusinessLayer.Services
 
             return add;
         }
-
-        public bool ExistsParserWord(string name)
+       
+        public bool AddParserWord(string word, string language = "en", int? subtitleRowId = null)
         {
-            if (String.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(word) || ExistsParserWord(word))
             {
                 return false;
             }
 
-            return _unitOfWork.ParserWords.Get(c => c.Name == name) != null;
+            ParserWord newWord = new ParserWord
+            {
+                Name = word,
+                LanguageName = language,
+                SubtitleRowId = subtitleRowId
+            };
+
+            return AddWord(newWord);
         }
 
-       
-
-        public void AddParserWord(ParserWord word)
+        public bool AddWord(ParserWord word)
         {
-            AddParserWord(word.Name);
-
-            if (!ExistsParserWord(word.Name))
+            if (word == null || string.IsNullOrEmpty(word.Name) || ExistsParserWord(word.Name))
             {
-                _unitOfWork.ParserWords.Create(word);
-                _unitOfWork.Save();
+                return false;
             }
+            
+            _unitOfWork.ParserWords.Create(word);
+            _unitOfWork.Save();
+            return true;
         }
 
         public void UpdateParserWord(ParserWord parserWord)
@@ -149,6 +155,16 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork.Save();
         }
 
+        public bool ExistsParserWord(string name)
+        {
+            if (String.IsNullOrEmpty(name))
+            {
+                return false;
+            }
+
+            return _unitOfWork.ParserWords.Exists(name);
+        }
+
         private bool TryParseWords(string line, out string[] words)
         {
             if (string.IsNullOrEmpty(line))
@@ -163,25 +179,6 @@ namespace Lingva.BusinessLayer.Services
             {
                 return false;
             }
-
-            return true;
-        }
-        private bool AddParserWord(string word, string language = "en", int? subtitleRowId = null)
-        {
-            if (ExistsParserWord(word))
-            {
-                return false;
-            }
-
-            ParserWord newWord = new ParserWord
-            {
-                Name = word,
-                LanguageName = language,
-                SubtitleRowId = subtitleRowId
-            };
-
-            _unitOfWork.ParserWords.Create(newWord);
-            _unitOfWork.Save();
 
             return true;
         }

@@ -45,23 +45,46 @@ namespace Lingva.WebAPI.Controllers
                 return NotFound(ERR_ID_NOT_FOUND + $"\"{name}>\"");
             }
 
-            return Ok(_mapper.Map<WordParserDTO>(word));
+            return Ok(new { message = "GET request succeeds.", parserWord = _mapper.Map<WordParserDTO>(word)});
         }
 
         // GET: api/parser
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ParserWord>>> GetAllParserWords()
         {
+
             var parserWords = _wordService.GetAllParserWords();
 
-            IQueryable<WordParserDTO> wordsDto = _mapper.Map<IQueryable<WordParserDTO>>(parserWords);
+            return Ok(new { message = "GET request succeeds.", parserWords = _mapper.Map<IEnumerable<WordParserDTO>>(parserWords) });
+        }
 
-            return Ok(wordsDto);
+        // POST: api/parser/add
+        [HttpPost("add")]
+        public async Task<IActionResult> PostCreateParserWord([FromBody]WordParserDTO word)
+        {
+            if (!ModelState.IsValid || word == null)
+            {
+                return BadRequest(new { message = "Request object is not correct." });
+            }
+
+            try
+            {
+                if (await Task.Run(() => _wordService.AddWord(_mapper.Map<ParserWord>(word))))
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+            return BadRequest();
         }
 
         // PUT: api/parser/en/3
-        [HttpPut("{lang?}/{subtId?}")]
-        public async Task<IActionResult> PutWordFromPhrase(string lang, int? subtId, [FromBody]string phrase)
+        [HttpPost("{lang?}/{subtId?}")]
+        public async Task<IActionResult> PostCreateParserWordsFromPhrase(string lang, int? subtId, [FromBody]string phrase)
         {
             if (!ModelState.IsValid || string.IsNullOrEmpty(phrase))
             {
@@ -70,7 +93,7 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                if (await Task.Run(() => _wordService.AddWordFromPhrase(phrase, lang, subtId)))
+                if (await Task.Run(() => _wordService.AddParserWordsFromPhrase(phrase, lang, subtId)))
                 {
                     return Ok();
                 }

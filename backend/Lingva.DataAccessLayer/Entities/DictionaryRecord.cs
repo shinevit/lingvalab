@@ -20,12 +20,14 @@ namespace Lingva.DataAccessLayer.Entities
         [Required]
         [StringLength(200)]
         public string Translation { get; set; }
+
         [Required]
         [StringLength(3)]
         public string LanguageName { get; set; }
         public virtual Language Language { get; set; }
         [StringLength(200)]
         public string Context { get; set; }
+
         public string Picture { get; set; }
     }
 }

@@ -75,7 +75,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-               
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

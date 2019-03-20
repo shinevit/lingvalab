@@ -75,6 +75,11 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositoryEvent, RepositoryEvent>();
         }
 
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();           
+        }
+
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
         {
             services.Configure<StorageOptions>(config.GetSection("StorageConfig"));

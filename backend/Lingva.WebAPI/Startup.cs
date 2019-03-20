@@ -37,6 +37,7 @@ namespace Lingva.WebAPI
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
             services.ConfigureMVC();
+            services.ConfigureServices();
 
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();

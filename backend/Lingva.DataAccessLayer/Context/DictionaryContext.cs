@@ -16,6 +16,7 @@ namespace Lingva.DataAccessLayer.Context
         public DbSet<Film> Films { get; set; }
         public DbSet<Subtitles> Subtitles { get; set; }
         public DbSet<SubtitlesRow> SubtitlesRows { get; set; }
+        public DbSet<EventMember> EventMembers { get; set; }
 
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)

@@ -15,6 +15,7 @@ using Lingva.BusinessLayer.Contracts;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
+using UsersManagementBackEnd.Services;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -43,6 +44,7 @@ namespace Lingva.WebAPI.Extensions
         {
             services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
+            services.AddScoped<IUnitOfWorkEventMember, UnitOfWorkEventMember>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
@@ -55,6 +57,7 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IEventMemberService, EventMemberService>();
         }
 
         public static void ConfigureLoggerService(this IServiceCollection services)

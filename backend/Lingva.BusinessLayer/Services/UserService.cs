@@ -6,7 +6,7 @@ using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Context;
 using System.Linq;
-using Lingva.DataAccessLayer;
+using Lingva.DataAccessLayer.Exceptions;
 using Lingva.DataAccessLayer.Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -53,11 +53,11 @@ namespace Lingva.BusinessLayer.Services
         {
             
             if (string.IsNullOrWhiteSpace(password))
-                throw new LingvaException("Password is required");
+                throw new UserServiceException("Password is required");
 
             if (_unitOfWork.Users.Get(x => x.Username == user.Username) != null)
             {
-                throw new LingvaException("Username \"" + user.Username + "\" is already taken");
+                throw new UserServiceException("Username \"" + user.Username + "\" is already taken");
             }
 
             byte[] passwordHash, passwordSalt;
@@ -78,12 +78,12 @@ namespace Lingva.BusinessLayer.Services
             var user = _unitOfWork.Users.Get(userParam.Id);
 
             if (user == null)
-                throw new LingvaException("User not found");
+                throw new UserServiceException("User not found");
 
             if (userParam.Username != user.Username)
             {
                 if (_unitOfWork.Users.Get(x => x.Username == userParam.Username) != null)
-                    throw new LingvaException("Username " + userParam.Username + " is already taken");
+                    throw new UserServiceException("Username " + userParam.Username + " is already taken");
             }
 
             user.FirstName = userParam.FirstName;

@@ -14,7 +14,7 @@ using Lingva.WebAPI.Dto;
 using Lingva.WebAPI.Helpers;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Services;
-using Lingva.DataAccessLayer;
+using Lingva.DataAccessLayer.Exceptions;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
@@ -70,7 +70,7 @@ namespace Lingva.WebAPI.Controllers
                 await Task.Run(() => _userService.Create(user, userDto.Password));
                 return Ok();
             }
-            catch (LingvaException ex)
+            catch (UserServiceException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
@@ -106,7 +106,7 @@ namespace Lingva.WebAPI.Controllers
                 await Task.Run(() => _userService.Update(user, userDto.Password));
                 return Ok();
             }
-            catch (LingvaException ex)
+            catch (UserServiceException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }

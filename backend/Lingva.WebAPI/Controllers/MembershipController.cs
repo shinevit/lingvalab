@@ -18,7 +18,7 @@ using Lingva.BusinessLayer.Services;
 using Lingva.DataAccessLayer;
 
 namespace Lingva.WebAPI.Controllers
-{
+{ 
     [Authorize]
     [ApiController]
     [Route("[controller]")]

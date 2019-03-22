@@ -1,5 +1,7 @@
 import { authHeader } from '../Helpers';
 import config from 'react-global-configuration';
+import {configuration} from '../Constants';
+
 
 export const userService = {
     login,
@@ -11,7 +13,7 @@ export const userService = {
     delete: _delete
 };
 
-const url = 'https://localhost:5000';
+const url = configuration.url
 
 function login(username, password) {
     const requestOptions = {
@@ -57,7 +59,7 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-
+    debugger
     return fetch(`${url}/users/register`, requestOptions).then(handleResponse);
 }
 

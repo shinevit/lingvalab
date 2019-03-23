@@ -1,14 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../Actions';
+import LoginForm from './LogginForm';
 
 class LoginPage extends React.Component {
     constructor(props) {
-        super(props);
-       
+        super(props);       
         this.props.dispatch(userActions.logout());
-
         this.state = {
             username: '',
             password: '',
@@ -39,30 +37,9 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { username, password, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-                        {submitted && !username &&
-                            <div className="help-block">Username is required</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                        }
-                    </div>
-                    <div className="form-group">                  
-                        <button className="btn btn-primary">Login</button>
-                        {loggingIn}
-                        <Link to="/register" className="btn btn-link">Register</Link>
-                    </div>                    
-                </form>
-            </div>
+            <LoginForm username={username} password={password} loggingIn={loggingIn}
+                handleChange={this.handleChange} handleSubmit={this.handleSubmit} 
+                submitted={this.submitted}/>
         );
     }
 }
@@ -75,4 +52,4 @@ function mapStateToProps(state) {
 }
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-export { connectedLoginPage as LoginPage }; 
+export { connectedLoginPage as LoginPage };

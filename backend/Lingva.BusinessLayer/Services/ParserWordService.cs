@@ -119,6 +119,7 @@ namespace Lingva.BusinessLayer.Services
             
             _unitOfWork.ParserWords.Create(word);
             _unitOfWork.Save();
+
             return true;
         }
 

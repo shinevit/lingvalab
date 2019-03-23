@@ -20,7 +20,7 @@ namespace Lingva.DataAccessLayer.Entities
 
         public string LanguageName { get; set; }
 
-        public virtual Language Language { get; set; }
+        //public virtual Language Language { get; set; }
 
         public virtual ICollection<SubtitleRow> SubtitlesRow { get; set; }
 

@@ -14,7 +14,6 @@ namespace Lingva.DataAccessLayer.Repositories
         public class UnitOfWorkParser : IUnitOfWorkParser
         {
             private static DictionaryContext _context;
-            private bool disposed = false;
 
             private readonly IRepositorySubtitle _subtitles;
             private readonly IRepositorySubtitleRow _subtitleRows;
@@ -41,25 +40,6 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 _context.SaveChanges();
             }
-
-            protected virtual void Dispose(bool disposing)
-            {
-                if (!this.disposed)
-                {
-                    if (disposing)
-                    {
-                        _context.Dispose();
-                    }
-                }
-                this.disposed = true;
-            }
-
-            public void Dispose()
-            {
-                Dispose(true);
-                GC.SuppressFinalize(this);
-            }
         }
     }
-
 }

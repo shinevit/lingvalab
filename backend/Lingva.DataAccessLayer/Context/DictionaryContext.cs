@@ -27,6 +27,7 @@ namespace Lingva.DataAccessLayer.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -52,11 +53,6 @@ namespace Lingva.DataAccessLayer.Context
                 .WithOne(f => f.Film)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Film>()
-                .HasOne(s => s.Language)
-                .WithMany(f => f.Films)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Subtitle>()
                   .HasMany(c => c.SubtitlesRow)
                   .WithOne(t => t.Subtitles)
@@ -75,7 +71,7 @@ namespace Lingva.DataAccessLayer.Context
             //modelBuilder.Entity<Language>().HasData(
             //      new Language() { Name = "en" },
             //      new Language() { Name = "sp" },
-            //      new Language() { Name = "fr" });
+            //      new Language() { Name = "ru" });
 
             //modelBuilder.Entity<Film>().HasData(
             //     new Film() { Id = 1, Name = "The Game Of Thrones", LanguageName = "en" },

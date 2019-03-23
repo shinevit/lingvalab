@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
 using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
-using Lingva.DataAccessLayer.InitializeWithTestData;
+using Lingva.WebAPI.Initializer;
 
 namespace Lingva.WebAPI.Extensions
 {

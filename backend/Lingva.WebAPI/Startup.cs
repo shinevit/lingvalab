@@ -14,8 +14,8 @@ using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Helpers;
 using Lingva.BusinessLayer.Models.Enums;
-using Lingva.DataAccessLayer.InitializeWithTestData;
 using Microsoft.AspNetCore.Mvc;
+using Lingva.WebAPI.Initializer;
 
 namespace Lingva.WebAPI
 {
@@ -37,7 +37,6 @@ namespace Lingva.WebAPI
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
             services.ConfigureMVC();
-
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
             services.AddTransient<TranslaterGoogleService>();
@@ -73,8 +72,6 @@ namespace Lingva.WebAPI
             //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-            
-            //DbInitializer.InitializeParserWords(app);
         }
        
     }

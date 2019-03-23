@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Lingva.DataAccessLayer.InitializeWithTestData;
 using Lingva.DataAccessLayer.Repositories;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Lingva.WebAPI.Initializer;
+using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.WebAPI
 {
@@ -17,12 +19,15 @@ namespace Lingva.WebAPI
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args)
-                            .Run();
-
+            var host = BuildWebHost(args);
 #if DEBUG
-            Console.WriteLine("Fill data");
+            Console.WriteLine("Fill test data.");
+
+            var unitOfWork = host.Services.GetService<IUnitOfWorkParser>();
+            DbInitializer.InitializeParserWords(unitOfWork, true);
 #endif
+
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

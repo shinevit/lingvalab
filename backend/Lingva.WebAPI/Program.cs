@@ -17,7 +17,12 @@ namespace Lingva.WebAPI
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                            .Run();
+
+#if DEBUG
+            Console.WriteLine("Fill data");
+#endif
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

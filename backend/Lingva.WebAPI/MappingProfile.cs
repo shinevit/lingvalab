@@ -36,6 +36,7 @@ namespace Lingva.WebAPI
                 .ForMember("Language", opt => opt.MapFrom(c => c.LanguageName));
 
             CreateMap<ParserWord, WordParserDTO>();
+            CreateMap<WordParserDTO, ParserWord>();
 
             CreateMap<User, AuthenticateUserDto>();
             CreateMap<AuthenticateUserDto, User>();

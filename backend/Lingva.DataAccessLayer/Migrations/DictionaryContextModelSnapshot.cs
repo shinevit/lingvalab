@@ -19,6 +19,20 @@ namespace Lingva.DataAccessLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.DictionaryEnWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DictionaryEnWords");
+                });
+
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.DictionaryRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -32,11 +46,15 @@ namespace Lingva.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(3);
 
+                    b.Property<string>("OriginalPhraseName");
+
                     b.Property<string>("Picture");
 
                     b.Property<string>("Translation")
                         .IsRequired()
                         .HasMaxLength(200);
+
+                    b.Property<string>("TranslationLanguageName");
 
                     b.Property<int>("UserId");
 
@@ -45,28 +63,111 @@ namespace Lingva.DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LanguageName");
+                    b.HasIndex("OriginalPhraseName");
+
+                    b.HasIndex("TranslationLanguageName");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("WordName");
+                    b.ToTable("DictionaryRecords");
+                });
 
-                    b.ToTable("Dictionary");
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int?>("FilmId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250);
+
+                    b.Property<int?>("SubtitleId");
+
+                    b.Property<string>("Tag")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilmId");
+
+                    b.HasIndex("SubtitleId");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Film", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("GengeId");
+
+                    b.Property<int?>("GenreId");
+
+                    b.Property<string>("LanguageName")
+                        .HasMaxLength(3);
+
+                    b.Property<string>("Link")
+                        .HasMaxLength(250);
+
                     b.Property<string>("Name")
-                        .HasColumnName("name");
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PosterLink")
+                        .HasMaxLength(250);
 
                     b.HasKey("Id");
 
-                    b.ToTable("film");
+                    b.HasIndex("GenreId");
+
+                    b.HasIndex("LanguageName");
+
+                    b.ToTable("Films");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EventId");
+
+                    b.Property<string>("RoleName")
+                        .HasMaxLength(100);
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("RoleName");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Language", b =>
@@ -80,53 +181,100 @@ namespace Lingva.DataAccessLayer.Migrations
                     b.ToTable("Languages");
                 });
 
-            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Subtitles", b =>
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.ParserWord", b =>
+                {
+                    b.Property<string>("Name")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("LanguageName")
+                        .HasMaxLength(3);
+
+                    b.Property<int?>("SubtitleRowId");
+
+                    b.HasKey("Name");
+
+                    b.HasIndex("LanguageName");
+
+                    b.HasIndex("SubtitleRowId");
+
+                    b.ToTable("ParserWords");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Role", b =>
+                {
+                    b.Property<string>("Name")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100);
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.SimpleEnWord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("FilmId")
-                        .HasColumnName("film_id");
-
                     b.Property<string>("Name")
-                        .HasColumnName("name");
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SimpleEnWords");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Subtitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("FilmId");
+
+                    b.Property<string>("LanguageName");
+
+                    b.Property<string>("Path")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
                     b.HasIndex("FilmId");
 
-                    b.ToTable("subtitles");
+                    b.HasIndex("LanguageName");
+
+                    b.ToTable("Subtitles");
                 });
 
-            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.SubtitlesRow", b =>
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.SubtitleRow", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnName("end_time");
+                    b.Property<TimeSpan>("EndTime");
 
-                    b.Property<int>("LineNumber")
-                        .HasColumnName("line_number");
+                    b.Property<string>("LanguageName");
 
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnName("start_time");
+                    b.Property<int>("LineNumber");
 
-                    b.Property<int>("SubtitlesId")
-                        .HasColumnName("subtitles_id");
+                    b.Property<TimeSpan>("StartTime");
+
+                    b.Property<int?>("SubtitleId");
 
                     b.Property<string>("Value")
-                        .HasColumnName("value");
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubtitlesId");
+                    b.HasIndex("LanguageName");
 
-                    b.ToTable("subtitles_row");
+                    b.HasIndex("SubtitleId");
+
+                    b.ToTable("SubtitleRows");
                 });
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.User", b =>
@@ -172,36 +320,91 @@ namespace Lingva.DataAccessLayer.Migrations
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.DictionaryRecord", b =>
                 {
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Word", "Word")
+                        .WithMany("DictionaryRecords")
+                        .HasForeignKey("OriginalPhraseName");
+
                     b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
-                        .WithMany("UserDictionaryRecords")
-                        .HasForeignKey("LanguageName")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany("TranslationDictionary")
+                        .HasForeignKey("TranslationLanguageName");
 
                     b.HasOne("Lingva.DataAccessLayer.Entities.User", "User")
                         .WithMany("UserDictionaryRecords")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Lingva.DataAccessLayer.Entities.Word", "Word")
-                        .WithMany("UserDictionaryRecords")
-                        .HasForeignKey("WordName")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Subtitles", b =>
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Event", b =>
+                {
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Film", "Film")
+                        .WithMany("Events")
+                        .HasForeignKey("FilmId");
+
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Subtitle", "Subtitle")
+                        .WithMany("Events")
+                        .HasForeignKey("SubtitleId");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Film", b =>
+                {
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Genre", "Genre")
+                        .WithMany("Films")
+                        .HasForeignKey("GenreId");
+
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
+                        .WithMany("Films")
+                        .HasForeignKey("LanguageName")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Group", b =>
+                {
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId");
+
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Role", "Role")
+                        .WithMany("Groups")
+                        .HasForeignKey("RoleName");
+
+                    b.HasOne("Lingva.DataAccessLayer.Entities.User", "Users")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.ParserWord", b =>
+                {
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
+                        .WithMany("ParserWords")
+                        .HasForeignKey("LanguageName");
+
+                    b.HasOne("Lingva.DataAccessLayer.Entities.SubtitleRow", "SubtitleRow")
+                        .WithMany("Words")
+                        .HasForeignKey("SubtitleRowId");
+                });
+
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Subtitle", b =>
                 {
                     b.HasOne("Lingva.DataAccessLayer.Entities.Film", "Film")
                         .WithMany("Subtitles")
                         .HasForeignKey("FilmId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
+                        .WithMany("Subtitles")
+                        .HasForeignKey("LanguageName");
                 });
 
-            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.SubtitlesRow", b =>
+            modelBuilder.Entity("Lingva.DataAccessLayer.Entities.SubtitleRow", b =>
                 {
-                    b.HasOne("Lingva.DataAccessLayer.Entities.Subtitles", "Subtitles")
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
+                        .WithMany("SubtitleRows")
+                        .HasForeignKey("LanguageName");
+
+                    b.HasOne("Lingva.DataAccessLayer.Entities.Subtitle", "Subtitles")
                         .WithMany("SubtitlesRow")
-                        .HasForeignKey("SubtitlesId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SubtitleId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Word", b =>
@@ -209,7 +412,7 @@ namespace Lingva.DataAccessLayer.Migrations
                     b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
                         .WithMany("Words")
                         .HasForeignKey("LanguageName")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

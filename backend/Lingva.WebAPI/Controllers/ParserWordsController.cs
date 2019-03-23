@@ -35,7 +35,11 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return  BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = "Bad request. Model state is not valid."
+                });
             }
 
             ParserWord word = _wordService.GetParserWord(name);
@@ -45,38 +49,71 @@ namespace Lingva.WebAPI.Controllers
                 return NotFound(ERR_ID_NOT_FOUND + $"\"{name}>\"");
             }
 
-            return Ok(new { message = "GET request succeeds.", parserWord = _mapper.Map<WordParserDTO>(word)});
+            return Ok(new
+            {
+                status = StatusCodes.Status200OK,
+                message = "GET request succeeds.",
+                data = _mapper.Map<WordParserDTO>(word)
+            });
         }
 
         // GET: api/parser
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ParserWord>>> GetAllParserWords()
         {
-
             var parserWords = _wordService.GetAllParserWords();
 
-            return Ok(new { message = "GET request succeeds.", parserWords = _mapper.Map<IEnumerable<WordParserDTO>>(parserWords) });
+            if(!parserWords.Any())
+            {
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status204NoContent,
+                    message = "There is no any record in the ParserWord table."
+                });
+            }
+
+            return Ok(new
+            {
+                status = StatusCodes.Status200OK,
+                message = "GET request succeeds.",
+                data = _mapper.Map<IEnumerable<WordParserDTO>>(parserWords)
+            });
         }
 
-        // POST: api/parser/add
-        [HttpPost("add")]
+        // POST: api/parser/addword
+        [HttpPost("addword")]
         public async Task<IActionResult> PostCreateParserWord([FromBody]WordParserDTO word)
         {
             if (!ModelState.IsValid || word == null)
             {
-                return BadRequest(new { message = "Request object is not correct." });
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = "Request object is not correct."
+                });
             }
 
             try
             {
-                if (await Task.Run(() => _wordService.AddWord(_mapper.Map<ParserWord>(word))))
+                ParserWord parserWord = _mapper.Map<ParserWord>(word);
+
+                if (await Task.Run(() => _wordService.AddWord(parserWord)))
                 {
-                    return Ok();
+                    return Ok( new
+                    {
+                        status = StatusCodes.Status201Created,
+                        message = "The new record of the ParserWords table was successfully added.",
+                        data = word
+                    });
                 }
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest( new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = ex.Message
+                });
             }
 
             return BadRequest();

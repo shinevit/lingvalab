@@ -127,8 +127,6 @@ namespace Lingva.DataAccessLayer.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.HasIndex("LanguageName");
-
                     b.ToTable("Films");
                 });
 
@@ -194,8 +192,6 @@ namespace Lingva.DataAccessLayer.Migrations
 
                     b.HasKey("Name");
 
-                    b.HasIndex("LanguageName");
-
                     b.HasIndex("SubtitleRowId");
 
                     b.ToTable("ParserWords");
@@ -243,8 +239,6 @@ namespace Lingva.DataAccessLayer.Migrations
 
                     b.HasIndex("FilmId");
 
-                    b.HasIndex("LanguageName");
-
                     b.ToTable("Subtitles");
                 });
 
@@ -269,8 +263,6 @@ namespace Lingva.DataAccessLayer.Migrations
                         .HasMaxLength(200);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LanguageName");
 
                     b.HasIndex("SubtitleId");
 
@@ -350,11 +342,6 @@ namespace Lingva.DataAccessLayer.Migrations
                     b.HasOne("Lingva.DataAccessLayer.Entities.Genre", "Genre")
                         .WithMany("Films")
                         .HasForeignKey("GenreId");
-
-                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
-                        .WithMany("Films")
-                        .HasForeignKey("LanguageName")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.Group", b =>
@@ -374,10 +361,6 @@ namespace Lingva.DataAccessLayer.Migrations
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.ParserWord", b =>
                 {
-                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
-                        .WithMany("ParserWords")
-                        .HasForeignKey("LanguageName");
-
                     b.HasOne("Lingva.DataAccessLayer.Entities.SubtitleRow", "SubtitleRow")
                         .WithMany("Words")
                         .HasForeignKey("SubtitleRowId");
@@ -389,18 +372,10 @@ namespace Lingva.DataAccessLayer.Migrations
                         .WithMany("Subtitles")
                         .HasForeignKey("FilmId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
-                        .WithMany("Subtitles")
-                        .HasForeignKey("LanguageName");
                 });
 
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.SubtitleRow", b =>
                 {
-                    b.HasOne("Lingva.DataAccessLayer.Entities.Language", "Language")
-                        .WithMany("SubtitleRows")
-                        .HasForeignKey("LanguageName");
-
                     b.HasOne("Lingva.DataAccessLayer.Entities.Subtitle", "Subtitles")
                         .WithMany("SubtitlesRow")
                         .HasForeignKey("SubtitleId")

@@ -46,8 +46,12 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 throw new ArgumentNullException("Tried to insert null entity!");
             }
+            if (_entities == null)
+            {
+                throw new ArgumentNullException("Tried to work with null entity set!");
+            }
 
-            _entities.Add(entity);           
+            _entities.Add(entity);
         }
 
         public virtual void Update(T entity)
@@ -67,7 +71,6 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 throw new ArgumentNullException("Tried to delete null entity!");
             }
-
             if (_context.Entry(entity).State == EntityState.Detached)
             {
                 _entities.Attach(entity);

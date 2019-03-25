@@ -10,12 +10,13 @@ using System;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
-using Lingva.WebAPI.Helpers;
 using Lingva.BusinessLayer.Contracts;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
-using Microsoft.IdentityModel.Protocols;
+using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
+using Lingva.WebAPI.Helpers;
+using Lingva.DataAccessLayer.InitializeWithTestData;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -46,24 +47,31 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
+            services.AddScoped<IUnitOfWorkParser, UnitOfWorkParser>();
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
+            services.AddScoped(typeof(IGenericRepository<>), typeof(EfRepository<>));
+
             services.AddScoped<IRepositoryWord, RepositoryWord>();
             services.AddScoped<IRepositoryDictionaryRecord, RepositoryDictionaryRecord>();
-            services.AddScoped<IRepositoryUser, RepositoryUser>();           
-        }
+            services.AddScoped<IRepositoryUser, RepositoryUser>();
 
-        public static void ConfigureDependencyInjection(this IServiceCollection services)
-        {
-            services.AddTransient<IUserService, UserService>();
-        }
+            services.AddScoped<IRepositoryWord, RepositoryWord>();
+            services.AddScoped<IRepositorySimpleEnWord, RepositorySimpleEnWord>();
+            services.AddScoped<IRepositoryDictionaryEnWord, RepositoryDictionaryEnWord>();
 
-        public static void ConfigureLoggerService(this IServiceCollection services)
-        {
-            //services.AddSingleton<ILoggerFactory, LoggerManager>();
+            services.AddScoped<IRepositoryFilm, RepositoryFilm>();
+            services.AddScoped<IRepositorySubtitle, RepositorySubtitle>();
+            services.AddScoped<IRepositorySubtitleRow, RepositorySubtitleRow>();
+            services.AddScoped<IRepositoryParserWord, RepositoryParserWord>();
+            services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
+
+            services.AddScoped<IRepositoryRole, RepositoryRole>();
+            services.AddScoped<IRepositoryGroup, RepositoryGroup>();
+            services.AddScoped<IRepositoryEvent, RepositoryEvent>();
         }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
@@ -121,7 +129,5 @@ namespace Lingva.WebAPI.Extensions
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
-
     }
-
 }

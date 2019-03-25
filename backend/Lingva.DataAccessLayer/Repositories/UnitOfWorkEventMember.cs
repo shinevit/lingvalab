@@ -12,14 +12,14 @@ namespace Lingva.DataAccessLayer.Repositories
 
         private bool disposed = false;
 
-        private readonly IEventMemberRepository _eventMember;
+        private readonly IGroupRepository _group;
 
-        public IEventMemberRepository EventMembers { get => _eventMember; }
+        public IGroupRepository Groups { get => _group; }
 
-        public UnitOfWorkEventMember(DictionaryContext context, IEventMemberRepository eventMemberRepository)
+        public UnitOfWorkEventMember(DictionaryContext context, IGroupRepository groupRepository)
         {
             _context = context;
-            _eventMember = eventMemberRepository;
+            _group = groupRepository;
         }
 
         public void Save()

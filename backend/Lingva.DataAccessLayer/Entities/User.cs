@@ -11,6 +11,7 @@ namespace Lingva.DataAccessLayer.Entities
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
@@ -20,6 +21,7 @@ namespace Lingva.DataAccessLayer.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
+        [ForeignKey("UserId")]
         public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
 
         public User()

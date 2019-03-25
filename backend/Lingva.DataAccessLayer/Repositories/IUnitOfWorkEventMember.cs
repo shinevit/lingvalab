@@ -5,7 +5,7 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public interface IUnitOfWorkEventMember : IUnitOfWork
     {
-        IEventMemberRepository EventMembers { get; }
+        IGroupRepository Groups { get; }
     }
 }
 

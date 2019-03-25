@@ -3,13 +3,11 @@ using Lingva.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace Lingva.DataAccessLayer.Entities
 {
-    public interface IEventMemberService
+    public interface IGroupService
     {
-
-        EventMember JoinGroup(int userID, int groupID);
+        Group JoinGroup(int userID, int groupID);
         void LeaveGroup(int userID, int groupID);
     }
 }

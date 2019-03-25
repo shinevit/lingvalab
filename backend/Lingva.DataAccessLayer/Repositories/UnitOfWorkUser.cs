@@ -4,7 +4,7 @@ using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class UnitOfWorkUser:IUnitOfWorkUser
+    public class UnitOfWorkUser :IUnitOfWorkUser
     {
         private static DictionaryContext _context;
 

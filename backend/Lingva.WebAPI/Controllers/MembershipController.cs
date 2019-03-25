@@ -24,16 +24,16 @@ namespace Lingva.WebAPI.Controllers
     [Route("[controller]")]
     public class MembershipController : ControllerBase
     {
-        private IEventMemberService _eventMemberService;
+        private IGroupService _groupService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
         public MembershipController(
-            IEventMemberService eventMemberService,
+            IGroupService groupService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
-            _eventMemberService = eventMemberService;
+            _groupService = groupService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -45,7 +45,7 @@ namespace Lingva.WebAPI.Controllers
             {
                 var user = _mapper.Map<User>(userDto);
                 user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
-                return Ok(await Task.Run(() => _eventMemberService.JoinGroup(user.Id, int.Parse(groupID))));
+                return Ok(await Task.Run(() => _groupService.JoinGroup(user.Id, int.Parse(groupID))));
             }
             catch (LingvaException)
             {
@@ -58,7 +58,7 @@ namespace Lingva.WebAPI.Controllers
         {
             var user = _mapper.Map<User>(userDto);
             user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
-            await Task.Run(() => _eventMemberService.LeaveGroup(user.Id,groupID));
+            await Task.Run(() => _groupService.LeaveGroup(user.Id,groupID));
             return Ok();
         }
     }

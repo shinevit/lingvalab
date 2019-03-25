@@ -9,12 +9,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.Interfaces;
 using Lingva.WebAPI.Extensions;
 using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Helpers;
 using Lingva.BusinessLayer.Models.Enums;
+using Lingva.DataAccessLayer.InitializeWithTestData;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Lingva.WebAPI
 {
@@ -27,23 +28,18 @@ namespace Lingva.WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
-            services.ConfigureLoggerService();
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
             services.ConfigureMVC();
-            services.ConfigureDependencyInjection();
-            services.ConfigureJwt(Configuration);
-            
+
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
-            
             services.AddTransient<TranslaterGoogleService>();
             services.AddTransient<TranslaterYandexService>();
             services.AddTransient<Func<TranslaterServices, ITranslaterService>>(serviceProvider => key =>
@@ -58,17 +54,15 @@ namespace Lingva.WebAPI
                         return null;
                 }
             });
-          
-            services.AddSingleton<IRepository<Word>, RepositoryWord>();
-            services.AddSingleton<IRepository<DictionaryRecord>, RepositoryDictionaryRecord>();
-            services.AddScoped<ISubtitlesHandler, SubtitlesHandlerService>();
+            services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
+            services.AddScoped<IWordService, WordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             // loggerFactory.AddProvider(); // TODO: use Serilog
-          
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -79,6 +73,9 @@ namespace Lingva.WebAPI
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
+
+            DbInitializer.InitializeParserWords(app);
         }
+       
     }
 }

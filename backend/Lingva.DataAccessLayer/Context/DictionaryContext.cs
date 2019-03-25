@@ -68,32 +68,6 @@ namespace Lingva.DataAccessLayer.Context
                   .WithMany(t => t.Words)
                   .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Language>().HasData(
-            //      new Language() { Name = "en" },
-            //      new Language() { Name = "sp" },
-            //      new Language() { Name = "ru" });
-
-            //modelBuilder.Entity<Film>().HasData(
-            //     new Film() { Id = 1, Name = "The Game Of Thrones", LanguageName = "en" },
-            //     new Film() { Id = 2, Name = "Friends", LanguageName = "en" },
-            //     new Film() { Id = 3, Name = "Sherlock", LanguageName = "en" });
-
-            //modelBuilder.Entity<Subtitle>().HasData(
-            //                new Subtitle() { Id = 1, Path = @"C:\MySubtitles\Sherlock.rtf", LanguageName = "en" },
-            //                new Subtitle() { Id = 2, Path = @"D:\Dods\Friends.rtf", LanguageName = "en" },
-            //                new Subtitle() { Id = 3, Path = @"E:\Films\Game.rtf", LanguageName = "en" });
-
-            //modelBuilder.Entity<SubtitleRow>().HasData(
-            //                new SubtitleRow() { Id = 1, Value = @"Hello, my friend!", LanguageName = "en" },
-            //                new SubtitleRow() { Id = 2, Value = @"Much time has passed since.", LanguageName = "en" },
-            //                new SubtitleRow() { Id = 3, Value = @"I will have to leave anyway.", LanguageName = "en" });
-
-            //modelBuilder.Entity<ParserWord>().HasData(
-            //                new ParserWord() { Name = "cold", LanguageName = "en" },
-            //                new ParserWord() { Name = "hot", LanguageName = "en" },
-            //                new ParserWord() { Name = "light", LanguageName = "en" },
-            //                new ParserWord() { Name = "happy", LanguageName = "en" });
-
             base.OnModelCreating(modelBuilder);
         }
     }

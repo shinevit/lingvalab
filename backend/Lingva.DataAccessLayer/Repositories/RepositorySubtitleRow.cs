@@ -63,6 +63,35 @@ namespace Lingva.DataAccessLayer.Repositories
 
             _context.SubtitleRows.Remove(subtitle);
         }
+
+        public void InsertOrUpdate(SubtitleRow subtitle)
+        {
+            if (subtitle == null || string.IsNullOrEmpty(subtitle.Value))
+            {
+                return;
+            }
+
+            if (Exists(subtitle.Value))
+            {
+                //_context.Update(word);
+                _context.Entry(subtitle).CurrentValues.SetValues(subtitle);
+
+                return;
+            }
+
+            _context.SubtitleRows.Add(subtitle);
+        }
+
+        public bool Any()
+        {
+            return _context.SubtitleRows.Any();
+        }
+
+        public bool Exists(string value)
+        {
+            return _context.SubtitleRows.Any(s => s.Value == value);
+        }
     }
 }
+
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
 {
-    public class WordParserDTO
+    public class ParserWordDTO
     {
         public string Name { get; set; }
         public string LanguageName { get; set; }

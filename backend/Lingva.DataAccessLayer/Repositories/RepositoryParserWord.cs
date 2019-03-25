@@ -11,7 +11,9 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositoryParserWord : Repository<ParserWord>, IRepositoryParserWord
     {
-        private const string ERR_ARG_NULL_EXP = "Tried to insert null ParserWord entity!";
+        private const string ERR_ARG_NULL_EXP_UPDATE = "Tried to insert or update null ParserWord entity.";
+        private const string ERR_ARG_NULL_EXP_CREATE = "Tried to create null ParserWord entity.";
+        private const string ERR_ARG_NULL_EXP_CREATE_RANGE = "Tried to create null ParserWord range.";
 
         public RepositoryParserWord(DictionaryContext context)
             : base(context)
@@ -27,7 +29,50 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Create(ParserWord word)
         {
-            base.Create(word);
+            if (word == null || string.IsNullOrEmpty(word.Name))
+            {
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE); 
+            }
+
+            _context.ParserWords.Add(word);
+        }
+
+        public override void Delete(ParserWord word)
+        {
+            if (_context.Entry(word).State == EntityState.Detached)
+            {
+                _context.ParserWords.Attach(word);
+            }
+
+            _context.ParserWords.Remove(word);
+        }
+
+        public void CreateRange(IEnumerable<ParserWord> words)
+        {
+            if (words == null)
+            {
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE_RANGE);
+            }
+
+            _entities.AddRange(words);
+        }
+        public void InsertOrUpdate(ParserWord word)
+        {
+            if (word == null || string.IsNullOrEmpty(word.Name))
+            {
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE); 
+            }
+
+            if (Exists(word.Name))
+            {
+                //_context.Update(word);
+                _context.Entry(word).CurrentValues.SetValues(word);
+
+                return;
+            }
+
+            _context.ParserWords.Add(word);
+           
         }
 
         public bool Any()
@@ -38,22 +83,6 @@ namespace Lingva.DataAccessLayer.Repositories
         public bool Exists(string wordName)
         {
             return _context.ParserWords.Any(w => w.Name == wordName);
-        }
-
-        public void CreateOrUpdate(ParserWord word)
-        {
-            if(word == null || string.IsNullOrEmpty(word.Name))
-            {
-                return;
-            }
-
-            if(Exists(word.Name))
-            {
-                //_context.Update(word);
-                return;
-            }
-
-            _context.ParserWords.Add(word);
         }
     }
 }

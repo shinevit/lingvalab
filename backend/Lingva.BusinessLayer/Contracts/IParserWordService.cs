@@ -1,4 +1,5 @@
-﻿using Lingva.DataAccessLayer.Entities;
+﻿using Lingva.BusinessLayer.DTO;
+using Lingva.DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +16,13 @@ namespace Lingva.BusinessLayer.Contracts
 
         IEnumerable<ParserWord> GetAllParserWords();
 
-        bool AddParserWordsFromSubtitleRow(SubtitleRow row);
+        IEnumerable<ParserWordDTO> AddParserWordsFromRow(SubtitleRow row);
 
-        bool AddParserWordsFromPhrase(string phrase, string language = "en", int? rowId = null);
+        void AddParserWord(ParserWord word);
 
-        bool AddParserWord(string word, string language = "en", int? subtitleRowId = null);
+        void InsertOrUpdateParserWord(ParserWord word);
 
-        bool AddWord(ParserWord word);
-
-        void UpdateParserWord(ParserWord parserWord);
-
-        void DeleteParserWord(string name);
+        ParserWord DeleteParserWord(string name);
 
         bool ExistsParserWord(string wordName);
     }

@@ -24,6 +24,7 @@ namespace Lingva.WebAPI
             Console.WriteLine("Fill test data.");
 
             var unitOfWork = host.Services.GetService<IUnitOfWorkParser>();
+            DbInitializer.InitializeSubtitleRows(unitOfWork, true);
             DbInitializer.InitializeParserWords(unitOfWork, true);
 #endif
 

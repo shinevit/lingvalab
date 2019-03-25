@@ -32,6 +32,7 @@ namespace Lingva.BusinessLayer.Services
         public void AddDictionaryRecord(DictionaryRecord dictionaryRecord)
         {
             AddWord(dictionaryRecord.WordName);
+
             if (!ExistDictionaryRecord(dictionaryRecord))
             {
                 _unitOfWork.DictionaryRecords.Create(dictionaryRecord);

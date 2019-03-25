@@ -42,14 +42,14 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual void Create(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("Tried to insert null entity!");
-            }
-
             if (_entities == null)
             {
                 throw new ArgumentNullException("Tried to work with null entity set!");
+            }
+
+            if (entity == null)
+            {
+                throw new ArgumentNullException("Tried to insert null entity!");
             }
 
             _entities.Add(entity);
@@ -63,6 +63,7 @@ namespace Lingva.DataAccessLayer.Repositories
             }
 
             _entities.Attach(entity);
+
             _context.Entry(entity).State = EntityState.Modified;
         }
 
@@ -73,10 +74,16 @@ namespace Lingva.DataAccessLayer.Repositories
                 throw new ArgumentNullException("Tried to delete null entity!");
             }
 
+            if(!_entities.Select(e => e == entity).Any())
+            {
+                throw new ArgumentNullException("Attempt to delete non-existent entity has occured.");
+            }
+
             if (_context.Entry(entity).State == EntityState.Detached)
             {
                 _entities.Attach(entity);
             }
+
             _entities.Remove(entity);
         }
     }

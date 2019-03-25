@@ -29,11 +29,11 @@ namespace Lingva.DataAccessLayer.Entities
 
         public virtual Subtitle Subtitles { get; set; }
 
-        public virtual ICollection<ParserWord> Words { get; set; }
+        public virtual ICollection<ParserWord> ParserWords { get; set; }
 
         public SubtitleRow()
         {
-            Words = new List<ParserWord>();
+            ParserWords = new List<ParserWord>();
         }
     }
 }

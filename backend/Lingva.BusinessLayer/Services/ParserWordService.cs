@@ -1,4 +1,5 @@
 ﻿using Lingva.BusinessLayer.Contracts;
+using Lingva.BusinessLayer.DTO;
 using Lingva.BusinessLayer.SubtitlesParser.Classes;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
@@ -43,117 +44,107 @@ namespace Lingva.BusinessLayer.Services
             return _unitOfWork.ParserWords.GetList();
         }
 
-        public bool AddParserWordsFromSubtitleRow(SubtitleRow row)
+        public IEnumerable<ParserWordDTO> AddParserWordsFromRow(SubtitleRow row)
         {
             if (row == null || string.IsNullOrEmpty(row.Value))
             {
-                return false;
+                return null;
             }
 
-            bool add = false;
-
             string[] words;
+
+            List<ParserWordDTO> wordsDto = new List<ParserWordDTO>();
+            List<ParserWord> wordsToCreate = new List<ParserWord>();
 
             if (TryParseWords(row.Value, out words))
             {
-                add = true;
-
-                string language = _unitOfWork.Subtitles.Get(s => s.Id == row.SubtitleId).LanguageName ?? "en";
-
-                foreach (string word in words)
-                {
-                    AddParserWord(word, language, row.Id );
-                }
-            }
-            
-            return add;
-        }
-
-        public bool AddParserWordsFromPhrase(string phrase, string language = "en", int? rowId = null)
-        {
-            if (string.IsNullOrEmpty(phrase))
-            {
-                return false;
-            }
-
-            bool add = false;
-
-            string[] words;
-
-            if (TryParseWords(phrase, out words))
-            {
-                add = true;
+                string language = row.LanguageName;
+                int subtitleRowId = row.Id;
 
                 foreach (string word in words)
                 {
-                    AddParserWord(word, language, rowId);
+                    ParserWord newWord = new ParserWord
+                    {
+                        Name = word,
+                        LanguageName = language,
+                        SubtitleRowId = subtitleRowId
+                    };
+
+                    wordsToCreate.Add(newWord);
+
+                    ParserWordDTO newWordDto = new ParserWordDTO()
+                    {
+                        Name = word,
+                        LanguageName = language,
+                        SubtitleRowId = subtitleRowId
+                    };
+
+                    wordsDto.Add(newWordDto);
                 }
+
+                AddRangeParserWords(wordsToCreate);
+
+                IEnumerable<ParserWordDTO> results = (IEnumerable<ParserWordDTO>)wordsDto; 
+
+                return results;
             }
 
-            return add;
-        }
-       
-        public bool AddParserWord(string word, string language = "en", int? subtitleRowId = null)
-        {
-            if (string.IsNullOrEmpty(word) || ExistsParserWord(word))
-            {
-                return false;
-            }
-
-            ParserWord newWord = new ParserWord
-            {
-                Name = word,
-                LanguageName = language,
-                SubtitleRowId = subtitleRowId
-            };
-
-            return AddWord(newWord);
+            return null;
         }
 
-        public bool AddWord(ParserWord word)
+        public void AddRangeParserWords(IEnumerable<ParserWord> words)
         {
-            if (word == null || string.IsNullOrEmpty(word.Name) || ExistsParserWord(word.Name))
-            {
-                return false;
-            }
-            
-            _unitOfWork.ParserWords.Create(word);
-            _unitOfWork.Save();
-
-            return true;
-        }
-
-        public void UpdateParserWord(ParserWord parserWord)
-        {
-            if(parserWord == null || String.IsNullOrEmpty(parserWord.Name))
+            if(words == null)
             {
                 return;
             }
 
-            ParserWord wordToUpdate = _unitOfWork.ParserWords.Get(parserWord.Name);
+            _unitOfWork.ParserWords.CreateRange(words);
+            _unitOfWork.Save();
+        }
+       
+        public void AddParserWord(ParserWord word)
+        {
+            if (word == null || string.IsNullOrEmpty(word.Name))
+            {
+                return;
+            }
 
-            wordToUpdate.LanguageName = parserWord.LanguageName;
-            wordToUpdate.SubtitleRowId = parserWord.SubtitleRowId;
-            _unitOfWork.ParserWords.Update(wordToUpdate);
+            _unitOfWork.ParserWords.Create(word);
             _unitOfWork.Save();
         }
 
-        public void DeleteParserWord(string name)
+        public void InsertOrUpdateParserWord(ParserWord word)
+        {
+            if (word == null || string.IsNullOrEmpty(word.Name))
+            {
+                return;
+            }
+
+            //_unitOfWork.ParserWords.Create(word);
+            _unitOfWork.ParserWords.InsertOrUpdate(word);
+
+            _unitOfWork.Save();
+        }
+
+        public ParserWord DeleteParserWord(string name)
         {
             if(String.IsNullOrEmpty(name))
             {
-                return;
+                return null;
             }
 
             ParserWord parserWord = _unitOfWork.ParserWords.Get(name);
 
             if (parserWord == null)
             {
-                return;
+                throw new ArgumentNullException("The ParserWord entity does not exist in the database.");
             }
 
             _unitOfWork.ParserWords.Delete(parserWord);
             _unitOfWork.Save();
+
+            return parserWord;
         }
 
         public bool ExistsParserWord(string name)

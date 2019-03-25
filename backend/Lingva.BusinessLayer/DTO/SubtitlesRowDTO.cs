@@ -7,6 +7,8 @@ namespace Lingva.BusinessLayer.DTO
 {
     public class SubtitlesRowDTO
     {
+        public int Id { get; set; } 
+
         public int? SubtitleId { get; set; }
 
         public int LineNumber { get; set; }
@@ -17,15 +19,19 @@ namespace Lingva.BusinessLayer.DTO
 
         public TimeSpan EndTime { get; set; }
 
+        public string Language { get; set; }
+
         public static explicit operator SubtitleRow (SubtitlesRowDTO sub)
         {
             return new SubtitleRow
             {
+                Id = sub.Id,
                 SubtitleId = sub.SubtitleId,
                 LineNumber = sub.LineNumber,
                 Value = sub.Value,
                 StartTime = sub.StartTime,
-                EndTime = sub.EndTime
+                EndTime = sub.EndTime,
+                LanguageName = sub.Language
             };
         }
     }

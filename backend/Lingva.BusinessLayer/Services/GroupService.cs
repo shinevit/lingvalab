@@ -48,7 +48,6 @@ namespace Lingva.BusinessLayer.Services
         public void LeaveGroup(int userID, int groupID, string roleName = "Student")
         {
             _unitOfWork.Groups.Delete(new Group { UserId = userID, EventId = groupID, RoleName = roleName });
-        }
-        
+        }        
     }
 }

@@ -3,6 +3,7 @@ using Lingva.BusinessLayer.DTO;
 using Lingva.BusinessLayer.SubtitlesParser.Classes;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,12 @@ namespace Lingva.BusinessLayer.Services
 {
     public class ParserWordService: IParserWordService
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IUnitOfWorkParser _unitOfWork;
 
         private readonly string[] _separators = { " ", ",", ".", "!", "?", ";", ":", "<i>", "<h>" };
+        private const string ERR_ARG_NULL_EXP_GET = "Tried to get ParserWord record with null Name primary key.";
+        private const string EXP_GENERATED = "The ArgumentNullException exception is generated.";
 
         public ParserWordService(IUnitOfWorkParser unitOfWork)
         {
@@ -31,10 +35,22 @@ namespace Lingva.BusinessLayer.Services
         {
             if (String.IsNullOrEmpty(name))
             {
-                return null;
+                _logger.Error(ERR_ARG_NULL_EXP_GET);
+                _logger.Error(EXP_GENERATED);
+
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_GET);
             }
 
+            _logger.Info("Attempt to get \"{name}\" record from the ParserWords table occured.");
+
             ParserWord parserWord = _unitOfWork.ParserWords.Get(name);
+
+            if(parserWord == null)
+            {
+                _logger.Info($"There is no ParserWord record with \"{name}\" in the ParserWords table.");
+            }
+
+            _logger.Info("Attempt to get \"{name}\" record from ParserWords table succeeded.");
 
             return parserWord;
         }

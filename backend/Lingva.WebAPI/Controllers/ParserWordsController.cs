@@ -12,6 +12,7 @@ using AutoMapper;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
 using System.Text;
+using NLog;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -21,6 +22,7 @@ namespace Lingva.WebAPI.Controllers
     {
         private readonly IParserWordService _wordService;
         private readonly IMapper _mapper;
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         private const string ERR_ID_NOT_FOUND = "There is no ParserWord object with Name = ";
 
@@ -37,8 +39,13 @@ namespace Lingva.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetParserWord(string name)
         {
+            _logger.Info($"GET Action: Attempt to get ParserWord record by \"{name}\"");
+
             if (!ModelState.IsValid)
             {
+                _logger.Error("ModelState is not valid.");
+                _logger.Error("400 StatusCode is generated.");
+
                 return BadRequest(new
                 {
                     status = StatusCodes.Status400BadRequest,
@@ -48,16 +55,25 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
+                _logger.Debug("Call ParserWordService for the request handling.");
+
                 ParserWord word = _wordService.GetParserWord(name);
 
                 if (word == null)
                 {
+                    _logger.Debug("The ParserWord record with Name = \"{name}\" is not found.");
+                    _logger.Debug("404 StatusCode is generated.");
+
                     return NotFound(new
                     {
                         status = StatusCodes.Status404NotFound,
                         message = ERR_ID_NOT_FOUND + $"\"{name}\""
                     });
                 }
+
+                _logger.Debug("The ParserWord record with Name = \"{name}\" is found.");
+                _logger.Info("Database record from ParserWords is safely returned to the client side.");
+                _logger.Debug("200 StatusCode is generated.");
 
                 return Ok(new
                 {
@@ -68,6 +84,9 @@ namespace Lingva.WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Error($"{ex.GetType()} exception is generated.");
+                _logger.Error($"{ex.Message}");
+
                 return BadRequest(new
                 {
                     status = StatusCodes.Status400BadRequest,

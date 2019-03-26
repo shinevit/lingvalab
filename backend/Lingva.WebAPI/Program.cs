@@ -12,20 +12,26 @@ using Microsoft.Extensions.Logging;
 using Lingva.WebAPI.Initializer;
 using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
+using NLog.Web;
+using NLog;
 
 namespace Lingva.WebAPI
 {
     public class Program
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
         public static void Main(string[] args)
         {
+            _logger.Info("Program.Main: get started.");
             var host = BuildWebHost(args);
 #if DEBUG
             Console.WriteLine("Fill test data.");
 
+            _logger.Debug("Set initial test data.");
+
             var unitOfWork = host.Services.GetService<IUnitOfWorkParser>();
-            DbInitializer.InitializeSubtitleRows(unitOfWork, true);
-            DbInitializer.InitializeParserWords(unitOfWork, true);
+            DbInitializer.InitializeSubtitleRows(unitOfWork, false);
+            DbInitializer.InitializeParserWords(unitOfWork, false);
 #endif
 
             host.Run();
@@ -37,6 +43,12 @@ namespace Lingva.WebAPI
                 .UseIISIntegration()
                 .UseUrls("http://localhost:5000")
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                })
+                .UseNLog()
                 .Build();
 
     }

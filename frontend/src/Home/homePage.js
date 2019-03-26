@@ -8,6 +8,7 @@ import CreateGroupProvider from '../Services/createGroupProvider';
 import SearchForm from '../Components/searchForm';
 import EventProvider from '../Services/eventProvider';
 import OMDBImageGetter from '../Services/OMDBImageGetter';
+import {EventWindow} from '../Events/eventsPage';
 
 const dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -57,30 +58,34 @@ class HomePage extends Component {
 
     SendAddRequest = async (event) => {
         event.preventDefault();
-        let sender = new CreateGroupProvider();
-        let response = await sender.AddGroup(event);
-        let data = await response.json();
+        const sender = new CreateGroupProvider();
+        const response = await sender.AddGroup(event);        
         
-        console.log(response.data);
+        window.location.assign(`/events/${response.id}`)
     }
 
     SendSearchRequest = async (event) => {
         event.preventDefault();
-        let eventId = event.target.elements.groupName.value;
-        let getter = new EventProvider();
-        let response = await getter.GetSearchResults(eventId);        
+        const eventId = event.target.elements.groupName.value;
+        const getter = new EventProvider();
+        const response = await getter.GetSearchResults(eventId);        
            
         window.location.assign(`/events/${response.data.id}`)        
     }
 
     GetGroupsView = async () => {
-        let eventViews = [];                
+        let eventViews = [];
+        
+        const getter = new EventProvider();
+        const response = await getter.GetSearchResults();        
 
-        await topGroupsDummy.groups.map(
+        await response.data.map(
            async (element, elementKey) => {
+            console.log("ev view");
+            console.log(element);
 
-                eventViews.push(
-                    <EventInfo key={elementKey} info={element} />
+                eventViews.push(                    
+                    <EventWindow key={elementKey} data={element} />
                 );
 
                 return true;
@@ -150,8 +155,8 @@ class EventInfo extends Component {
         super(props);
         this.state = {
             groupId : this.props.info.id,
-            posterURL: dummyImage250,
-            groupName: this.props.info.groupName,
+            posterURL: this.props.info.picture,
+            groupName: this.props.info.title,
             movieName: this.props.info.movieName                                  
         }
         

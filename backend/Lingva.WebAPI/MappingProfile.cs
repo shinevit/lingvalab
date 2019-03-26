@@ -17,12 +17,22 @@ namespace Lingva.WebAPI
             .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
 
             CreateMap<DictionaryRecordCreatingDTO, DictionaryRecord>()
-            .ForMember("UserId", opt => opt.MapFrom(c => c.User))
+            .ForMember("UserId", opt => opt.MapFrom(c => c.UserId))
+            .ForMember("WordName", opt => opt.MapFrom(c => c.Word))
             .ForMember("LanguageName", opt => opt.MapFrom(c => c.Language))
-            .ForMember("WordName", opt => opt.MapFrom(c => c.Word));
+            .ForMember("Translation", opt => opt.MapFrom(c => c.Translation))
+            .ForMember("Context", opt => opt.MapFrom(c => c.Context))
+            .ForMember("Picture", opt => opt.MapFrom(c => c.Picture))
+            .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<DictionaryRecord, WordViewDTO>()
             .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
+
+            CreateMap<Group, GroupViewDTO>();
+            CreateMap<Movie, MovieViewDTO>();
+
+            CreateMap<GroupCreatingDTO, Group>();
+            CreateMap<MovieCreatingDTO, Movie>();
         }
     }
 }

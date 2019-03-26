@@ -6,24 +6,21 @@ using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class UnitOfWorkDictionary : IUnitOfWorkDictionary
+    public class UnitOfWorkGroupsCollection : IUnitOfWorkGroupsCollection
     {
         private static DictionaryContext _context;
 
         private bool disposed = false;
 
-        private readonly IRepositoryDictionaryRecord _dictionaryRecords;
-        private readonly IRepositoryWord _words;
+        private readonly IRepositoryGroup _groups;
 
-        public UnitOfWorkDictionary(DictionaryContext context, IRepositoryWord words, IRepositoryDictionaryRecord dictionaryRecords)
+        public UnitOfWorkGroupsCollection(DictionaryContext context, IRepositoryGroup groups)
         {
             _context = context;
-            _dictionaryRecords = dictionaryRecords;
-            _words = words;
+            _groups = groups;
         }
 
-        public IRepositoryDictionaryRecord DictionaryRecords { get => _dictionaryRecords; }
-        public IRepositoryWord Words { get => _words; }
+        public IRepositoryGroup Groups { get => _groups; }
 
         public void Save()
         {

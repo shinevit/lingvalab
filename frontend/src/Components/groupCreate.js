@@ -73,7 +73,9 @@ class GroupAddForm extends Component {
                         </InputGroup.Append>                             
                     </InputGroup>
                     <Form.Control type="text" name="description"
-                        className="event-descr-input" placeholder="Description..."/>                                          
+                        className="event-descr-input" placeholder="Description..."/>
+                    <Form.Control type="text" name="movieName"
+                        className="event-descr-input" placeholder="MovieName"/>                                          
                 </Form.Group>
             </Form>
         );

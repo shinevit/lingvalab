@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
@@ -35,7 +33,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/Dictionary/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] 
         public async Task<IActionResult> GetDictionaryRecord([FromRoute] int id)
         {
             if (!ModelState.IsValid)

@@ -5,13 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Repositories\FilmRepository.cs" />
-    <Compile Remove="Repositories\SubtitlesRepository.cs" />
-    <Compile Remove="Repositories\SubtitlesRowRepository.cs" />
+    <Compile Remove="Migrations\20190320112035_AddMovies.cs" />
+    <Compile Remove="Migrations\20190321100606_Group-Movie.cs" />
+    <Compile Remove="Migrations\20190321101310_Group-Movie.cs" />
+    <Compile Remove="Migrations\20190321102531_Group-Movie.cs" />
+    <Compile Remove="Migrations\20190321111314_Group-Movie2.cs" />
+    <Compile Remove="Migrations\20190321111909_Group-Movie2.cs" />
+    <Compile Remove="Migrations\20190321114022_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190326102921_AddPoster.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

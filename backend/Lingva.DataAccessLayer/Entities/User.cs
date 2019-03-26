@@ -16,7 +16,11 @@ namespace Lingva.DataAccessLayer.Entities
         public string Login { get; set; }
         public string Password { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual IEnumerable<DictionaryRecord> UserDictionary { get; set; }
+        public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
+
+        public User()
+        {
+            UserDictionaryRecords = new List<DictionaryRecord>();
+        }
     }
 }

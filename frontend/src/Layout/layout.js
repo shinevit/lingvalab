@@ -9,7 +9,8 @@ import MediaPage from '../Media/mediaPage';
 import ReduxTest from '../Media/reduxTest';
 import HomePage from '../Home/homePage';
 import HomePageUnsigned from '../Home/homePageUnsigned';
-import EventsPage from '../Events/eventsPage';
+import {EventsPage} from '../Events/eventsPage';
+import UserProfilePage from '../UserProfile/userProfilePage';
 
 class Layout extends Component{
 
@@ -31,7 +32,8 @@ class Layout extends Component{
               <Route exact path='/' component={HomePage}/>
               <Route exact path='/home' component={HomePage}/>                    
               <Route path='/events' component={EventsPage}/>
-              <Route path='/media' component={MediaPage}/>
+              <Route path='/media' component={MediaPage}/>              
+              <Route path='/userProfile' component={UserProfilePage}/>
               <Route path='/redux_test' component={ReduxTest}/>          
             </Switch>
           </main>

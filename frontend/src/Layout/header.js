@@ -92,7 +92,8 @@ class HeaderSigned extends Component {
                     <ButtonToolbar className="head-toolbar">
                         <Button href="/home">Home</Button>
                         <Button href="/events">Events</Button>
-                        <Button href="/media">Media</Button>                        
+                        <Button href="/media">Media</Button>
+                        <Button href="/userProfile">My Profile</Button>                    
                         <Button href="/" onClick={this.props.loginMethod}>Log off</Button>
                     </ButtonToolbar>
                 </Col>

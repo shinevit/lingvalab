@@ -7,7 +7,6 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import EventProvider from '../Services/eventProvider';
 import VideoPlayer from '../Components/videoPlayer';
 import OMDBImageGetter from '../Services/OMDBImageGetter';
-import MovieProvider from '../Services/getMovieProvider';
 
 const dummyImage250 = "https://via.placeholder.com/250x250.png";
 
@@ -70,12 +69,27 @@ class EventWindow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: this.props.data.title,
+            movieName: this.props.data.title,
             posterURL: this.props.data.picture,
             id: this.props.data.id,
             description: this.props.data.description
-        }       
-    }    
+        }
+        
+        // this.GetPoster = this.GetPoster.bind(this);        
+    }
+
+    // GetPoster = async () => {        
+    //     let getter = new OMDBImageGetter();
+    //     let response = await getter.GetImageURLByName(this.state.movieName);            
+
+    //     this.setState({
+    //         posterURL: response
+    //     });
+    // }
+
+    // componentDidMount() {
+    //     this.GetPoster(this.state.movieName);
+    // }
 
     render() {
         console.log(this.props.data);
@@ -101,22 +115,19 @@ class SingleEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            event: <div>Empty</div>,
-            eventId: this.props.match.params.id,
-            movieData: undefined                          
+            events: <div>Empty</div>,
+            eventId: this.props.match.params.id                          
         }
         
         this.GetSingleEvent = this.GetSingleEvent.bind(this);
-        this.GetMovieData = this.GetMovieData.bind(this);
     }
 
     GetSingleEvent = async (eventId) => {        
-        const getter = new EventProvider();
-        const response = await getter.GetSearchResults(eventId);
-        const movieData = await this.GetMovieData(response.data.movieId);
+        let getter = new EventProvider();
+        let response = await getter.GetSearchResults(eventId);
         console.log(response);
         let group =                 
-                <Row className="event-block">
+                <Row>
                     <Col lg={6}>
                     <h3>Welcome to {response.data.title}</h3>
                         <ButtonToolbar>
@@ -132,21 +143,15 @@ class SingleEvent extends Component {
                             Our Movie
                         </h4>
                         <h5>
-                            {movieData.data.title}
+                            {response.data.title}
                         </h5>
                         <VideoPlayer />
                     </Col>
                 </Row>            
 
         this.setState({
-            event: group
+            events: group
         });
-    }
-
-    GetMovieData = async (movieId) => {        
-        const getter = new MovieProvider();
-        const response = await getter.GetMovieData(movieId);        
-        return response;
     }
 
     componentDidMount() {
@@ -157,10 +162,11 @@ class SingleEvent extends Component {
         return(            
             <div>
                 <h3>Events</h3>    
-                {this.state.event}                
+                {this.state.events}                
             </div>
         )
     }
 }
 
-export {EventsPage, EventWindow};
+
+export default EventsPage;

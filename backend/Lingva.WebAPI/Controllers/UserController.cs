@@ -27,6 +27,7 @@ namespace Lingva.WebAPI.Controllers
         private IUserService _userService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private BaseStatusDto _responseDto = new BaseStatusDto();
 
         public UsersController(
             IUserService userService,
@@ -40,7 +41,7 @@ namespace Lingva.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticateUserDto userDto)
+        public async Task<IActionResult> Authenticate([FromBody]SignUpUserDto userDto)
         {
             var user = await Task.Run(() => _userService.Authenticate(userDto.Username, userDto.Password));
 
@@ -51,31 +52,32 @@ namespace Lingva.WebAPI.Controllers
 
             string tokenString = _userService.GetUserToken(user, _appSettings.Secret);
 
-            return Ok(new
-            {
-                Id = user.Id,
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = tokenString
-            });
+            SignInUserDto signInUser = _mapper.Map<SignInUserDto>(user);
+            signInUser.Token = tokenString;
+
+            signInUser.CreateSucess();
+
+            return Ok(signInUser);
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]AuthenticateUserDto userDto)
+        public async Task<IActionResult> Register([FromBody]SignUpUserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
 
             try
             {
                 await Task.Run(() => _userService.Create(user, userDto.Password));
+                _responseDto.CreateSucess();
 
-                return Ok();
+                return Ok(_responseDto);
             }
             catch (UserServiceException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                _responseDto.CreateError(ex.Message);
+
+                return BadRequest(_responseDto);
             }
         }
 
@@ -83,8 +85,8 @@ namespace Lingva.WebAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var users = await Task.Run(() => _userService.GetAll());
-            var userDtos = _mapper.Map<IList<AuthenticateUserDto>>(users);
-
+            var userDtos = _mapper.Map<IList<SignUpUserDto>>(users);
+            
             return Ok(userDtos);
         }
 
@@ -101,18 +103,22 @@ namespace Lingva.WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody]AuthenticateUserDto userDto)
+        public async Task<IActionResult> Update([FromBody]SignUpUserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
             user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
             try
             {
                 await Task.Run(() => _userService.Update(user, userDto.Password));
-                return Ok();
+                _responseDto.CreateSucess();
+
+                return Ok(_responseDto);
             }
             catch (UserServiceException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                _responseDto.CreateError(ex.Message);
+
+                return BadRequest(_responseDto);
             }
         }
 
@@ -120,14 +126,16 @@ namespace Lingva.WebAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await Task.Run(() => _userService.Delete(id));
+            _responseDto.CreateSucess();
 
-            return Ok();
+            return Ok(_responseDto);
         }
 
         private async Task<IActionResult> GetUserInfo(int id)
         {
             var user = await Task.Run(() => _userService.GetById(id));
-            var userDto = _mapper.Map<AuthenticateUserDto>(user);
+            var userDto = _mapper.Map<SignUpUserDto>(user);
+            userDto.CreateSucess();
 
             return Ok(userDto);
         }

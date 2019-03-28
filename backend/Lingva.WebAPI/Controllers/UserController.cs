@@ -45,7 +45,9 @@ namespace Lingva.WebAPI.Controllers
             var user = await Task.Run(() => _userService.Authenticate(userDto.Username, userDto.Password));
 
             if (user == null)
+            {
                 return BadRequest(new { message = "Username or password is incorrect" });
+            }
 
             string tokenString = _userService.GetUserToken(user, _appSettings.Secret);
 
@@ -68,6 +70,7 @@ namespace Lingva.WebAPI.Controllers
             try
             {
                 await Task.Run(() => _userService.Create(user, userDto.Password));
+
                 return Ok();
             }
             catch (UserServiceException ex)
@@ -81,6 +84,7 @@ namespace Lingva.WebAPI.Controllers
         {
             var users = await Task.Run(() => _userService.GetAll());
             var userDtos = _mapper.Map<IList<AuthenticateUserDto>>(users);
+
             return Ok(userDtos);
         }
 
@@ -116,6 +120,7 @@ namespace Lingva.WebAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await Task.Run(() => _userService.Delete(id));
+
             return Ok();
         }
 
@@ -123,6 +128,7 @@ namespace Lingva.WebAPI.Controllers
         {
             var user = await Task.Run(() => _userService.GetById(id));
             var userDto = _mapper.Map<AuthenticateUserDto>(user);
+
             return Ok(userDto);
         }
 

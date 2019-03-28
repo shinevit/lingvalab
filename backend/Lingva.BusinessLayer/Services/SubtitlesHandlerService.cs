@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.DTO;
-using Lingva.BusinessLayer.SubtitlesParser.Classes;
+using Lingva.BusinessLayer.Extensions;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
+using SubtitlesParser.Classes;
 
 namespace Lingva.BusinessLayer.Services
 {
@@ -18,66 +19,87 @@ namespace Lingva.BusinessLayer.Services
         public SubtitlesHandlerService(IUnitOfWorkParser unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _path = string.Empty;
         }
 
-        public void AddSubtitles(SubtitlesRowDTO[] subDTO, string path, int? filmId)  
+        public IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle)
         {
+            IEnumerable<SubtitleRow> rows;
+
+            using (var sourceStream = File.OpenRead(subtitle.Path))
+            {
+                rows = ParseStream(sourceStream);
+            }
+
+            AddSubtitleWithRows(subtitle, rows);
+
+            return rows;
+        }
+ 
+        private void AddSubtitleWithRows(Subtitle subtitle, IEnumerable<SubtitleRow> rows)  
+        {
+            if(subtitle == null)
+            {
+                throw new ArgumentNullException("Tried to operate with a null Subtitle object.");
+            }
+
+            if (rows == null)
+            {
+                throw new ArgumentNullException("Tried to operate with a null IEnumerable<SubtitleRow> object.");
+            }
+
             _unitOfWork.Subtitles.Create(new Subtitle()
             {
-                Path = path,
-                FilmId = filmId,
-                LanguageName = "en"
+                Path = subtitle.Path,
+                FilmId = subtitle.FilmId,
+                LanguageName = subtitle.LanguageName,
             });
 
-            int subId = _unitOfWork.Subtitles.Get(p => p.Path == path).Id;
-            subDTO.ToList().ForEach(n => n.SubtitleId = subId);
+            int? subtitleId = _unitOfWork.Subtitles.Get(subtitle.Path);
 
-            var subtitles = subDTO.Select(n => new SubtitleRow()
+            if (subtitleId == null)
             {
-                Value = n.Value,
-                SubtitleId = (int)n.SubtitleId,
-                StartTime = n.StartTime,
-                EndTime = n.EndTime
-            });
+                throw new ArgumentNullException("Returned null primary key value of the Subtitles table record.");
+            }
 
-            foreach (var sub in subDTO)
+            foreach (SubtitleRow row in rows)
             {
-                _unitOfWork.SubtitleRows.Create((SubtitleRow)sub);
+                row.SubtitleId = subtitleId;
+                _unitOfWork.SubtitleRows.Create(row);
             }
 
             _unitOfWork.Save();
         }
 
-        public SubtitlesRowDTO[] Parse(Stream subtitles)
+        private IEnumerable<SubtitleRow> ParseStream(Stream subtitleStream)
         {
-            var encoding = DetectEncoding(subtitles);
-
             var parser = new SubtitlesParser.Classes.Parsers.SrtParser();
-            List<SubtitleItem> items = parser.ParseStream(subtitles, encoding);
+            var encoding = DetectEncoding(subtitleStream);
 
-            SubtitlesRowDTO[] subDTO = items.Select(n => new SubtitlesRowDTO()
+            List<SubtitleItem> items = parser.ParseStream(subtitleStream, encoding);
+
+            IEnumerable<SubtitleRow> rows = new List<SubtitleRow>();
+
+            foreach (SubtitleItem item in items)
             {
-                Value = String.Join(" ", n.Lines),
-                StartTime = new TimeSpan(0, 0, 0, 0, n.StartTime),
-                EndTime = new TimeSpan(0, 0, 0, 0, n.EndTime),
-            }).ToArray();
+                (rows as List<SubtitleRow>).Add(item.ToSubtitleRow());
+            };
 
-            return subDTO;
+            return rows;
         }
-
+               
         private Encoding DetectEncoding(Stream stream)
         {
             Ude.CharsetDetector cdet = new Ude.CharsetDetector();
             cdet.Feed(stream);
             cdet.DataEnd();
-            if (cdet.Charset != null)
+
+            if (cdet.Charset == null)
             {
-                return Encoding.GetEncoding(cdet.Charset);
+                throw new FormatException("Encoding unrecognized.");
             }
-            else
-            {
-                throw new FormatException("Encoding unrecognized");
-            }
+
+            return Encoding.GetEncoding(cdet.Charset);
         }
     }
 }

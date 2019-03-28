@@ -7,7 +7,7 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public interface IRepositoryParserWord : IRepository<ParserWord>
     {
-        void InsertOrUpdate(ParserWord word);
+        bool InsertOrUpdate(ParserWord word);
 
         bool Exists(string wordName);
 

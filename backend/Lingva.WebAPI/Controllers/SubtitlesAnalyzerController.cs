@@ -40,8 +40,6 @@ namespace Lingva.WebAPI.Controllers
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 
-            //TODO: Save words to BD, and binding to the same film
-
             return words;
         }
     }

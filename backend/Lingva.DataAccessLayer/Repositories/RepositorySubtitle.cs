@@ -18,27 +18,44 @@ namespace Lingva.DataAccessLayer.Repositories
         {
         }
 
-        public IQueryable<Subtitle> GetList()
+        public override IQueryable<Subtitle> GetList()
         {
             return _context.Subtitles.AsNoTracking();
         }
 
-        public IQueryable<Subtitle> GetList(int quantity, Expression<Func<Subtitle, bool>> predicator)
+        public override IQueryable<Subtitle> GetList(int quantity, Expression<Func<Subtitle, bool>> predicator)
         {
             return _context.Subtitles.Where(predicator).Take(quantity).AsNoTracking();
         }
 
-        public Subtitle Get(object id)
+        public override Subtitle Get(object id)
         {
             return _context.Subtitles.Find((int)id);
         }
 
-        public Subtitle Get(Expression<Func<Subtitle, bool>> predicator)
+        public int? Get(string path)
+        {
+            if(string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            Subtitle subtitle = _context.Subtitles.Where(p => p.Path == path).FirstOrDefault();
+
+            if (subtitle == null)
+            {
+                return null;
+            }
+
+            return subtitle.Id;
+        }
+
+        public override Subtitle Get(Expression<Func<Subtitle, bool>> predicator)
         {
             return _context.Subtitles.Where(predicator).FirstOrDefault();
         }
 
-        public void Create(Subtitle subtitle)
+        public override void Create(Subtitle subtitle)
         {
             if (subtitle == null)
             {
@@ -48,13 +65,13 @@ namespace Lingva.DataAccessLayer.Repositories
             _context.Subtitles.Add(subtitle);
         }
 
-        public void Update(Subtitle subtitle)
+        public override void Update(Subtitle subtitle)
         {
             _context.Subtitles.Attach(subtitle);
             _context.Entry(subtitle).State = EntityState.Modified;
         }
 
-        public void Delete(Subtitle subtitle)
+        public override void Delete(Subtitle subtitle)
         {
             if (_context.Entry(subtitle).State == EntityState.Detached)
             {

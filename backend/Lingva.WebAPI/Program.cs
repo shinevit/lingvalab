@@ -23,6 +23,7 @@ namespace Lingva.WebAPI
         public static void Main(string[] args)
         {
             _logger.Info("Program.Main: get started.");
+
             var host = BuildWebHost(args);
 #if DEBUG
             Console.WriteLine("Fill test data.");

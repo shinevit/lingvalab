@@ -14,10 +14,12 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private const string ERR_ARG_NULL_EXP_GET = "Tried to get null ParserWord record with null Name primary key.";
+        private const string ERR_ARG_NULL_EXP_GET = "Tried to get ParserWord record with a null Name primary key.";
         private const string ERR_ARG_NULL_EXP_UPDATE = "Tried to insert or update null ParserWord entity.";
         private const string ERR_ARG_NULL_EXP_CREATE = "Tried to create null ParserWord entity.";
         private const string ERR_ARG_NULL_EXP_CREATE_RANGE = "Tried to create null ParserWord range.";
+        private const string ERR_ARG_NULL_EXP_DELETE = "Tried to delete null ParserWord record.";
+        private const string ERR_ARG_NULL_EXP_CHECK = "Tried to check ParserWord record with null Name primary key for existence.";
         private const string EXP_GENERATED = "The ArgumentNullException exception is generated.";
 
         public RepositoryParserWord(DictionaryContext context)
@@ -29,7 +31,7 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             if(name == null)
             {
-                _logger.Error(ERR_ARG_NULL_EXP_GET);
+                _logger.ErrorException(ERR_ARG_NULL_EXP_GET, new ArgumentNullException(ERR_ARG_NULL_EXP_GET));
 
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP_GET);
             }
@@ -50,48 +52,69 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             if (word == null || string.IsNullOrEmpty(word.Name))
             {
+                _logger.ErrorException(ERR_ARG_NULL_EXP_CREATE, new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE));
+
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE); 
             }
 
             _context.ParserWords.Add(word);
+            _logger.Debug("The ParserWord record is added to the database.");
         }
 
         public override void Delete(ParserWord word)
         {
+            if (word == null)
+            {
+                _logger.ErrorException(ERR_ARG_NULL_EXP_DELETE, new ArgumentNullException(ERR_ARG_NULL_EXP_DELETE));
+
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_DELETE);
+            }
+
             if (_context.Entry(word).State == EntityState.Detached)
             {
                 _context.ParserWords.Attach(word);
             }
 
             _context.ParserWords.Remove(word);
+            _logger.Debug("The ParserWord record is deleted from the database.");
         }
 
         public void CreateRange(IEnumerable<ParserWord> words)
         {
             if (words == null)
             {
+                _logger.ErrorException(ERR_ARG_NULL_EXP_CREATE_RANGE, new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE_RANGE));
+
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE_RANGE);
             }
 
             _entities.AddRange(words);
+            _logger.Debug("The range of ParserWord records is added to the database.");
         }
-        public void InsertOrUpdate(ParserWord word)
+
+        public bool InsertOrUpdate(ParserWord word)
         {
             if (word == null || string.IsNullOrEmpty(word.Name))
             {
+                _logger.ErrorException(ERR_ARG_NULL_EXP_UPDATE, new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE));
+
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE); 
             }
 
             if (Exists(word.Name))
             {
-                //_context.Update(word);
-                _context.Entry(word).CurrentValues.SetValues(word);
+                _context.ParserWords.Update(word);
+                //_context.Entry(word).CurrentValues.SetValues(word);
 
-                return;
+                _logger.Debug("The ParserWord record is updated.");
+
+                return true;
             }
 
             _context.ParserWords.Add(word);
-           
+            _logger.Debug("The ParserWord record is added to the database.");
+
+            return false;
         }
 
         public bool Any()
@@ -99,9 +122,18 @@ namespace Lingva.DataAccessLayer.Repositories
             return _context.ParserWords.Any();
         }
 
-        public bool Exists(string wordName)
+        public bool Exists(string name)
         {
-            return _context.ParserWords.Any(w => w.Name == wordName);
+            if (name == null || string.IsNullOrEmpty(name))
+            {
+                _logger.ErrorException(ERR_ARG_NULL_EXP_CHECK, new ArgumentNullException(ERR_ARG_NULL_EXP_CHECK));
+
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_CHECK);
+            }
+
+            _logger.Debug("Check if there is any {name} ParserWord record in database.", name);
+
+            return _context.ParserWords.Any(w => w.Name == name);
         }
     }
 }

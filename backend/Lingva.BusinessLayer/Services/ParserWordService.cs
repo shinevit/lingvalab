@@ -1,6 +1,5 @@
 ﻿using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.DTO;
-using Lingva.BusinessLayer.SubtitlesParser.Classes;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
 using NLog;
@@ -20,6 +19,8 @@ namespace Lingva.BusinessLayer.Services
         private readonly string[] _separators = { " ", ",", ".", "!", "?", ";", ":", "<i>", "<h>" };
         private const string ERR_ARG_NULL_EXP_GET = "Tried to get ParserWord record with null Name primary key.";
         private const string EXP_GENERATED = "The ArgumentNullException exception is generated.";
+        private const string ERR_NULL_REF = "There is not any record in the ParserWords table the in database.";
+        private const string ERR_GET_ALL = "All ParserWords records is returned to the client side.";
 
         public ParserWordService(IUnitOfWorkParser unitOfWork)
         {
@@ -35,8 +36,8 @@ namespace Lingva.BusinessLayer.Services
         {
             if (String.IsNullOrEmpty(name))
             {
-                _logger.Error(ERR_ARG_NULL_EXP_GET);
-                _logger.Error(EXP_GENERATED);
+                _logger.Warn(ERR_ARG_NULL_EXP_GET);
+                _logger.Warn(EXP_GENERATED);
 
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP_GET);
             }
@@ -57,6 +58,17 @@ namespace Lingva.BusinessLayer.Services
 
         public IEnumerable<ParserWord> GetAllParserWords()
         {
+            IEnumerable<ParserWord> result = _unitOfWork.ParserWords.GetList();
+
+            if (result == null)
+            {
+                _logger.DebugException(ERR_NULL_REF, new NullReferenceException());
+
+                throw new NullReferenceException(ERR_NULL_REF);
+            }
+
+            _logger.Debug(ERR_GET_ALL);
+
             return _unitOfWork.ParserWords.GetList();
         }
 
@@ -137,7 +149,6 @@ namespace Lingva.BusinessLayer.Services
                 return;
             }
 
-            //_unitOfWork.ParserWords.Create(word);
             _unitOfWork.ParserWords.InsertOrUpdate(word);
 
             _unitOfWork.Save();

@@ -27,7 +27,6 @@ namespace Lingva.WebAPI.Controllers
         private IUserService _userService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
-        private BaseStatusDto _responseDto = new BaseStatusDto();
 
         public UsersController(
             IUserService userService,
@@ -55,7 +54,7 @@ namespace Lingva.WebAPI.Controllers
             SignInUserDto signInUser = _mapper.Map<SignInUserDto>(user);
             signInUser.Token = tokenString;
 
-            signInUser.CreateSucess();
+            signInUser.CreateSuccess();
 
             return Ok(signInUser);
         }
@@ -69,15 +68,12 @@ namespace Lingva.WebAPI.Controllers
             try
             {
                 await Task.Run(() => _userService.Create(user, userDto.Password));
-                _responseDto.CreateSucess();
 
-                return Ok(_responseDto);
+                return Ok(BaseStatusDto.CreateSuccessDto());
             }
             catch (UserServiceException ex)
             {
-                _responseDto.CreateError(ex.Message);
-
-                return BadRequest(_responseDto);
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message.ToString()));
             }
         }
 
@@ -86,7 +82,7 @@ namespace Lingva.WebAPI.Controllers
         {
             var users = await Task.Run(() => _userService.GetAll());
             var userDtos = _mapper.Map<IList<SignUpUserDto>>(users);
-            
+
             return Ok(userDtos);
         }
 
@@ -110,15 +106,12 @@ namespace Lingva.WebAPI.Controllers
             try
             {
                 await Task.Run(() => _userService.Update(user, userDto.Password));
-                _responseDto.CreateSucess();
 
-                return Ok(_responseDto);
+                return Ok(BaseStatusDto.CreateSuccessDto());
             }
             catch (UserServiceException ex)
             {
-                _responseDto.CreateError(ex.Message);
-
-                return BadRequest(_responseDto);
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message.ToString()));
             }
         }
 
@@ -126,16 +119,15 @@ namespace Lingva.WebAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await Task.Run(() => _userService.Delete(id));
-            _responseDto.CreateSucess();
 
-            return Ok(_responseDto);
+            return Ok(BaseStatusDto.CreateSuccessDto());
         }
 
         private async Task<IActionResult> GetUserInfo(int id)
         {
             var user = await Task.Run(() => _userService.GetById(id));
             var userDto = _mapper.Map<SignUpUserDto>(user);
-            userDto.CreateSucess();
+            userDto.CreateSuccess();
 
             return Ok(userDto);
         }

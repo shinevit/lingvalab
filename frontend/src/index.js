@@ -6,7 +6,7 @@ import Layout from './Layout/layout';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { store } from './_helpers';
+import { store } from './Helpers';
 import config from 'react-global-configuration';
 import apiSettings from './Config/apiSettings';
 
@@ -14,11 +14,9 @@ config.set(apiSettings);
 
 ReactDOM.render(
     <Provider store={store}>
-       
-    
-    <BrowserRouter>
-        <Layout />
-    </BrowserRouter>,
+        <BrowserRouter>
+            <Layout />
+        </BrowserRouter>,
     </Provider>,
 document.getElementById('root'));
 

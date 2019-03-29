@@ -1,4 +1,7 @@
-import { authHeader } from '../_helpers';
+import { authHeader } from '../Helpers';
+import config from 'react-global-configuration';
+import {configuration} from '../Constants';
+
 
 export const userService = {
     login,
@@ -6,10 +9,11 @@ export const userService = {
     register,
     getAll,
     getById,
-    update,
+    update,    
     delete: _delete
 };
-let url= 'http://localhost:4000'; 
+
+const url = configuration.url
 
 function login(username, password) {
     const requestOptions = {
@@ -17,11 +21,10 @@ function login(username, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
-
+       
     return fetch(`${url}/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
-
             sessionStorage.setItem('user', JSON.stringify(user));
 
             return user;
@@ -56,6 +59,7 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
+    debugger
     return fetch(`${url}/users/register`, requestOptions).then(handleResponse);
 }
 
@@ -82,12 +86,10 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
+            if (response.status === 401) {               
                 logout();           
                 window.location.reload(true);     
             }
-
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

@@ -1,7 +1,6 @@
-import { userConstants } from '../_constants';
-import { userService } from '../_services';
+import { userConstants } from '../Constants';
+import { userService } from '../Services';
 import { alertActions } from './';
-import { history } from '../_helpers';
 
 export const userActions = {
     login,
@@ -79,7 +78,6 @@ function getAll() {
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
 
-// prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
     return dispatch => {
         dispatch(request(id));

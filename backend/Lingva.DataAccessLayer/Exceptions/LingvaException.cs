@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Lingva.DataAccessLayer
+namespace Lingva.DataAccessLayer.Exceptions
 {
     public class LingvaException : Exception
     {

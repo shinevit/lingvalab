@@ -27,15 +27,18 @@ namespace Lingva.WebAPI
         }
 
         public IConfiguration Configuration { get; }
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
+            services.ConfigureJwt(Configuration);
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
             services.ConfigureMVC();
+            services.ConfigureServices();
 
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
@@ -57,7 +60,6 @@ namespace Lingva.WebAPI
             services.AddScoped<IWordService, WordService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             // loggerFactory.AddProvider(); // TODO: use Serilog

@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Lingva.BusinessLayer.WordsSelector;
 
-
 namespace Lingva.WebAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -39,11 +38,7 @@ namespace Lingva.WebAPI.Controllers
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 
-            //    //TODO: Save words to BD, and binding to same film
-
-            return words;
-           
-
+            return words;           
         }
     }
 }

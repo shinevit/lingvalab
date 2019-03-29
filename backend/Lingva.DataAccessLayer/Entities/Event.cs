@@ -13,10 +13,7 @@ namespace Lingva.DataAccessLayer.Entities
         [Required]
         [StringLength(250)]
         public string Name { get; set; }
-
-        [StringLength(50)]
-        public string Tag { get; set; }
-
+        
         public DateTime Date { get; set; }
         
         public int? FilmId { get; set; }
@@ -26,5 +23,13 @@ namespace Lingva.DataAccessLayer.Entities
         public int? SubtitleId { get; set; }
 
         public virtual Subtitle Subtitle { get; set; }
+
+        public virtual ICollection<Group> Groups { get; set; }
+
+        public Event()
+        {
+            Groups = new List<Group>();
+
+        }
     }
 }

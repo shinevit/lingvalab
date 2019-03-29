@@ -25,8 +25,7 @@ namespace Lingva.WebAPI.Controllers
         public async Task<IActionResult> Get(int FilmID)
         {
             try
-            {                
-                ;
+            {
                 return Ok(await Task.Run(() => 
                     _FilmService.GetFilmInfo(FilmID)));
             }

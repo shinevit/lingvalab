@@ -76,6 +76,7 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IUnitOfWorkParser, UnitOfWorkParser>();
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
             services.AddScoped<IUnitOfWorkFilm, UnitOfWorkFilm>();
+            services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
@@ -97,7 +98,7 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
 
             services.AddScoped<IRepositoryRole, RepositoryRole>();
-            services.AddScoped<IRepositoryGroup, RepositoryGroup>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IRepositoryEvent, RepositoryEvent>();
         }
 

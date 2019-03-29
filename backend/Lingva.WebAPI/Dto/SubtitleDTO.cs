@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lingva.BusinessLayer.DTO
+namespace Lingva.WebAPI.Dto
 {
     public class SubtitleDTO
     {
@@ -12,6 +12,5 @@ namespace Lingva.BusinessLayer.DTO
         public int? FilmId { get; set; }
 
         public string LanguageName { get; set; }
-        public IEnumerable<SubtitleRow> SubtitleRows { get; set; }
     }
 }

@@ -49,6 +49,8 @@ namespace Lingva.BusinessLayer.Services
             if(parserWord == null)
             {
                 _logger.Info($"There is no ParserWord record with \"{name}\" in the ParserWords table.");
+
+                return null;
             }
 
             _logger.Info("Attempt to get \"{name}\" record from ParserWords table succeeded.");

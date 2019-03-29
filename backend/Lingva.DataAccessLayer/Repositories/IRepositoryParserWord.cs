@@ -9,8 +9,6 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         bool InsertOrUpdate(ParserWord word);
 
-        bool Exists(string wordName);
-
         bool Any();
 
         void CreateRange(IEnumerable<ParserWord> words);

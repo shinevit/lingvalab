@@ -75,7 +75,7 @@ namespace Lingva.WebAPI.Initializer
 
             foreach (ParserWord word in _parserWords)
             {
-                if(unitOfWork.ParserWords.Exists(word.Name))
+                if(unitOfWork.ParserWords.Get(w => w.Name == word.Name) != null)
                 {
                     unitOfWork.ParserWords.Delete(word);
                 }
@@ -93,7 +93,7 @@ namespace Lingva.WebAPI.Initializer
 
             foreach (SubtitleRow row in _subtitleRows)
             {
-                if (unitOfWork.SubtitleRows.Exists(row.Value))
+                if (unitOfWork.SubtitleRows.Get(n => n.Value == row.Value) != null)
                 {
                     unitOfWork.SubtitleRows.Delete(row);
                 }

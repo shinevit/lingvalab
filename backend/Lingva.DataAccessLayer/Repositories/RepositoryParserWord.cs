@@ -92,26 +92,28 @@ namespace Lingva.DataAccessLayer.Repositories
             _logger.Debug("The range of ParserWord records is added to the database.");
         }
 
-        public bool InsertOrUpdate(ParserWord word)
+        public bool InsertOrUpdate(ParserWord wordUpdate)
         {
-            if (word == null || string.IsNullOrEmpty(word.Name))
+            if (wordUpdate == null || string.IsNullOrEmpty(wordUpdate.Name))
             {
                 _logger.ErrorException(ERR_ARG_NULL_EXP_UPDATE, new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE));
 
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE); 
             }
 
-            if (Exists(word.Name))
+            ParserWord wordDB = Get(w => w.Name == wordUpdate.Name);
+
+            if (wordDB != null)
             {
-                _context.ParserWords.Update(word);
-                //_context.Entry(word).CurrentValues.SetValues(word);
+                //_context.ParserWords.Update(word);
+                _context.Entry(wordDB).CurrentValues.SetValues(wordUpdate);
 
                 _logger.Debug("The ParserWord record is updated.");
 
                 return true;
             }
 
-            _context.ParserWords.Add(word);
+            _context.ParserWords.Add(wordUpdate);
             _logger.Debug("The ParserWord record is added to the database.");
 
             return false;
@@ -120,20 +122,6 @@ namespace Lingva.DataAccessLayer.Repositories
         public bool Any()
         {
             return _context.ParserWords.Any();
-        }
-
-        public bool Exists(string name)
-        {
-            if (name == null || string.IsNullOrEmpty(name))
-            {
-                _logger.ErrorException(ERR_ARG_NULL_EXP_CHECK, new ArgumentNullException(ERR_ARG_NULL_EXP_CHECK));
-
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP_CHECK);
-            }
-
-            _logger.Debug("Check if there is any {name} ParserWord record in database.", name);
-
-            return _context.ParserWords.Any(w => w.Name == name);
         }
     }
 }

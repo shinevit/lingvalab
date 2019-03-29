@@ -53,6 +53,7 @@ namespace Lingva.WebAPI
                         return null;
                 }
             });
+
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
             services.AddScoped<IParserWordService, ParserWordService>();
         }
@@ -60,8 +61,6 @@ namespace Lingva.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // loggerFactory.AddProvider(); // TODO: use Serilog
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

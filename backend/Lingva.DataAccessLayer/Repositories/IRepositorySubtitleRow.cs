@@ -9,8 +9,6 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         void InsertOrUpdate(SubtitleRow subtitle);
 
-        bool Exists(string value);
-
         bool Any();
     }
 }

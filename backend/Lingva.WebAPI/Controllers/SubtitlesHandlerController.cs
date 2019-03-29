@@ -21,8 +21,8 @@ namespace Lingva.WebAPI.Controllers
     public class SubtitlesHandlerController : ControllerBase
     {
         private readonly ISubtitlesHandlerService _subtitleService;
-
         private readonly IParserWordService _wordService;
+
         private readonly IMapper _mapper;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -31,6 +31,7 @@ namespace Lingva.WebAPI.Controllers
             _subtitleService = parser;
         }
 
+        //GET: api/subtitle/3
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSubtitleById([FromRoute] int id)
         {
@@ -43,18 +44,106 @@ namespace Lingva.WebAPI.Controllers
                 }); 
             }
 
-            DictionaryRecord dictionaryRecord = _dictionaryService.GetDictionaryRecord(id);
+            Subtitle subtitle = _subtitleService.GetSubtitleById(id);
 
-            if (dictionaryRecord == null)
+            if (subtitle == null)
             {
-                return NotFound();
+                return BadRequest(new BaseClassDTO
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Message = $"There is no a Subtitle record with Id = {id} in the Subtitles table."
+                });
             }
 
-            return Ok(_mapper.Map<DictionaryRecordViewDTO>(dictionaryRecord));
+            SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
+
+            return Ok( new BaseClassDTO
+            {
+                Status = StatusCodes.Status200OK,
+                Message = "GET request by Subtitle Id succeeds.",
+                Data = subtitleDTO
+            });
         }
 
+        //GET: api/subtitle/path
+        [HttpGet]
+        [Route("path")]
+        public async Task<IActionResult> GetSubtitleByPath([FromBody] string path)
+        {
+            if (!ModelState.IsValid || string.IsNullOrEmpty(path))
+            {
+                return BadRequest(new BaseClassDTO
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Message = "The Path of the subtitle is incorrect."
+                });
+            }
+
+            Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);
+
+            if (subtitle == null)
+            {
+                return BadRequest(new BaseClassDTO
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Message = $"There is no any Subtitle record with Path = {path} in the Subtitles table."
+                });
+            }
+
+            SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
+
+            return Ok(new BaseClassDTO
+            {
+                Status = StatusCodes.Status200OK,
+                Message = "GET request by Subtitle Path succeeds.",
+                Data = subtitleDTO
+            });
+        }
+
+        //POST: api/subtitle/add
         [HttpPost]
-        public IActionResult Post([FromBody]SubtitleDTO subtitleDto)
+        [Route("add")]
+        public async Task<IActionResult> AddSubtitle([FromBody]SubtitleDTO subtitleDto)
+        {
+            if (!ModelState.IsValid || subtitleDto == null)
+            {
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = "ModelState is not valid or the SubtitleDTO object is null."
+                });
+            }
+
+            try
+            {
+                Subtitle subtitle = _mapper.Map<Subtitle>(subtitleDto);
+
+                await Task.Run(() => _subtitleService.AddSubtitle(subtitle));
+
+                return Ok(new BaseClassDTO
+                {
+                    Status = StatusCodes.Status200OK,
+                    Message = "Subtitle record is created successfully.",
+                    Data = subtitleDto
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.Debug($"{ex.GetType()} exception is generated.");
+                _logger.Debug($"{ex.Message}");
+
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status400BadRequest,
+                    message = ex.Message
+                });
+            }
+        }
+
+        //POST: api/subtitle/parse
+        [HttpPost]
+        [Route("parse")]
+        public async Task<IActionResult> PostParse([FromBody]SubtitleDTO subtitleDto)
         {
             if (!ModelState.IsValid || subtitleDto == null)
             {
@@ -69,18 +158,16 @@ namespace Lingva.WebAPI.Controllers
             {
                 Subtitle subtitle = _mapper.Map<Subtitle>(subtitleDto);
 
-                IEnumerable<SubtitleRow>  rows =_subtitleService.ParseSubtitle(subtitle);
+                IEnumerable<SubtitleRow>  rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
 
                 if (rows == null)
                 {
                     return BadRequest(new BaseClassDTO
                     {
                         Status = StatusCodes.Status400BadRequest,
-                        Message = "There are not any rows from parsing subtitle by the ParserWordService."
+                        Message = "There are no any rows from parsing subtitle by the ParserWordService."
                     }); 
                 }
-
-                IEnumerable<SubtitlesRowDTO> rowDTOs = _mapper.Map<IEnumerable<SubtitlesRowDTO>>(rows);
 
                 return  Ok(new BaseClassDTO
                 {
@@ -100,5 +187,7 @@ namespace Lingva.WebAPI.Controllers
                 });
             }
         }
+
+
     }
 }

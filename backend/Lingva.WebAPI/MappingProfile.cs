@@ -41,9 +41,6 @@ namespace Lingva.WebAPI
 
             CreateMap<User, AuthenticateUserDto>();
             CreateMap<AuthenticateUserDto, User>();
-
-            CreateMap<SubtitleDTO, Subtitle>();
-            CreateMap<Subtitle, SubtitleDTO>();
         }
     }
 }

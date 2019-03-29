@@ -252,8 +252,6 @@ namespace Lingva.DataAccessLayer.Migrations
 
                     b.Property<string>("LanguageName");
 
-                    b.Property<int>("LineNumber");
-
                     b.Property<TimeSpan>("StartTime");
 
                     b.Property<int?>("SubtitleId");
@@ -362,7 +360,7 @@ namespace Lingva.DataAccessLayer.Migrations
             modelBuilder.Entity("Lingva.DataAccessLayer.Entities.ParserWord", b =>
                 {
                     b.HasOne("Lingva.DataAccessLayer.Entities.SubtitleRow", "SubtitleRow")
-                        .WithMany("Words")
+                        .WithMany("ParserWords")
                         .HasForeignKey("SubtitleRowId");
                 });
 

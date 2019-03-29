@@ -16,7 +16,10 @@ using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
 using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
+using Swashbuckle.AspNetCore.Swagger;
 using Lingva.DataAccessLayer.InitializeWithTestData;
+using System.Reflection;
+using System.IO;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -30,6 +33,29 @@ namespace Lingva.WebAPI.Extensions
 
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue));
+        }
+
+        public static void ConfigureDependencyInjection(this IServiceCollection services)
+        {
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IFilmService, FilmService>();
+        }
+
+        public static void ConfigureSwagger(this IServiceCollection services, IConfiguration Configuration)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Lingvalab",
+                    Version = "v1",
+                    Description = "Demo app of Dp-155 .NET"
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         public static void ConfigureCors(this IServiceCollection services)
@@ -49,6 +75,7 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IUnitOfWorkDictionary, UnitOfWorkDictionary>();
             services.AddScoped<IUnitOfWorkParser, UnitOfWorkParser>();
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
+            services.AddScoped<IUnitOfWorkFilm, UnitOfWorkFilm>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)

@@ -35,6 +35,8 @@ namespace Lingva.WebAPI
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork();
+            services.ConfigureJwt(Configuration);
+            services.ConfigureSwagger(Configuration);
             services.ConfigureRepositories();
             services.ConfigureMVC();
 
@@ -56,6 +58,7 @@ namespace Lingva.WebAPI
             });
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
             services.AddScoped<IWordService, WordService>();
+            services.AddScoped<IFilmService, FilmService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,12 +73,14 @@ namespace Lingva.WebAPI
 
             app.UseCors("CorsPolicy"); // TODO: add required
             app.UseStaticFiles();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("./v1/swagger.json", "Lingvalab V1");
+            });
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseMvc();
-
-            DbInitializer.InitializeParserWords(app);
+            app.UseMvc(); 
         }
-       
     }
 }

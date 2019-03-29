@@ -38,8 +38,26 @@ namespace Lingva.WebAPI.Controllers
             _appSettings = appSettings.Value;
         }
 
+        /// <summary>
+        /// Authentificates user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /user 
+        ///     {
+        ///        "id": 1,
+        ///        "name": "Item1",
+        ///        "isComplete": true
+        ///     }
+        ///
+        /// </remarks>
         [AllowAnonymous]
         [HttpPost("authenticate")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(505)]
         public async Task<IActionResult> Authenticate([FromBody]AuthenticateUserDto userDto)
         {
             var user = await Task.Run(() => _userService.Authenticate(userDto.Username, userDto.Password));

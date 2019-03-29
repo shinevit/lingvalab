@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Lingva.WebAPI
 {
+#pragma warning disable CS1591
     public class Program
     {
         public static void Main(string[] args)
@@ -28,5 +29,5 @@ namespace Lingva.WebAPI
                 .Build();
 
     }
-
+#pragma warning restore CS1591
 }

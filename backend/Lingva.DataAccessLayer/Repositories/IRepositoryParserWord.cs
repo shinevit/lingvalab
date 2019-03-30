@@ -11,6 +11,8 @@ namespace Lingva.DataAccessLayer.Repositories
 
         bool Any();
 
+        bool Exists(string name);
+
         void CreateRange(IEnumerable<ParserWord> words);
     }
 }

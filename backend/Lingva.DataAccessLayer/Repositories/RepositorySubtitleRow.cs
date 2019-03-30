@@ -2,6 +2,7 @@
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,6 +12,7 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositorySubtitleRow : Repository<SubtitleRow> ,IRepositorySubtitleRow
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
         private const string ERR_ARG_NULL_EXP = "Tried to insert null SubtitleRow entity!";
 
         public RepositorySubtitleRow(DictionaryContext context)
@@ -82,6 +84,19 @@ namespace Lingva.DataAccessLayer.Repositories
         public bool Any()
         {
             return _context.SubtitleRows.Any();
+        }
+
+        public bool Exists(string value)
+        {
+            if(string.IsNullOrEmpty(value))
+            {
+                _logger.Warn("Tried to check the SubtitleRow record with Value is empty or null for existence.", 
+                    new ArgumentNullException());
+
+                throw new ArgumentNullException("Tried to check the SubtitleRow record with Value is empty or null for existence.");
+            }
+
+            return _context.SubtitleRows.Any(r => r.Value == value);
         }
     }
 }

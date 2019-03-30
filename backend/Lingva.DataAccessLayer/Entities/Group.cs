@@ -12,19 +12,15 @@ namespace Lingva.DataAccessLayer.Entities
         [StringLength(250)]
         public string Name { get; set; }
 
-        public int? UserId { get; set; }
-
-        public virtual User Users { get; set; }
-
         public int? EventId { get; set; }
 
         public virtual Event Event { get; set; }
 
-        public IEnumerable<User> Participants { get; set; }
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
 
         public Group()
         {
-            Participants = new List<User>();
+            UserGroups = new List<UserGroup>();
         }
     }
 }

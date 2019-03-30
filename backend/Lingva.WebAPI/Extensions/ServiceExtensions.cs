@@ -70,7 +70,6 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositoryParserWord, RepositoryParserWord>();
             services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
 
-            services.AddScoped<IRepositoryRole, RepositoryRole>();
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();
             services.AddScoped<IRepositoryEvent, RepositoryEvent>();
         }

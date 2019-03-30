@@ -123,6 +123,19 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             return _context.ParserWords.Any();
         }
+
+        public bool Exists(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                _logger.Warn("Tried to check the ParserWord record with Value is empty or null for existence.",
+                    new ArgumentNullException());
+
+                throw new ArgumentNullException("Tried to check the ParserWord record with Value is empty or null for existence.");
+            }
+
+            return _context.ParserWords.Any(w => w.Name == name);
+        }
     }
 }
 

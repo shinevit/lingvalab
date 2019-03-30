@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lingva.BusinessLayer.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Lingva.BusinessLayer.Interfaces;

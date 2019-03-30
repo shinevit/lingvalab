@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lingva.BusinessLayer.Interfaces
+namespace Lingva.BusinessLayer.Contracts
 {
     public interface ICommonWord : IDisposable
     {

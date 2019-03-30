@@ -5,13 +5,6 @@ namespace Lingva.DataAccessLayer.Context
 {
     public class DictionaryContext : DbContext
     {
-        public DictionaryContext(DbContextOptions options)
-            : base(options)
-        {
-            // Database.EnsureDeleted();
-            // Database.EnsureCreated();
-        }
-
         public DbSet<DictionaryRecord> Dictionary { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Language> Languages { get; set; }
@@ -26,6 +19,12 @@ namespace Lingva.DataAccessLayer.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Event> Events { get; set; }
+
+        public DictionaryContext(DbContextOptions<DictionaryContext> options)
+            : base(options)
+        {
+
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using Lingva.BusinessLayer;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Lingva.BusinessLayer.Services;
+using Microsoft.IdentityModel.Protocols;
 using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -69,6 +67,11 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositoryRole, RepositoryRole>();
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();
             services.AddScoped<IRepositoryEvent, RepositoryEvent>();
+        }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();           
         }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)

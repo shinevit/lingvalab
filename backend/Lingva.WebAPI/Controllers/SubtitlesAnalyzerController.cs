@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Lingva.BusinessLayer.Interfaces;
 using Lingva.BusinessLayer.WordsSelector;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +21,12 @@ namespace Lingva.WebAPI.Controllers
             }
 
             ICommonWord conection = new CommonWord();
-            var analyzer = new Analyzer(conection);
-            var words = analyzer.ParseToWords(allText);
+            Analyzer analyzer = new BusinessLayer.WordsSelector.Analyzer(conection);
+            List<BusinessLayer.WordsSelector.Word> words = analyzer.ParseToWords(allText);
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 
-            //TODO: Save words to BD, and binding to same film
-
-            return words;
+            return words;           
         }
     }
 }

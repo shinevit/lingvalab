@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace Lingva.DataAccessLayer
+namespace Lingva.DataAccessLayer.Exceptions
 {
     public class LingvaException : Exception
     {

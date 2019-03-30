@@ -63,7 +63,6 @@ namespace Lingva.DataAccessLayer.Repositories
             }
 
             _entities.Attach(entity);
-
             _context.Entry(entity).State = EntityState.Modified;
         }
 
@@ -83,7 +82,6 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 _entities.Attach(entity);
             }
-
             _entities.Remove(entity);
         }
     }

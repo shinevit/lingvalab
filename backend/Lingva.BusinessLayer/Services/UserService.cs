@@ -134,7 +134,6 @@ namespace Lingva.BusinessLayer.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-
             return tokenString;
         }
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
@@ -184,6 +183,6 @@ namespace Lingva.BusinessLayer.Services
 
             return true;
         }
-
+        
     }
 }

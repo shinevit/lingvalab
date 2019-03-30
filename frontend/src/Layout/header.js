@@ -21,7 +21,7 @@ class Header extends Component {
     }
 
     handleLogin = () => {
-        if (this.state.userLoggedIn == true || this.state.userLoggedIn == "true") {
+        if (this.state.userLoggedIn === true || this.state.userLoggedIn === "true") {
             this.setState({
                 userLoggedIn: false
             });
@@ -42,7 +42,7 @@ class Header extends Component {
     }
 
     getCurrentHeader = (logged) => {        
-        if (logged == true || logged == "true") {
+        if (logged === true || logged === "true") {
             return <HeaderSigned loginMethod = {this.handleLogin}/>;
         } else {
             return <HeaderUnsigned loginMethod = {this.handleLogin}/>;            
@@ -70,7 +70,8 @@ class HeaderUnsigned extends Component {
                     </a>
                 </Col>
                 <Col>                
-                    <ButtonToolbar className="head-toolbar">                                        
+                    <ButtonToolbar className="head-toolbar">
+                        <Button onClick={this.props.loginMethod}>Login Stub</Button>                                        
                         <Button href="/login">Login</Button>
                         <Button href="/about">About Us</Button>                            
                     </ButtonToolbar>
@@ -93,8 +94,9 @@ class HeaderSigned extends Component {
                     <ButtonToolbar className="head-toolbar">
                         <Button href="/home">Home</Button>
                         <Button href="/events">Events</Button>
-                        <Button href="/media">Media</Button>                        
-                        <Button href="/" onClick={this.props.loginMethod}>Log off</Button>
+                        <Button href="/media">Media</Button>
+                        <Button href="/userProfile">My Profile</Button>                        
+                        <Button href="/" onClick={this.props.loginMethod}>Log off</Button>                        
                     </ButtonToolbar>
                 </Col>
             </Row>

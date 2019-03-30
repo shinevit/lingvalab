@@ -66,7 +66,6 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void InsertOrUpdate(SubtitleRow subtitle)
         {
-            if (subtitle == null || string.IsNullOrEmpty(subtitle.Value))
             {
                 return;
             }
@@ -86,5 +85,7 @@ namespace Lingva.DataAccessLayer.Repositories
         }
     }
 }
+
+
 
 

@@ -49,7 +49,7 @@ namespace Lingva.WebAPI
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration()
-                //.UseUrls("http://localhost:5000")
+                .UseUrls("http://localhost:5000")
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .ConfigureLogging(logging =>
                 {

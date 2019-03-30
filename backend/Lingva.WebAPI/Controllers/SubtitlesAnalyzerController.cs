@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.WordsSelector;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace Lingva.WebAPI.Controllers
 
             ICommonWord conection = new CommonWord();
             Analyzer analyzer = new BusinessLayer.WordsSelector.Analyzer(conection);
-            List<BusinessLayer.WordsSelector.Word> words = analyzer.ParseToWords(allText);
+            List<Word> words = analyzer.ParseToWords(allText);
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 

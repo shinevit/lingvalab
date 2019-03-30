@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
 using Lingva.WebAPI.Helpers;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.BusinessLayer.Services;
-using Lingva.DataAccessLayer;
-using System.Threading.Tasks;
+using Lingva.DataAccessLayer.Exceptions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Lingva.WebAPI.Controllers
 {

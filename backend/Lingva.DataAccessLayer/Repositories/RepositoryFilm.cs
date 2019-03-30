@@ -16,6 +16,7 @@ namespace Lingva.DataAccessLayer.Repositories
         public RepositoryFilm(DictionaryContext context)
            :base(context)
         {
+            _context = context;
         }
         
         public IQueryable<Film> GetList()

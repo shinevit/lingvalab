@@ -17,6 +17,7 @@ using NLog;
 
 namespace Lingva.WebAPI
 {
+#pragma warning disable CS1591
     public class Program
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
@@ -60,5 +61,5 @@ namespace Lingva.WebAPI
                 .Build();
 
     }
-
+#pragma warning restore CS1591
 }

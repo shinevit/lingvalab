@@ -36,6 +36,8 @@ namespace Lingva.WebAPI
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork();
+            services.ConfigureJwt(Configuration);
+            services.ConfigureSwagger(Configuration);
             services.ConfigureRepositories();
             services.ConfigureMVC();
             services.ConfigureServices();
@@ -58,7 +60,12 @@ namespace Lingva.WebAPI
             });
 
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
+<<<<<<< HEAD
             services.AddScoped<IParserWordService, ParserWordService>();
+=======
+            services.AddScoped<IWordService, WordService>();
+            services.AddScoped<IFilmService, FilmService>();
+>>>>>>> origin/feature-movie-info
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -70,11 +77,21 @@ namespace Lingva.WebAPI
             
             app.UseCors("CorsPolicy"); 
             app.UseStaticFiles();
+<<<<<<< HEAD
             //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
 
+=======
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("./v1/swagger.json", "Lingvalab V1");
+            });
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseMvc(); 
+>>>>>>> origin/feature-movie-info
         }
-       
     }
 }

@@ -12,7 +12,6 @@ using Lingva.WebAPI.Dto;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Lingva.BusinessLayer.WordsSelector;
-using Lingva.BusinessLayer.Interfaces;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -27,21 +26,19 @@ namespace Lingva.WebAPI.Controllers
                 return null;
             }
 
-            string allText; 
+            string allText;
             using (StreamReader txt = new StreamReader(upload.OpenReadStream()))
             {
                 allText = txt.ReadToEnd();
             }
 
             ICommonWord conection = new CommonWord();
-            Analyzer analyzer = new Analyzer(conection);
+            Analyzer analyzer = new BusinessLayer.WordsSelector.Analyzer(conection);
             List<BusinessLayer.WordsSelector.Word> words = analyzer.ParseToWords(allText);
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 
-            //TODO: Save words to BD, and binding to same film
-
-            return words;
+            return words;           
         }
     }
 }

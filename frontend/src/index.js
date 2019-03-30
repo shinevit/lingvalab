@@ -4,15 +4,20 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Layout from './Layout/layout';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+import { store } from './Helpers';
 import config from 'react-global-configuration';
 import apiSettings from './Config/apiSettings';
 
 config.set(apiSettings);
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Layout />
-    </BrowserRouter>,
+    <Provider store={store}>
+        <BrowserRouter>
+            <Layout />
+        </BrowserRouter>,
+    </Provider>,
 document.getElementById('root'));
 
 

@@ -14,6 +14,7 @@ using Lingva.BusinessLayer.Contracts;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
+using Microsoft.IdentityModel.Protocols;
 using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
 using Lingva.DataAccessLayer.InitializeWithTestData;
@@ -27,7 +28,7 @@ namespace Lingva.WebAPI.Extensions
             string configStringValue = config.GetConnectionString("LingvaConnection");
             string configVariableName = configStringValue.GetVariableName();
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
-
+                       
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue));
         }
@@ -72,6 +73,11 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositoryRole, RepositoryRole>();
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();
             services.AddScoped<IRepositoryEvent, RepositoryEvent>();
+        }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();           
         }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)

@@ -37,32 +37,21 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new BaseClassDTO
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Message = "Id of subtitle is incorrect."
-                }); 
+                return BadRequest(BaseStatusDTO.CreateErrorDto("Id of subtitle is incorrect."));
             }
 
             Subtitle subtitle = _subtitleService.GetSubtitleById(id);
 
             if (subtitle == null)
             {
-                return BadRequest(new BaseClassDTO
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Message = $"There is no a Subtitle record with Id = {id} in the Subtitles table."
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto($"There is no a Subtitle record with Id = {id} in the Subtitles table."));
             }
 
             SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
+            subtitleDTO.CreateSuccess("GET request by Subtitle Id succeeds.");
 
-            return Ok( new BaseClassDTO
-            {
-                Status = StatusCodes.Status200OK,
-                Message = "GET request by Subtitle Id succeeds.",
-                Data = subtitleDTO
-            });
+            return Ok(subtitleDTO);
+            
         }
 
         //GET: api/subtitle/path
@@ -72,32 +61,20 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || string.IsNullOrEmpty(path))
             {
-                return BadRequest(new BaseClassDTO
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Message = "The Path of the subtitle is incorrect."
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto("The Path of the subtitle is incorrect."));
             }
 
             Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);
 
             if (subtitle == null)
             {
-                return BadRequest(new BaseClassDTO
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Message = $"There is no any Subtitle record with Path = {path} in the Subtitles table."
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto(
+                    $"There is no any Subtitle record with Path = {path} in the Subtitles table."));
             }
 
             SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
-
-            return Ok(new BaseClassDTO
-            {
-                Status = StatusCodes.Status200OK,
-                Message = "GET request by Subtitle Path succeeds.",
-                Data = subtitleDTO
-            });
+            subtitleDTO.CreateSuccess("GET request by Subtitle Path succeeds.");
+            return Ok(subtitleDTO);
         }
 
         //POST: api/subtitle/add
@@ -107,11 +84,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || subtitleDto == null)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = "ModelState is not valid or the SubtitleDTO object is null."
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto("ModelState is not valid or the SubtitleDTO object is null."));
             }
 
             try
@@ -120,23 +93,16 @@ namespace Lingva.WebAPI.Controllers
 
                 await Task.Run(() => _subtitleService.AddSubtitle(subtitle));
 
-                return Ok(new BaseClassDTO
-                {
-                    Status = StatusCodes.Status200OK,
-                    Message = "Subtitle record is created successfully.",
-                    Data = subtitleDto
-                });
+                subtitleDto.CreateSuccess("Subtitle record is created successfully.");
+
+                return Ok(subtitleDto);
             }
             catch (Exception ex)
             {
                 _logger.Debug($"{ex.GetType()} exception is generated.");
                 _logger.Debug($"{ex.Message}");
 
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto(ex.Message));
             }
         }
 
@@ -147,11 +113,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || subtitleDto == null)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = "WordParserDTO request object is not correct."
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto("WordParserDTO request object is not correct."));
             }
 
             try
@@ -162,32 +124,19 @@ namespace Lingva.WebAPI.Controllers
 
                 if (rows == null)
                 {
-                    return BadRequest(new BaseClassDTO
-                    {
-                        Status = StatusCodes.Status400BadRequest,
-                        Message = "There are no any rows from parsing subtitle by the ParserWordService."
-                    }); 
+                    return BadRequest(BaseStatusDTO.CreateSuccessDto(
+                        "There are no any rows from parsing subtitle by the ParserWordService."));
                 }
 
-                return  Ok(new BaseClassDTO
-                {
-                    Status = StatusCodes.Status200OK,
-                    Message = "Subtitle parsing operation is successful."
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto("Subtitle parsing operation is successful."));
             }
             catch (Exception ex)
             {
                 _logger.Debug($"{ex.GetType()} exception is generated.");
                 _logger.Debug($"{ex.Message}");
 
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message
-                });
+                return BadRequest(BaseStatusDTO.CreateErrorDto(ex.Message));
             }
         }
-
-
     }
 }

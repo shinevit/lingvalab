@@ -26,7 +26,7 @@ namespace Lingva.DataAccessLayer.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -47,10 +47,6 @@ namespace Lingva.DataAccessLayer.Context
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<UserGroup>().ToTable("UserGroups");
 
-            //------------------------
-            modelBuilder.Entity<UserGroup>()
-               .HasKey(ug => new { ug.UserId, ug.GroupId });
-
             modelBuilder.Entity<UserGroup>()
                 .HasOne<Group>(ug => ug.Group)
                 .WithMany(g => g.UserGroups)
@@ -60,7 +56,7 @@ namespace Lingva.DataAccessLayer.Context
                .HasOne<User>(ug => ug.User)
                .WithMany(g => g.UserGroups)
                .HasForeignKey(ug => ug.UserId);
-            //---------------------
+
             modelBuilder.Entity<Film>()
                 .HasMany(s => s.Subtitles)
                 .WithOne(f => f.Film)

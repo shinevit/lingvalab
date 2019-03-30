@@ -12,24 +12,49 @@ namespace Lingva.DataAccessLayer.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        
         [StringLength(50)]
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        [Required]
         public string Username { get; set; }
-        [MaxLength(16)]
+
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
         [ForeignKey("UserId")]
         public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
 
-        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
 
         public User()
         {
             UserDictionaryRecords = new List<DictionaryRecord>();
-            Groups = new List<Group>();
+            UserGroups = new List<UserGroup>();
         }
+
+        //[Key]
+        //public int Id { get; set; }
+
+        //[Required]
+        //[StringLength(50)]
+        //public string FirstName { get; set; }
+        //[Required]
+        //[StringLength(50)]
+        //public string LastName { get; set; }
+        //[Required]
+        //[StringLength(50)]
+        //public string Username { get; set; }
+        //public byte[] PasswordHash { get; set; }
+        //public byte[] PasswordSalt { get; set; }
+
+        //[ForeignKey("UserId")]
+        //public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
+
+        //public User()
+        //{
+        //    UserDictionaryRecords = new List<DictionaryRecord>();
+        //}
     }
 }

@@ -35,7 +35,6 @@ namespace Lingva.WebAPI.Controllers
         // GET: api/parser/car
         [HttpGet("{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetParserWord(string name)
         {

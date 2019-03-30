@@ -28,8 +28,8 @@ namespace Lingva.WebAPI
 
                 var host = BuildWebHost(args);
 #if DEBUG
-                _logger.Debug("Fill test data.");
-                _logger.Debug("Set initial test data.");
+                //_logger.Debug("Fill test data.");
+                //_logger.Debug("Set initial test data.");
 
                 //var unitOfWork = host.Services.GetService<IUnitOfWorkParser>();
 

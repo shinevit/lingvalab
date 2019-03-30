@@ -20,14 +20,13 @@ namespace Lingva.DataAccessLayer.Context
         public DbSet<ParserWord> ParserWords { get; set; }
         public DbSet<SimpleEnWord> SimpleEnWords { get; set; }
         public DbSet<DictionaryEnWord> DictionaryEnWords { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Event> Events { get; set; }
 
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -46,8 +45,22 @@ namespace Lingva.DataAccessLayer.Context
             modelBuilder.Entity<Group>().ToTable("Groups");
             modelBuilder.Entity<Language>().ToTable("Languages");
             modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<UserGroup>().ToTable("UserGroups");
 
+            //------------------------
+            modelBuilder.Entity<UserGroup>()
+               .HasKey(ug => new { ug.UserId, ug.GroupId });
+
+            modelBuilder.Entity<UserGroup>()
+                .HasOne<Group>(ug => ug.Group)
+                .WithMany(g => g.UserGroups)
+                .HasForeignKey(ug => ug.GroupId);
+
+            modelBuilder.Entity<UserGroup>()
+               .HasOne<User>(ug => ug.User)
+               .WithMany(g => g.UserGroups)
+               .HasForeignKey(ug => ug.UserId);
+            //---------------------
             modelBuilder.Entity<Film>()
                 .HasMany(s => s.Subtitles)
                 .WithOne(f => f.Film)

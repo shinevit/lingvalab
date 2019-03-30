@@ -74,7 +74,6 @@ namespace Lingva.WebAPI
             app.UseAuthentication();
             app.UseMvc();
 
-            DbInitializer.InitializeParserWords(app);
         }
        
     }

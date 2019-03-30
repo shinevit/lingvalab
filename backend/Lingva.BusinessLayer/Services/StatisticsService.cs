@@ -25,30 +25,14 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<User> GetUserGroups(int userId, int groupsQuantity)
-        {
-            var userGroups = _unitOfWork.User.GetList(groupsQuantity, c => c.UserGroups
-                                                .Where(u => u.Id == userId) != null);
-
-            if (userGroups == null)
-            {
-                throw new LingvaException(WRON_USERID);
-            }
-
-            return userGroups;
-        }
-
         public IEnumerable<Group> GetGroupParticipants(int groupId, int groupsQuantity)
         {
-            var groupUsers = _unitOfWork.Group.GetList(groupsQuantity, u => u.Participants.Where(g => g.Id == groupId) != null);
-
-            if (groupUsers == null)
-            {
-                throw new LingvaException(WRONG_GROUPID);
-            }
-
-            return groupUsers;
+            throw new NotImplementedException();
         }
 
+        public IEnumerable<User> GetUserGroups(int userId, int groupsQuantity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

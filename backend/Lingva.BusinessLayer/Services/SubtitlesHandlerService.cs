@@ -68,13 +68,14 @@ namespace Lingva.BusinessLayer.Services
             {
                 _logger.Info($"There is no Subtitle record with Path = {path} in the Subtitles table.");
 
-                return null;
+                _logger.Info($"Attempt to get a Subtitle record with Path = {path} from the Subtitles table is successful.");
+
+                return subtitle;
             }
 
-            _logger.Info($"Attempt to get a Subtitle record with Path = {path} from the Subtitles table is successful.");
-
-            return subtitle;
-        }
+ 
+                return null;
+            }
 
         public IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle)
         {

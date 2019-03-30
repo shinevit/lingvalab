@@ -1,5 +1,4 @@
 ﻿using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.SubtitlesParser.Classes;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
 using System;

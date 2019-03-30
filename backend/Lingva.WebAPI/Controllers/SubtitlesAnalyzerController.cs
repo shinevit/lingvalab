@@ -12,7 +12,6 @@ using Lingva.WebAPI.Dto;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Lingva.BusinessLayer.WordsSelector;
-using Lingva.BusinessLayer.Interfaces;
 using Word = Lingva.BusinessLayer.WordsSelector.Word;
 
 namespace Lingva.WebAPI.Controllers

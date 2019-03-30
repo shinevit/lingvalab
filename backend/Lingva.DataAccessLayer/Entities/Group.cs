@@ -22,5 +22,12 @@ namespace Lingva.DataAccessLayer.Entities
         public int? EventId { get; set; }
 
         public virtual Event Event { get; set; }
+
+        public IEnumerable<User> Participants { get; set; }
+
+        public Group()
+        {
+            Participants = new List<User>();
+        }
     }
 }

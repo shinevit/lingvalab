@@ -26,10 +26,13 @@ namespace Lingva.DataAccessLayer.Entities
 
         [ForeignKey("UserId")]
         public virtual ICollection<DictionaryRecord> UserDictionaryRecords { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ICollection<Group> UserGroups { get; set; }
 
         public User()
         {
             UserDictionaryRecords = new List<DictionaryRecord>();
+            UserGroups = new List<Group>();
         }
     }
 }

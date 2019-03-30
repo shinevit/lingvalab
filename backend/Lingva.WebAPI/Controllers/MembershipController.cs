@@ -38,7 +38,7 @@ namespace Lingva.WebAPI.Controllers
             _appSettings = appSettings.Value;
         }
 
-        // POST: api/Todo
+        // POST: /Membership
         /// <summary>
         /// Joins user into group.
         /// </summary>
@@ -47,24 +47,32 @@ namespace Lingva.WebAPI.Controllers
         ///
         ///     POST /join/{groupID}
         ///     {
-        ///        "id": 1
+        ///        "Id" : 1
+        ///        "FirstName" : string
+        ///        "LastName" : string
+        ///        "Username" : string
+        ///        "Token" : string
         ///     }
         ///
-        /// </remarks>         
+        /// </remarks> 
+        /// /// <param name="groupID"></param>
+        /// <returns>Joining complete</returns>
+        /// <response code="200">Returns the newly created item</response>
+        /// <response code="404">If the item is null</response> 
         [HttpPost("join/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> JoinGroup([FromBody]AuthenticateUserDto userDto, string groupID)
+        public async Task<IActionResult> JoinGroup([FromBody]SignInUserDto userDto, [FromRoute] int groupID)
         {
             try
             {
                 var user = _mapper.Map<User>(userDto);
                 user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
-                return Ok(await Task.Run(() => _groupService.JoinGroup(user.Id, int.Parse(groupID))));
+                return Ok(BaseStatusDto.CreateSuccessDto());
             }
             catch (LingvaException)
             {
-                return BadRequest() ;
+                return BadRequest(BaseStatusDto.CreateErrorDto()) ;
             }
         }
 
@@ -74,21 +82,35 @@ namespace Lingva.WebAPI.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /Todo
+        ///     POST /leave/{groupID}
         ///     {
-        ///        "id": 1
+        ///        "Id" : 1
+        ///        "FirstName" : string
+        ///        "LastName" : string
+        ///        "Username" : string
+        ///        "Token" : string
         ///     }
         ///
         /// </remarks>
+        /// <param name="groupID"></param>
+        /// <returns>Leaving complete</returns>
+        /// <response code="200">Returns status</response>
+        /// <response code="404">If the exception is handled</response> 
         [HttpDelete("leave/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> LeaveGroup([FromBody]AuthenticateUserDto userDto, int groupID)
+        public async Task<IActionResult> LeaveGroup([FromBody]SignInUserDto userDto, [FromBody] int groupID)
         {
-            var user = _mapper.Map<User>(userDto);
-            user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
-            await Task.Run(() => _groupService.LeaveGroup(user.Id,groupID));
-            return Ok();
+            try
+            {
+                var user = _mapper.Map<User>(userDto);
+                await Task.Run(() => _groupService.LeaveGroup(user.Id, groupID));
+                return Ok(BaseStatusDto.CreateSuccessDto());
+            }
+            catch (LingvaException)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto());
+            }
         }
     }
 }

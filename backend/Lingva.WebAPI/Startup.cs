@@ -60,12 +60,12 @@ namespace Lingva.WebAPI
             });
 
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
-<<<<<<< HEAD
+
             services.AddScoped<IParserWordService, ParserWordService>();
-=======
+
             services.AddScoped<IWordService, WordService>();
             services.AddScoped<IFilmService, FilmService>();
->>>>>>> origin/feature-movie-info
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -77,12 +77,9 @@ namespace Lingva.WebAPI
             
             app.UseCors("CorsPolicy"); 
             app.UseStaticFiles();
-<<<<<<< HEAD
             //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-
-=======
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -91,7 +88,6 @@ namespace Lingva.WebAPI
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc(); 
->>>>>>> origin/feature-movie-info
         }
     }
 }

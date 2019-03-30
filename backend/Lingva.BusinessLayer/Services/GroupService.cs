@@ -17,37 +17,25 @@ namespace Lingva.BusinessLayer.Services
         {
             _unitOfWork = unitOfWorkGroup;
             _unitOfWorkUser = unitOfWorkUser;
+
         }
 
         public Group JoinGroup(int userID, int groupID)
         {
-            var newGroup = new Group { UserId = userID, EventId = groupID};
-            _unitOfWork.Groups.Create(newGroup);
+            //e is no Subtitle record with Path = {path} in the Subtitles table.");  var newGroup = new Group { UserId = userID, EventId = groupID};
+           // _unitOfWork.Groups.Create(newGroup);
 
-            return newGroup;
+            return new Group();
         }
 
         public void LeaveGroup(int userID, int groupID)
         {
-            _unitOfWork.Groups.Delete(new Group { UserId = userID, EventId = groupID});
+            //_unitOfWork.Groups.Delete(new Group { UserId = userID, EventId = groupID});
         }
 
         public IEnumerable<Group> GetAll()
         {
             return _unitOfWork.Groups.GetList();
         }
-
-        public Group JoinGroup(int userID, int groupID, string roleName = "Student")
-        {
-            var newGroup = new Group { UserId = userID, EventId = groupID, RoleName = roleName };
-            _unitOfWork.Groups.Create(newGroup);
-
-            return newGroup;
-        }
-
-        public void LeaveGroup(int userID, int groupID, string roleName = "Student")
-        {
-            _unitOfWork.Groups.Delete(new Group { UserId = userID, EventId = groupID, RoleName = roleName });
-        }        
     }
 }

@@ -17,14 +17,11 @@ using Lingva.BusinessLayer.Services;
 using Microsoft.IdentityModel.Protocols;
 using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
-<<<<<<< HEAD
 using Lingva.WebAPI.Initializer;
-=======
 using Swashbuckle.AspNetCore.Swagger;
 using Lingva.DataAccessLayer.InitializeWithTestData;
 using System.Reflection;
 using System.IO;
->>>>>>> origin/feature-movie-info
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -102,12 +99,10 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositoryParserWord, RepositoryParserWord>();
             services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
 
-<<<<<<< HEAD
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();
-=======
+
             services.AddScoped<IRepositoryRole, RepositoryRole>();
             services.AddScoped<IGroupRepository, GroupRepository>();
->>>>>>> origin/feature-movie-info
             services.AddScoped<IRepositoryEvent, RepositoryEvent>();
         }
 

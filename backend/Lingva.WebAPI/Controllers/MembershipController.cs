@@ -99,7 +99,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpDelete("leave/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> LeaveGroup([FromBody]SignInUserDto userDto, [FromBody] int groupID)
+        public async Task<IActionResult> LeaveGroup([FromBody]SignInUserDto userDto, [FromRoute] int groupID)
         {
             try
             {

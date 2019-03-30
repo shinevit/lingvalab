@@ -15,8 +15,6 @@ namespace Lingva.DataAccessLayer.Entities
         
         public int? SubtitleRowId { get; set; }
         
-        public virtual Language Language { get; set; }
-
         public virtual SubtitleRow SubtitleRow { get; set; }
     }
 }

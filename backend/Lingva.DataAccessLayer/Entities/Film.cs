@@ -24,12 +24,6 @@ namespace Lingva.DataAccessLayer.Entities
 
         public string LanguageName { get; set; }
 
-        public virtual Language Language { get; set; }
-
-        public int? GengeId { get; set; }
-
-        public virtual Genre Genre { get; set; }
-       
         public virtual ICollection<Subtitle> Subtitles { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }

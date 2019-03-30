@@ -7,6 +7,10 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public interface IRepositoryParserWord : IRepository<ParserWord>
     {
+        bool InsertOrUpdate(ParserWord word);
+
         bool Any();
+
+        void CreateRange(IEnumerable<ParserWord> words);
     }
 }

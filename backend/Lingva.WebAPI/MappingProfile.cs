@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Lingva.BusinessLayer.DTO;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ParserWordDTO = Lingva.WebAPI.Dto.ParserWordDTO;
 
 namespace Lingva.WebAPI
 {
@@ -31,9 +33,11 @@ namespace Lingva.WebAPI
             CreateMap<ParserWord, WordDTO>()
             .ForMember("Word", opt => opt.MapFrom(c => c.Name));
 
-            CreateMap<SubtitleRow, SubtitleRowDTO>()
-                .ForMember("Value", opt => opt.MapFrom(c => c.Value))
-                .ForMember("Language", opt => opt.MapFrom(c => c.LanguageName));
+            CreateMap<SubtitleRow, SubtitleRowDTO>();
+            CreateMap<SubtitleRowDTO, SubtitleRow>();
+                
+            CreateMap<ParserWord, ParserWordDTO>();
+            CreateMap<ParserWordDTO, ParserWord>();
 
             CreateMap<User, SignUpUserDto>();
             CreateMap<SignUpUserDto, User>();

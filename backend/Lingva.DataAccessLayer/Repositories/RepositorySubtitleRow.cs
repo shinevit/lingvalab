@@ -18,27 +18,27 @@ namespace Lingva.DataAccessLayer.Repositories
         {
         }
 
-        public IQueryable<SubtitleRow> GetList()
+        public override IQueryable<SubtitleRow> GetList()
         {
             return _context.SubtitleRows.AsNoTracking();
         }
 
-        public IQueryable<SubtitleRow> GetList(int quantity, Expression<Func<SubtitleRow, bool>> predicator)
+        public override IQueryable<SubtitleRow> GetList(int quantity, Expression<Func<SubtitleRow, bool>> predicator)
         {
             return _context.SubtitleRows.Where(predicator).Take(quantity).AsNoTracking();
         }
 
-        public SubtitleRow Get(object id)
+        public override SubtitleRow Get(object id)
         {
             return _context.SubtitleRows.Find((int)id);
         }
 
-        public SubtitleRow Get(Expression<Func<SubtitleRow, bool>> predicator)
+        public override SubtitleRow Get(Expression<Func<SubtitleRow, bool>> predicator)
         {
             return _context.SubtitleRows.Where(predicator).FirstOrDefault();
         }
 
-        public void Create(SubtitleRow subtitle)
+        public override void Create(SubtitleRow subtitle)
         {
             if (subtitle == null)
             {
@@ -48,13 +48,13 @@ namespace Lingva.DataAccessLayer.Repositories
             _context.SubtitleRows.Add(subtitle);
         }
 
-        public void Update(SubtitleRow subtitle)
+        public override void Update(SubtitleRow subtitle)
         {
             _context.SubtitleRows.Attach(subtitle);
             _context.Entry(subtitle).State = EntityState.Modified;
         }
 
-        public void Delete(SubtitleRow subtitle)
+        public override void Delete(SubtitleRow subtitle)
         {
             if (_context.Entry(subtitle).State == EntityState.Detached)
             {
@@ -63,6 +63,28 @@ namespace Lingva.DataAccessLayer.Repositories
 
             _context.SubtitleRows.Remove(subtitle);
         }
+
+        public void InsertOrUpdate(SubtitleRow subtitle)
+        {
+            if (subtitle == null || string.IsNullOrEmpty(subtitle.Value))
+            {
+                return;
+            }
+
+            if (Get(n => n.Value == subtitle.Value) != null)
+            {
+                _context.Update(subtitle);
+                return;
+            }
+
+            _context.SubtitleRows.Add(subtitle);
+        }
+
+        public bool Any()
+        {
+            return _context.SubtitleRows.Any();
+        }
     }
 }
+
 

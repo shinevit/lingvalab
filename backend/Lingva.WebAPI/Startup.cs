@@ -14,8 +14,8 @@ using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Helpers;
 using Lingva.BusinessLayer.Models.Enums;
-using Lingva.DataAccessLayer.InitializeWithTestData;
 using Microsoft.AspNetCore.Mvc;
+using Lingva.WebAPI.Initializer;
 
 namespace Lingva.WebAPI
 {
@@ -56,14 +56,13 @@ namespace Lingva.WebAPI
                         return null;
                 }
             });
+
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
-            services.AddScoped<IWordService, WordService>();
+            services.AddScoped<IParserWordService, ParserWordService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // loggerFactory.AddProvider(); // TODO: use Serilog
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -71,11 +70,9 @@ namespace Lingva.WebAPI
             
             app.UseCors("CorsPolicy"); 
             app.UseStaticFiles();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-
-            DbInitializer.InitializeParserWords(app);
         }
        
     }

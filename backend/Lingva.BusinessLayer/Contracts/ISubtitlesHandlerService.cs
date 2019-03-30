@@ -9,7 +9,12 @@ namespace Lingva.BusinessLayer.Contracts
 {
     public interface ISubtitlesHandlerService
     {
-        void AddSubtitles(SubtitlesRowDTO[] subDTO, string path, int? filmId);//public void AddSubtitles(SubtitleRow[] subDTO, string path, int? filmId)  
-        SubtitlesRowDTO[] Parse(Stream subtitles);//public SubtitlesRowDTO[] Parse(Stream subtitles)
+        Subtitle GetSubtitleById(int id);
+
+        Subtitle GetSubtitleByPath(string path);
+
+        void AddSubtitle(Subtitle subtitle);
+
+        IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle);
     }
 }

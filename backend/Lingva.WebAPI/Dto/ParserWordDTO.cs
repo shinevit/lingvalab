@@ -5,14 +5,10 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
 {
-    public class SubtitleRowDTO
+    public class ParserWordDTO
     {
-        public int Id { get; set; }
-
-        public string Value { get; set; }
-
+        public string Name { get; set; }
         public string LanguageName { get; set; }
-
-        public int SubtitleId { get; set; }
+        public int SubtitleRowId { get; set; }
     }
 }

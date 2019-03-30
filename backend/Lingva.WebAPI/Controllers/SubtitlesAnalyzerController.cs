@@ -12,6 +12,8 @@ using Lingva.WebAPI.Dto;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Lingva.BusinessLayer.WordsSelector;
+using Lingva.BusinessLayer.Interfaces;
+using Word = Lingva.BusinessLayer.WordsSelector.Word;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -19,7 +21,7 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class SubtitlesAnalyzerController : ControllerBase
     {
-        public List<BusinessLayer.WordsSelector.Word> PostAnalyze(IFormFile upload)
+        public List<Word> PostAnalyze(IFormFile upload)
         {
             if (upload == null)
             {
@@ -33,12 +35,12 @@ namespace Lingva.WebAPI.Controllers
             }
 
             ICommonWord conection = new CommonWord();
-            Analyzer analyzer = new BusinessLayer.WordsSelector.Analyzer(conection);
-            List<BusinessLayer.WordsSelector.Word> words = analyzer.ParseToWords(allText);
+            Analyzer analyzer = new Analyzer(conection);
+            List<Word> words = analyzer.ParseToWords(allText);
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 
-            return words;           
+            return words;
         }
     }
 }

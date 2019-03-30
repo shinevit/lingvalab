@@ -1,7 +1,5 @@
-﻿using Lingva.DataAccessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.BusinessLayer.DTO
 {
@@ -17,7 +15,7 @@ namespace Lingva.BusinessLayer.DTO
 
         public TimeSpan EndTime { get; set; }
 
-        public static explicit operator SubtitleRow (SubtitlesRowDTO sub)
+        public static explicit operator SubtitleRow(SubtitlesRowDTO sub)
         {
             return new SubtitleRow
             {

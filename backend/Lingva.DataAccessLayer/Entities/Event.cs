@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Lingva.DataAccessLayer.Entities
 {
@@ -18,13 +16,13 @@ namespace Lingva.DataAccessLayer.Entities
         public string Tag { get; set; }
 
         public DateTime Date { get; set; }
-        
+
         public int? FilmId { get; set; }
 
         public virtual Film Film { get; set; }
 
         public int? SubtitleId { get; set; }
 
-        public virtual Subtitle Subtitle { get; set; }
+        public virtual Subtitles Subtitle { get; set; }
     }
 }

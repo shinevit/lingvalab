@@ -1,21 +1,19 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryRole: Repository<Role>, IRepositoryRole
+    public class RepositoryRole : Repository<Role>, IRepositoryRole
     {
+        private const string ERR_ARG_NULL_EXP = "Tried to insert null Role entity!";
         private DictionaryContext _context;
 
-        private const string ERR_ARG_NULL_EXP = "Tried to insert null Role entity!";
         public RepositoryRole(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -41,10 +39,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Create(Role entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
-            }
+            if (entity == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
 
             _context.Roles.Add(entity);
         }
@@ -57,12 +52,8 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Delete(Role entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                _context.Roles.Attach(entity);
-            }
+            if (_context.Entry(entity).State == EntityState.Detached) _context.Roles.Attach(entity);
             _context.Roles.Remove(entity);
         }
     }
 }
-

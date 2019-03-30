@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using System.ComponentModel.Design;
 using AutoMapper;
 using Lingva.BusinessLayer.Contracts;
+using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -18,10 +13,9 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class ParserWordsController : ControllerBase
     {
-        private readonly IWordService _wordService;
-        private readonly IMapper _mapper;
-
         private const string ERR_ID_NOT_FOUND = "There is no ParserWord object with id = ";
+        private readonly IMapper _mapper;
+        private readonly IWordService _wordService;
 
         public ParserWordsController(IWordService wordService, IMapper mapper)
         {
@@ -31,19 +25,13 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/parser/car
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetWord(string name) 
+        public async Task<IActionResult> GetWord(string name)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            ParserWord word = _wordService.GetParserWordByName(name);
-            
-            if (word == null)
-            {
-                return NotFound(ERR_ID_NOT_FOUND + $"{name}");
-            }
+            var word = _wordService.GetParserWordByName(name);
+
+            if (word == null) return NotFound(ERR_ID_NOT_FOUND + $"{name}");
 
             return Ok(_mapper.Map<WordDTO>(word));
         }
@@ -59,25 +47,19 @@ namespace Lingva.WebAPI.Controllers
 
         // PUT: api/parser/en/3
         [HttpPut("{lang?}/{subtId?}")]
-        public async Task<IActionResult> PutWordFromPhrase(string lang, int? subtId, [FromBody]string phrase)
+        public async Task<IActionResult> PutWordFromPhrase(string lang, int? subtId, [FromBody] string phrase)
         {
-            if (!ModelState.IsValid || string.IsNullOrEmpty(phrase))
-            {
-                return BadRequest(); 
-            }
+            if (!ModelState.IsValid || string.IsNullOrEmpty(phrase)) return BadRequest();
 
             try
             {
-                if (await Task.Run(() => _wordService.AddWordFromPhrase(phrase, lang, subtId)))
-                {
-                    return Ok();
-                }
+                if (await Task.Run(() => _wordService.AddWordFromPhrase(phrase, lang, subtId))) return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new {message = ex.Message});
             }
-            
+
             return BadRequest();
         }
     }

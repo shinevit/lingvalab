@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.BusinessLayer.Models.Enums;
 using Lingva.BusinessLayer.Services;
+using Lingva.WebAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.WebAPI.Extensions;
-using Lingva.DataAccessLayer.Repositories;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.WebAPI.Helpers;
-using Lingva.BusinessLayer.Models.Enums;
-using Lingva.DataAccessLayer.InitializeWithTestData;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Lingva.WebAPI
 {
@@ -42,13 +34,13 @@ namespace Lingva.WebAPI
             services.AddTransient<ILivesearchService, LivesearchService>();
             services.AddTransient<TranslaterGoogleService>();
             services.AddTransient<TranslaterYandexService>();
-            services.AddTransient<Func<TranslaterServices, ITranslaterService>>(serviceProvider => key =>
+            services.AddTransient<Func<TranslaterServiceEnum, ITranslaterService>>(serviceProvider => key =>
             {
                 switch (key)
                 {
-                    case TranslaterServices.Yandex:
+                    case TranslaterServiceEnum.Yandex:
                         return serviceProvider.GetService<TranslaterYandexService>();
-                    case TranslaterServices.Google:
+                    case TranslaterServiceEnum.Google:
                         return serviceProvider.GetService<TranslaterGoogleService>();
                     default:
                         return null;
@@ -61,21 +53,15 @@ namespace Lingva.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // loggerFactory.AddProvider(); // TODO: use Serilog
+            // loggerFactory.AddProvider();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseCors("CorsPolicy"); // TODO: add required
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-
-            DbInitializer.InitializeParserWords(app);
         }
-       
     }
 }

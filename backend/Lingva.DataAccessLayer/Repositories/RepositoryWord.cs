@@ -1,22 +1,19 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositoryWord : Repository<Word>, IRepositoryWord
     {
-        private DictionaryContext _context;
-        
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Word entity!";
+        private DictionaryContext _context;
 
         public RepositoryWord(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -42,10 +39,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Create(Word entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
-            }
+            if (entity == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
 
             _context.Words.Add(entity);
         }
@@ -58,10 +52,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Delete(Word entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                _context.Words.Attach(entity);
-            }
+            if (_context.Entry(entity).State == EntityState.Detached) _context.Words.Attach(entity);
             _context.Words.Remove(entity);
         }
     }

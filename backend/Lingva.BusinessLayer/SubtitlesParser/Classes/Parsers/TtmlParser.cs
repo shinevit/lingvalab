@@ -21,7 +21,6 @@ namespace Lingva.BusinessLayer.SubtitlesParser.Classes.Parsers
 
             var nodeList = xElement.Descendants(tt + "p").ToList();
             foreach (var node in nodeList)
-            {
                 try
                 {
                     var reader = node.CreateReader();
@@ -36,45 +35,38 @@ namespace Lingva.BusinessLayer.SubtitlesParser.Classes.Parsers
                         .Replace(string.Format(@" xmlns:tt=""{0}""", tt), "")
                         .Replace(string.Format(@" xmlns=""{0}""", tt), "");
 
-                    items.Add(new SubtitleItem()
+                    items.Add(new SubtitleItem
                     {
-                        StartTime = (int)(startTicks),
-                        EndTime = (int)(endTicks),
-                        Lines = new List<string>() { text }
+                        StartTime = (int) startTicks,
+                        EndTime = (int) endTicks,
+                        Lines = new List<string> {text}
                     });
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Exception raised when parsing xml node {0}: {1}", node, ex);
                 }
-            }
 
-            if (items.Any())
-            {
-                return items;
-            }
+            if (items.Any()) return items;
             throw new ArgumentException("Stream is not in a valid TTML format, or represents empty subtitles");
         }
 
         /// <summary>
-        /// Takes an SRT timecode as a string and parses it into a double (in seconds). A SRT timecode reads as follows: 
-        /// 00:00:20,000
+        ///     Takes an SRT timecode as a string and parses it into a double (in seconds). A SRT timecode reads as follows:
+        ///     00:00:20,000
         /// </summary>
         /// <param name="s">The timecode to parse</param>
-        /// <returns>The parsed timecode as a TimeSpan instance. If the parsing was unsuccessful, -1 is returned (subtitles should never show)</returns>
+        /// <returns>
+        ///     The parsed timecode as a TimeSpan instance. If the parsing was unsuccessful, -1 is returned (subtitles should
+        ///     never show)
+        /// </returns>
         private static long ParseTimecode(string s)
         {
             TimeSpan result;
-            if (TimeSpan.TryParse(s, out result))
-            {
-                return (long) result.TotalMilliseconds;
-            }
+            if (TimeSpan.TryParse(s, out result)) return (long) result.TotalMilliseconds;
             // Netflix subtitles have a weird format: timecodes are specified as ticks. Ex: begin="79249170t"
             long ticks;
-            if (long.TryParse(s.TrimEnd('t'), out ticks))
-            {
-                return ticks/10000;
-            }
+            if (long.TryParse(s.TrimEnd('t'), out ticks)) return ticks / 10000;
             return -1;
         }
     }

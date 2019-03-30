@@ -1,7 +1,6 @@
-﻿using Lingva.BusinessLayer.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Lingva.BusinessLayer.Interfaces;
 
 namespace Lingva.BusinessLayer.WordsSelector
 {

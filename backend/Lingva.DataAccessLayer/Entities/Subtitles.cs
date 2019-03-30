@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Lingva.DataAccessLayer.Entities
 {
-    public class Subtitle
+    public class Subtitles
     {
-        [Key]
-        public int Id { get; set; }
+        public Subtitles()
+        {
+            SubtitlesRow = new List<SubtitleRow>();
+            Events = new List<Event>();
+        }
 
-        [StringLength(200)]
-        public string Path { get; set; }
+        [Key] public int Id { get; set; }
+
+        [StringLength(200)] public string Path { get; set; }
 
         public int? FilmId { get; set; }
 
@@ -25,14 +26,5 @@ namespace Lingva.DataAccessLayer.Entities
         public virtual ICollection<SubtitleRow> SubtitlesRow { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
-
-        public Subtitle()
-        {
-            SubtitlesRow = new List<SubtitleRow>();
-            Events = new List<Event>();
-        }
     }
 }
-
-
-

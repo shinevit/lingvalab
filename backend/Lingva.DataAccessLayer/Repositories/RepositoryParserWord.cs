@@ -1,20 +1,18 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryParserWord: Repository<ParserWord>, IRepositoryParserWord  
+    public class RepositoryParserWord : Repository<ParserWord>, IRepositoryParserWord
     {
         private const string ERR_ARG_NULL_EXP = "Tried to insert null ParserWord entity!";
-        
+
         public RepositoryParserWord(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -43,10 +41,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Create(ParserWord entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
-            }
+            if (entity == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
 
             _context.ParserWords.Add(entity);
         }
@@ -59,10 +54,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Delete(ParserWord entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                _context.ParserWords.Attach(entity);
-            }
+            if (_context.Entry(entity).State == EntityState.Detached) _context.ParserWords.Attach(entity);
             _context.ParserWords.Remove(entity);
         }
 
@@ -72,4 +64,3 @@ namespace Lingva.DataAccessLayer.Repositories
         }
     }
 }
-

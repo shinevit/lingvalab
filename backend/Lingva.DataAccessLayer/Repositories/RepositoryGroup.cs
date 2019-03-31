@@ -17,6 +17,7 @@ namespace Lingva.DataAccessLayer.Repositories
         public RepositoryGroup(DictionaryContext context)
             :base(context)
         {
+            _context = context;
         }
 
         public IQueryable<Group> GetList()

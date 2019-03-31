@@ -3,6 +3,7 @@ using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.Models.Enums;
 using Lingva.BusinessLayer.Services;
 using Lingva.WebAPI.Extensions;
+using Lingva.WebAPI.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -61,9 +62,10 @@ namespace Lingva.WebAPI
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseCors("CorsPolicy"); 
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             app.UseHttpsRedirection();
+            app.UseMiddleware<ExceptionHandlerMIddleware>();
             app.UseAuthentication();
             app.UseMvc();
         }

@@ -14,6 +14,7 @@ namespace Lingva.WebAPI
         {
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseIISIntegration()
                 .UseUrls("http://localhost:5000")
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .Build();

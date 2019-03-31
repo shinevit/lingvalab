@@ -1,14 +1,12 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using Lingva.DataAccessLayer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public abstract class Repository<T> : IRepository<T> 
+    public abstract class Repository<T> : IRepository<T>
         where T : class
     {
         protected DictionaryContext _context;
@@ -32,7 +30,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual T Get(object id)
         {
-            return _entities.Find((int)id);
+            return _entities.Find((int) id);
         }
 
         public virtual T Get(Expression<Func<T, bool>> predicator)
@@ -57,6 +55,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual void Update(T entity)
         {
+            if (entity == null) throw new ArgumentNullException("Tried to update null entity!");
             if (entity == null)
             {
                 throw new ArgumentNullException("Tried to update null entity!");
@@ -69,6 +68,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual void Delete(T entity)
         {
+            if (entity == null) throw new ArgumentNullException("Tried to delete null entity!");
             if (entity == null)
             {
                 throw new ArgumentNullException("Tried to delete null entity!");

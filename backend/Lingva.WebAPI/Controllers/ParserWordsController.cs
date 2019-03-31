@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using System.ComponentModel.Design;
 using AutoMapper;
 using Lingva.BusinessLayer.Contracts;
+using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
 using System.Text;
 using NLog;
@@ -23,7 +17,6 @@ namespace Lingva.WebAPI.Controllers
         private readonly IParserWordService _wordService;
         private readonly IMapper _mapper;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
-
         private const string ERR_ID_NOT_FOUND = "There is no ParserWord object with Name = ";
 
         public ParserWordsController(IParserWordService wordService, IMapper mapper)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,7 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             _context = context;
         }
+
         public void Create(Subtitles entity)
         {
             _context.Subtitles.Add(entity);
@@ -28,6 +28,7 @@ namespace Lingva.DataAccessLayer.Repositories
             _context.Subtitles.AddRange(entities);
             _context.SaveChanges();
         }
+
         public void Delete(Subtitles entity)
         {
             _context.Subtitles.Remove(entity);

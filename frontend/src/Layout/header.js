@@ -26,6 +26,7 @@ class Header extends Component {
                 userLoggedIn: false
             });
             sessionStorage.userLoggedIn = false;
+            sessionStorage.user=null;
             this.props.layout.setState({
                 userLoggedIn: false
             });
@@ -70,7 +71,7 @@ class HeaderUnsigned extends Component {
                 </Col>
                 <Col>                
                     <ButtonToolbar className="head-toolbar">                                        
-                        <Button href="/" onClick={this.props.loginMethod} >Login</Button>
+                        <Button href="/login">Login</Button>
                         <Button href="/about">About Us</Button>                            
                     </ButtonToolbar>
                 </Col>

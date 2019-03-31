@@ -4,6 +4,15 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    const { dispatch } = this.props;
+    history.listen((location, action) => {
+        // clear alert on location change
+        dispatch(alertActions.clear());
+    });
+}
   render() {
     return (
       <div className="App">

@@ -9,6 +9,12 @@ namespace Lingva.DataAccessLayer.Entities
 {
     public class Language
     {
+        public Language()
+        {
+            Words = new List<Word>();
+            TranslationDictionary = new List<DictionaryRecord>();
+        }
+
         [Key]
         [StringLength(3)]
         public string Name { get; set; }
@@ -19,10 +25,5 @@ namespace Lingva.DataAccessLayer.Entities
         [ForeignKey("TranslationLanguageName")]
         public virtual IEnumerable<DictionaryRecord> TranslationDictionary { get; set; }
 
-        public Language()
-        {
-            Words = new List<Word>();
-            TranslationDictionary = new List<DictionaryRecord>();
-        }
     }
 }

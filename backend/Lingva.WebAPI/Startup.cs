@@ -1,8 +1,12 @@
 ﻿using System;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.BusinessLayer.Models.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lingva.BusinessLayer.Services;
+using Lingva.WebAPI.Extensions;
+using Lingva.WebAPI.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,27 +31,29 @@ namespace Lingva.WebAPI
         }
 
         public IConfiguration Configuration { get; }
-
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
+            services.ConfigureJwt(Configuration);
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork();
             services.ConfigureRepositories();
             services.ConfigureMVC();
+            services.ConfigureServices();
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
             services.AddTransient<TranslaterGoogleService>();
             services.AddTransient<TranslaterYandexService>();
-            services.AddTransient<Func<TranslaterServices, ITranslaterService>>(serviceProvider => key =>
+            services.AddTransient<Func<TranslaterServiceEnum, ITranslaterService>>(serviceProvider => key =>
             {
                 switch (key)
                 {
-                    case TranslaterServices.Yandex:
+                    case TranslaterServiceEnum.Yandex:
                         return serviceProvider.GetService<TranslaterYandexService>();
-                    case TranslaterServices.Google:
+                    case TranslaterServiceEnum.Google:
                         return serviceProvider.GetService<TranslaterGoogleService>();
                     default:
                         return null;
@@ -58,20 +64,19 @@ namespace Lingva.WebAPI
             services.AddScoped<IParserWordService, ParserWordService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors("CorsPolicy"); // TODO: add required
+            
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
+            app.UseMiddleware<ExceptionHandlerMIddleware>();
             app.UseAuthentication();
             app.UseMvc();
         }
-       
     }
 }

@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositorySubtitle : Repository<Subtitle>, IRepositorySubtitle
+    public class RepositorySubtitle : Repository<Subtitles>, IRepositorySubtitle
     {
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Subtitle entity!";
 
         public RepositorySubtitle(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override Subtitle Get(object id)
         {
-            return _context.Subtitles.Find((int)id);
+            return _context.Subtitles.Find((int) id);
         }
 
         public int? Get(string path)
@@ -57,6 +57,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Create(Subtitle subtitle)
         {
+            if (subtitle == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
             if (subtitle == null)
             {
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP);
@@ -73,6 +74,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Delete(Subtitle subtitle)
         {
+            if (_context.Entry(subtitle).State == EntityState.Detached) _context.Subtitles.Attach(subtitle);
             if (_context.Entry(subtitle).State == EntityState.Detached)
             {
                 _context.Subtitles.Attach(subtitle);

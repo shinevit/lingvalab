@@ -1,12 +1,8 @@
-﻿using Lingva.BusinessLayer.Contracts;
+﻿using System.IO;
+using System.Net;
+using Lingva.BusinessLayer.Contracts;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Lingva.BusinessLayer.Services
 {
@@ -21,31 +17,29 @@ namespace Lingva.BusinessLayer.Services
 
         public string Translate(string text, string originalLanguage, string translationLanguage)
         {
-            if (text.Length == 0)
+            if (text.Length == 0) return "";
+
+            var request = WebRequest.Create("https://translation.googleapis.com/language/translate/v2/?"
+                                            + "key=" + _storageOptions.Value.ServicesGoogleTranslaterKey
+                                            + "&q=" + text
+                                            + "&source=" + originalLanguage
+                                            + "&target=" + translationLanguage);
+
+            var response = request.GetResponse();
+
+            using (var stream = new StreamReader(response.GetResponseStream()))
             {
-                return "";
-            }
-
-            WebRequest request = WebRequest.Create("https://translation.googleapis.com/language/translate/v2/?"
-                + "key=" + _storageOptions.Value.ServicesGoogleTranslaterKey
-                + "&q=" + text
-                + "&source=" + originalLanguage
-                + "&target=" + translationLanguage);
-
-            WebResponse response = request.GetResponse();
-
-            using (StreamReader stream = new StreamReader(response.GetResponseStream()))
-            {
-                string line = stream.ReadToEnd();
-                dynamic translation = JsonConvert.DeserializeObject<dynamic>(line);
+                var line = stream.ReadToEnd();
+                var translation = JsonConvert.DeserializeObject<dynamic>(line);
                 text = translation.data.translations[0].translatedText;
             }
+
             return text;
         }
 
         public string[] GetTranslationVariants(string text, string originalLanguage, string translationLanguage)
         {
-            string[] translations = new string[1];
+            var translations = new string[1];
             translations[0] = Translate(text, originalLanguage, translationLanguage);
 
             return translations;

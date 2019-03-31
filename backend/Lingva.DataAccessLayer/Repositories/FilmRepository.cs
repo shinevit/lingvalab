@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +16,7 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             _context = context;
         }
+
         public void Create(Film entity)
         {
             _context.Films.Add(entity);
@@ -28,6 +28,7 @@ namespace Lingva.DataAccessLayer.Repositories
             _context.Films.AddRange(entities);
             _context.SaveChanges();
         }
+
         public void Delete(Film entity)
         {
             _context.Films.Remove(entity);

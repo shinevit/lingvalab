@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using AutoMapper;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.WebAPI.Dto;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using System.IO;
+using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.WordsSelector;
-using Lingva.BusinessLayer.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Word = Lingva.BusinessLayer.WordsSelector.Word;
 
 namespace Lingva.WebAPI.Controllers
@@ -28,19 +18,19 @@ namespace Lingva.WebAPI.Controllers
                 return null;
             }
 
-            string allText; 
-            using (StreamReader txt = new StreamReader(upload.OpenReadStream()))
+            string allText;
+            using (var txt = new StreamReader(upload.OpenReadStream()))
             {
                 allText = txt.ReadToEnd();
             }
 
             ICommonWord conection = new CommonWord();
-            Analyzer analyzer = new Analyzer(conection);
+            Analyzer analyzer = new BusinessLayer.WordsSelector.Analyzer(conection);
             List<Word> words = analyzer.ParseToWords(allText);
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 
-            return words;
+            return words;           
         }
     }
 }

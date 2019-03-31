@@ -45,8 +45,9 @@ namespace Lingva.WebAPI
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration()
                 //.UseUrls("http://localhost:5000")
@@ -58,7 +59,6 @@ namespace Lingva.WebAPI
                 })
                 .UseNLog()
                 .Build();
-
+        }
     }
-
 }

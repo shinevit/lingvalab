@@ -1,21 +1,19 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryGroup: Repository<Group>, IRepositoryGroup
+    public class RepositoryGroup : Repository<Group>, IRepositoryGroup
     {
+        private const string ERR_ARG_NULL_EXP = "Tried to insert null Group entity!";
         private DictionaryContext _context;
 
-        private const string ERR_ARG_NULL_EXP = "Tried to insert null Group entity!";
         public RepositoryGroup(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -31,7 +29,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public Group Get(object id)
         {
-            return _context.Groups.Find((int)id);
+            return _context.Groups.Find((int) id);
         }
 
         public Group Get(Expression<Func<Group, bool>> predicator)
@@ -41,10 +39,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Create(Group entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
-            }
+            if (entity == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
 
             _context.Groups.Add(entity);
         }
@@ -57,12 +52,8 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Delete(Group entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                _context.Groups.Attach(entity);
-            }
+            if (_context.Entry(entity).State == EntityState.Detached) _context.Groups.Attach(entity);
             _context.Groups.Remove(entity);
         }
     }
 }
-

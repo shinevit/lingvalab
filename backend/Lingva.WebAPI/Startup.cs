@@ -36,7 +36,6 @@ namespace Lingva.WebAPI
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork();
-            services.ConfigureJwt(Configuration);
             services.ConfigureSwagger(Configuration);
             services.ConfigureRepositories();
             services.ConfigureMVC();
@@ -85,9 +84,6 @@ namespace Lingva.WebAPI
             {
                 c.SwaggerEndpoint("./v1/swagger.json", "Lingvalab V1");
             });
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseMvc(); 
         }
     }
 }

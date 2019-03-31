@@ -35,7 +35,7 @@ namespace Lingva.WebAPI.Controllers
             }
             catch
             {
-                return NotFound("");
+                return NotFound();
             }
         }
 

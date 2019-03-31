@@ -1,0 +1,40 @@
+﻿<Properties StartupConfiguration="{A89DFC63-C61F-4981-893F-656C4B9A2F54}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Lingva.WebAPI/Extensions/ServiceExtensions.cs">
+    <Files>
+      <File FileName="Lingva.BusinessLayer/Services/GroupService.cs" Line="20" Column="13" />
+      <File FileName="Lingva.DataAccessLayer/Entities/Group.cs" Line="4" Column="42" />
+      <File FileName="Lingva.WebAPI/Dto/BaseStatusDto.cs" Line="59" Column="1" />
+      <File FileName="Lingva.WebAPI/Extensions/ServiceExtensions.cs" Line="21" Column="1" />
+      <File FileName="Lingva.WebAPI/Dto/SignInUserDto.cs" Line="18" Column="1" />
+      <File FileName="Lingva.WebAPI/Controllers/UserController.cs" Line="42" Column="35" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="lingva-backend" expanded="True">
+            <Node name="Lingva.BusinessLayer" expanded="True">
+              <Node name="Services" expanded="True" />
+            </Node>
+            <Node name="Lingva.DataAccessLayer" expanded="True">
+              <Node name="Entities" expanded="True" />
+            </Node>
+            <Node name="Lingva.WebAPI" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Dto" expanded="True" />
+              <Node name="Extensions" expanded="True">
+                <Node name="ServiceExtensions.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Lingva.WebAPI PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

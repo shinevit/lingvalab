@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/Lingva.BusinessLayer.UnitTest.csproj",
+  "TargetFramework": "netcoreapp2.2",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}

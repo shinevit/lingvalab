@@ -1,0 +1,24 @@
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/bin/Debug/netcoreapp2.2/NLog.config
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.deps.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.runtimeconfig.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.runtimeconfig.dev.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.dll
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.pdb
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.csproj.CoreCompileInputs.cache
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.AssemblyInfoInputs.cache
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.AssemblyInfo.cs
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.dll
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.pdb
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer.UnitTest/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.UnitTest.csprojAssemblyReference.cache
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.2\NLog.config
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.deps.json
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.runtimeconfig.json
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.runtimeconfig.dev.json
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.dll
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.pdb
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.csprojAssemblyReference.cache
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.csproj.CoreCompileInputs.cache
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.AssemblyInfoInputs.cache
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.AssemblyInfo.cs
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.dll
+E:\.net workspace\backend\backend\Lingva.BusinessLayer.UnitTest\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.UnitTest.pdb

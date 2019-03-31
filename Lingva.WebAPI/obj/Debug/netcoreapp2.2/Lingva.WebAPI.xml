@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lingva.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:Lingva.WebAPI.Controllers.DictionaryController.GetDictionary">
+             <summary>
+             Returns Dictionary record.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Get /Dictionary
+                 { }
+            
+             </remarks>
+             <response code="200">Returns the dictionary record</response>
+             <response code="404">If the item is null</response> 
+        </member>
+        <member name="M:Lingva.WebAPI.Controllers.DictionaryController.PostDictionaryRecord(Lingva.WebAPI.Dto.DictionaryRecordCreatingDTO)">
+             <summary>
+             Deletes user from group.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 Post /Dictionary
+                 {
+                    "Id" : 1
+                    "UserId" : 12
+                    "WordName" : "string"
+                    "Translation" : "translation"
+                    "LanguageName" : "languageName"
+                    "Context" : "context"
+                    "Picture" : "picture"
+                 }
+            
+             </remarks>
+             <response code="200">Returns the dictionary record</response>
+             <response code="404">If the item is null</response> 
+        </member>
+        <member name="M:Lingva.WebAPI.Controllers.DictionaryController.DeleteDictionaryRecord(System.Int32)">
+             <summary>
+             Deletes record from dictionary.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 DELETE /Dictionary
+                 {
+                    "id": 1
+                 }
+            
+             </remarks>
+             <response code="200">Returns the newly created item</response>
+             <response code="404">If the item is null</response> 
+        </member>
+        <member name="M:Lingva.WebAPI.Controllers.MembershipController.JoinGroup(Lingva.WebAPI.Dto.SignInUserDto,System.Int32)">
+             <summary>
+             Joins user into group.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /join/{groupID}
+                 {
+                    "Id" : 1
+                    "FirstName" : string
+                    "LastName" : string
+                    "Username" : string
+                    "Token" : string
+                 }
+            
+             </remarks> 
+             <returns>Joining complete</returns>
+             <response code="200">Returns the newly created item</response>
+             <response code="404">If the item is null</response> 
+        </member>
+        <member name="M:Lingva.WebAPI.Controllers.MembershipController.LeaveGroup(Lingva.WebAPI.Dto.SignInUserDto,System.Int32)">
+             <summary>
+             Deletes user from group.
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /leave/{groupID}
+                 {
+                    "Id" : 1
+                    "FirstName" : string
+                    "LastName" : string
+                    "Username" : string
+                    "Token" : string
+                 }
+            
+             </remarks>
+             <returns>Leaving complete</returns>
+             <response code="200">Returns status</response>
+             <response code="404">If the exception is handled</response> 
+        </member>
+        <member name="M:Lingva.WebAPI.Extensions.StringExtensions.GetVariableName(System.String)">
+            <summary>
+            Gets the name of the variable form pattern ${MyVariable}
+            </summary>
+            <returns>The variable name. Example, MyVariable</returns>
+            <param name="interpolatedVariable">Interpolated variable.</param>
+        </member>
+    </members>
+</doc>

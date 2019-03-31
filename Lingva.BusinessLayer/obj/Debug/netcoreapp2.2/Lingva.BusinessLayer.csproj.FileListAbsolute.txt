@@ -1,0 +1,45 @@
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.csprojAssemblyReference.cache
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.csproj.CoreCompileInputs.cache
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.AssemblyInfoInputs.cache
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.AssemblyInfo.cs
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/NLog.config
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.deps.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.runtimeconfig.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.runtimeconfig.dev.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.dll
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/Lingva.BusinessLayer.pdb
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/Lingva.DataAccessLayer.dll
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/bin/Debug/netcoreapp2.2/Lingva.DataAccessLayer.pdb
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.csproj.CopyComplete
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.dll
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.BusinessLayer/obj/Debug/netcoreapp2.2/Lingva.BusinessLayer.pdb
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.dll
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.pdb
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\NLog.config
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.deps.json
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.runtimeconfig.json
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.runtimeconfig.dev.json
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.dll
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.pdb
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.dll
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.pdb
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.csprojAssemblyReference.cache
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.csproj.CoreCompileInputs.cache
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.AssemblyInfoInputs.cache
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.AssemblyInfo.cs
+E:\.net workspace\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.csproj.CopyComplete
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\NLog.config
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.deps.json
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.runtimeconfig.json
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.runtimeconfig.dev.json
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.dll
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.BusinessLayer.pdb
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.dll
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.pdb
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.csprojAssemblyReference.cache
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.csproj.CoreCompileInputs.cache
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.AssemblyInfoInputs.cache
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.AssemblyInfo.cs
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.csproj.CopyComplete
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.dll
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.BusinessLayer\obj\Debug\netcoreapp2.2\Lingva.BusinessLayer.pdb

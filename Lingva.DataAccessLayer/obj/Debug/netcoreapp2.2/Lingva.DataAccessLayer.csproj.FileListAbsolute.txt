@@ -1,0 +1,36 @@
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/bin/Debug/netcoreapp2.2/NLog.config
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/bin/Debug/netcoreapp2.2/Lingva.DataAccessLayer.deps.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/bin/Debug/netcoreapp2.2/Lingva.DataAccessLayer.runtimeconfig.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/bin/Debug/netcoreapp2.2/Lingva.DataAccessLayer.runtimeconfig.dev.json
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/bin/Debug/netcoreapp2.2/Lingva.DataAccessLayer.dll
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/bin/Debug/netcoreapp2.2/Lingva.DataAccessLayer.pdb
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/obj/Debug/netcoreapp2.2/Lingva.DataAccessLayer.csproj.CoreCompileInputs.cache
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/obj/Debug/netcoreapp2.2/Lingva.DataAccessLayer.AssemblyInfoInputs.cache
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/obj/Debug/netcoreapp2.2/Lingva.DataAccessLayer.AssemblyInfo.cs
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/obj/Debug/netcoreapp2.2/Lingva.DataAccessLayer.dll
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/obj/Debug/netcoreapp2.2/Lingva.DataAccessLayer.pdb
+/Users/lesianikoza/Documents/GitHub/lingvalab/backend/Lingva.DataAccessLayer/obj/Debug/netcoreapp2.2/Lingva.DataAccessLayer.csprojAssemblyReference.cache
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\NLog.config
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.deps.json
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.runtimeconfig.json
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.runtimeconfig.dev.json
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.dll
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.pdb
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.csprojAssemblyReference.cache
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.csproj.CoreCompileInputs.cache
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.AssemblyInfoInputs.cache
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.AssemblyInfo.cs
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.dll
+E:\.net workspace\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.pdb
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\NLog.config
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.deps.json
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.runtimeconfig.json
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.runtimeconfig.dev.json
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.dll
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\bin\Debug\netcoreapp2.2\Lingva.DataAccessLayer.pdb
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.csprojAssemblyReference.cache
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.AssemblyInfoInputs.cache
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.AssemblyInfo.cs
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.dll
+C:\_MyASP\_Lingva\_LinguaMy\development--my\lingva-Demo4-2019-03-31\backend\backend\Lingva.DataAccessLayer\obj\Debug\netcoreapp2.2\Lingva.DataAccessLayer.pdb

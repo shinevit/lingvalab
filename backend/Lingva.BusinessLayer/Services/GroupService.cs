@@ -4,38 +4,50 @@ using System.Linq;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.DataAccessLayer.Repositories;
-using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Exceptions;
 
 namespace Lingva.BusinessLayer.Services
 {
     public class GroupService : IGroupService
     {
-        private IUnitOfWorkGroup _unitOfWork;
-        private IUnitOfWorkUser _unitOfWorkUser;
-
-        public GroupService(IUnitOfWorkGroup unitOfWorkGroup, IUnitOfWorkUser unitOfWorkUser)
+        private IRepositoryUserGroup _userGroup;
+        
+        public GroupService(IRepositoryUserGroup userGroup)
         {
-            _unitOfWork = unitOfWorkGroup;
-            _unitOfWorkUser = unitOfWorkUser;
-
+            _userGroup = userGroup;
         }
 
-        public Group JoinGroup(int userID, int groupID)
+        public void JoinGroup(int userID, int groupID)
         {
-            //e is no Subtitle record with Path = {path} in the Subtitles table.");  var newGroup = new Group { UserId = userID, EventId = groupID};
-           // _unitOfWork.Groups.Create(newGroup);
-
-            return new Group();
+            try
+            {
+                _userGroup.Create(GetUSerGroupEntity(userID, groupID));
+            }
+            catch (Exception)
+            {
+                throw new LingvaException("Failed to join User to group");
+            }
         }
 
         public void LeaveGroup(int userID, int groupID)
         {
-            //_unitOfWork.Groups.Delete(new Group { UserId = userID, EventId = groupID});
+            try
+            {
+                _userGroup.Delete(GetUSerGroupEntity(userID, groupID));
+            }
+            catch (Exception)
+            {
+                throw new LingvaException("Failed to leave User to group");
+            }
         }
-
-        public IEnumerable<Group> GetAll()
+        
+        private static UserGroup GetUSerGroupEntity(int userID, int groupID)
         {
-            return _unitOfWork.Groups.GetList();
+            UserGroup userGroup = new UserGroup();
+            userGroup.UserId = userID;
+            userGroup.GroupId = groupID;
+
+            return userGroup;
         }
     }
 }

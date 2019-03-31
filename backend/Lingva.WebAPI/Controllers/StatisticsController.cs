@@ -8,9 +8,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-
 using Lingva.BusinessLayer.Contracts;
-using Lingva.WebAPI.Dto;
 using Lingva.WebAPI.Dto;
 using Lingva.DataAccessLayer.Exceptions;
 using Lingva.BusinessLayer.Services;
@@ -35,24 +33,37 @@ namespace Lingva.WebAPI.Controllers
         {
             _mapper = mapper;
             _statistics = statistics;
-
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserStatistic([FromRoute] int id)
+        [HttpGet("user/{id}/groups")]
+        public async Task<IActionResult> GetUserStatistic([FromRoute] int userId)
         {
+            var usersStatistics = await Task.Run(() => _statistics.GetUserGroups(userId, DEFAULT_LIST_QUANTITY_COUNT));
 
-            var usersStatistics = await Task.Run(() => _statistics.GetUserGroups(id, DEFAULT_LIST_QUANTITY_COUNT));
-
-            if (usersStatistics==null)
+            if (usersStatistics == null)
             {
                 return BadRequest(BaseStatusDto.CreateErrorDto());
             }
-            UserStatisticsDto userStatistics = _mapper.Map<UserStatisticsDto>(usersStatistics);
 
-            userStatistics.CreateSuccess();
-            
+            var userStatistics = _mapper.Map<IList<UserGroupsDTO>>(usersStatistics);
+
             return Ok(userStatistics);
+        }
+
+        [HttpGet("groups/{id}/users")]
+        public async Task<IActionResult> GetGroupUsers([FromRoute] int groupId)
+        {
+            var groupStatistics = await Task.Run(() => _statistics.GetGroupParticipants(groupId, DEFAULT_LIST_QUANTITY_COUNT));
+
+            if (groupStatistics == null)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto());
+            }
+
+            var groupsUsers = _mapper.Map<IList<UserGroupsDTO>>(groupStatistics);
+
+            return Ok(groupsUsers);
         }
     }
 }
+

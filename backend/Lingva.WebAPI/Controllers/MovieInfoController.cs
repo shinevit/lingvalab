@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Services;
-using Lingva.DataAccessLayer;
+using Lingva.DataAccessLayer.Exceptions;
 
 namespace Lingva.WebAPI.Controllers
 {

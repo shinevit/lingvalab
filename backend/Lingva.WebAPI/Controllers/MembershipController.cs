@@ -15,10 +15,10 @@ using Lingva.WebAPI.Dto;
 using Lingva.WebAPI.Helpers;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Services;
-using Lingva.DataAccessLayer;
+using Lingva.DataAccessLayer.Exceptions;
 
 namespace Lingva.WebAPI.Controllers
-{ 
+{
     [Authorize]
     [ApiController]
     [Route("[controller]")]
@@ -54,28 +54,31 @@ namespace Lingva.WebAPI.Controllers
         ///        "Token" : string
         ///     }
         ///
-        /// </remarks> 
-        /// /// <param name="groupID"></param>
+        /// </remarks>      
         /// <returns>Joining complete</returns>
         /// <response code="200">Returns the newly created item</response>
         /// <response code="404">If the item is null</response> 
         [HttpPost("join/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> JoinGroup([FromBody]SignInUserDto userDto, [FromRoute] int groupID)
+        public async Task<IActionResult> JoinGroup([FromRoute] int groupID)
         {
             try
             {
-                var user = _mapper.Map<User>(userDto);
-                user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
-                return Ok(BaseStatusDto.CreateSuccessDto());
+                await Task.Run(() => _groupService.JoinGroup(UserService.GetLoggedInUserId(this), groupID));
             }
             catch (LingvaException)
             {
-                return BadRequest(BaseStatusDto.CreateErrorDto()) ;
+                return BadRequest(BaseStatusDto.CreateErrorDto());
             }
-        }
+            catch (Exception ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
 
+            return Ok(BaseStatusDto.CreateSuccessDto());
+        }
+        
         /// <summary>
         /// Deletes user from group.
         /// </summary>
@@ -91,26 +94,29 @@ namespace Lingva.WebAPI.Controllers
         ///        "Token" : string
         ///     }
         ///
-        /// </remarks>
-        /// <param name="groupID"></param>
+        /// </remarks>      
         /// <returns>Leaving complete</returns>
         /// <response code="200">Returns status</response>
         /// <response code="404">If the exception is handled</response> 
         [HttpDelete("leave/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> LeaveGroup([FromBody]SignInUserDto userDto, [FromBody] int groupID)
+        public async Task<IActionResult> LeaveGroup([FromRoute] int groupID)
         {
             try
             {
-                var user = _mapper.Map<User>(userDto);
-                await Task.Run(() => _groupService.LeaveGroup(user.Id, groupID));
+                await Task.Run(() => _groupService.LeaveGroup(UserService.GetLoggedInUserId(this), groupID));
                 return Ok(BaseStatusDto.CreateSuccessDto());
             }
-            catch (LingvaException)
+            catch (LingvaException ex)
             {
-                return BadRequest(BaseStatusDto.CreateErrorDto());
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
     }
 }
+

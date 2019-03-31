@@ -32,15 +32,9 @@ namespace Lingva.WebAPI.Extensions
             string configStringValue = config.GetConnectionString("LingvaConnection");
             string configVariableName = configStringValue.GetVariableName();
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
-                       
+
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue));
-        }
-
-        public static void ConfigureDependencyInjection(this IServiceCollection services)
-        {
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IFilmService, FilmService>();
         }
 
         public static void ConfigureSwagger(this IServiceCollection services, IConfiguration Configuration)
@@ -79,6 +73,7 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
             services.AddScoped<IUnitOfWorkFilm, UnitOfWorkFilm>();
             services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
+            services.AddScoped<IUnitOfWorkStatistics, UnitOfWorkStatistics>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
@@ -98,17 +93,18 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IRepositorySubtitleRow, RepositorySubtitleRow>();
             services.AddScoped<IRepositoryParserWord, RepositoryParserWord>();
             services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
-
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();
-
-            services.AddScoped<IRepositoryRole, RepositoryRole>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IRepositoryEvent, RepositoryEvent>();
+            services.AddScoped<IRepositoryUserGroup, RepositoryUserGroup>();
         }
 
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();           
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
+            services.AddTransient<IFilmService, FilmService>();
+            services.AddTransient<IGroupService, GroupService>();
         }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
@@ -143,12 +139,12 @@ namespace Lingva.WebAPI.Extensions
                         var userId = int.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
                         if (user == null)
-                        {                           
+                        {
                             context.Fail("Unauthorized");
                         }
                         return Task.CompletedTask;
                     }
-                };                
+                };
                 x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters

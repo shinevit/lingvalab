@@ -5,30 +5,32 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    class UnitOfWorkStatistics : IUnitOfWorkStatistics
+    public class UnitOfWorkStatistics : IUnitOfWorkStatistics
     {
         private static DictionaryContext _context;
 
         private bool disposed = false;
 
         private readonly IRepositoryUser _users;
-        private readonly IRepositoryEvent _event;
+
         private readonly IRepositoryGroup _group;
+
+        private readonly IRepositoryUserGroup _userGroup;
 
         public IRepositoryGroup Group { get => _group; }
         public IRepositoryUser User { get => _users; }
-        public IRepositoryEvent Event { get => _event; }
+        public IRepositoryUserGroup userGroup { get => _userGroup; }
 
         public UnitOfWorkStatistics(
             DictionaryContext context,
-            IRepositoryEvent lingvaEvent,
+            IRepositoryUserGroup userGroup,
             IRepositoryGroup group,
             IRepositoryUser user)
         {
             _context = context;
             _users = user;
             _group = group;
-            _event = lingvaEvent;
+            _userGroup = userGroup;
         }
 
         public void Save()

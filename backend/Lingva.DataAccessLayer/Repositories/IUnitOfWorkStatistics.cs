@@ -8,7 +8,7 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         IRepositoryUser User { get; }
         IRepositoryGroup Group { get; }
-        IRepositoryEvent Event { get; }
+        IRepositoryUserGroup userGroup { get; }
     }
 }
 

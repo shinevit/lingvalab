@@ -4,12 +4,8 @@ using System.Text;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Exceptions;
-using System.Linq;
-using Lingva.DataAccessLayer;
 using Lingva.DataAccessLayer.Repositories;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
+
 
 
 namespace Lingva.BusinessLayer.Services
@@ -25,14 +21,37 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Group> GetGroupParticipants(int groupId, int groupsQuantity)
+        public IEnumerable<User> GetGroupParticipants(int groupId, int usersQuantity)
         {
-            throw new NotImplementedException();
+
+            var usersID = _unitOfWork.userGroup.GetList(usersQuantity, g => g.GroupId == groupId);
+
+            if (usersID == null)
+            {
+                throw new StatisticsServiceException(WRONG_GROUPID);
+            }
+
+            foreach (var item in usersID)
+            {
+                yield return _unitOfWork.User.Get(g => g.Id == (item.UserId));
+            }
         }
 
-        public IEnumerable<User> GetUserGroups(int userId, int groupsQuantity)
+        public IEnumerable<Group> GetUserGroups(int userId, int groupsQuantity)
         {
-            throw new NotImplementedException();
+            var groupsID = _unitOfWork.userGroup.GetList(groupsQuantity, g => g.UserId == userId);
+
+            if (groupsID == null)
+            {
+                throw new StatisticsServiceException(WRON_USERID);
+            }
+
+            foreach (var item in groupsID)
+            {
+                yield return _unitOfWork.Group.Get(g => g.Id == (item.GroupId));
+            }
         }
+
+
     }
 }

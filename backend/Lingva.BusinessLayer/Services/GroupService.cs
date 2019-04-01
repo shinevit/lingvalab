@@ -4,81 +4,100 @@ using System.Linq;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.DataAccessLayer.Repositories;
-using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Exceptions;
 
 namespace Lingva.BusinessLayer.Services
 {
     public class GroupService : IGroupService
     {
-        private IUnitOfWorkGroup _unitOfWork;
-        private IUnitOfWorkUser _unitOfWorkUser;
+     
+        private IUnitOfWorkUserGroup _unitOfWork;
 
-        public GroupService(IUnitOfWorkGroup unitOfWorkGroup, IUnitOfWorkUser unitOfWorkUser)
+        public GroupService(IUnitOfWorkUserGroup unitOfWorkUserGroup)
         {
-            _unitOfWork = unitOfWorkGroup;
-            _unitOfWorkUser = unitOfWorkUser;
-
+            _unitOfWork = unitOfWorkUserGroup;
         }
 
-        public Group JoinGroup(int userID, int groupID)
+        public void JoinGroup(int userID, int groupID)
         {
-            //e is no Subtitle record with Path = {path} in the Subtitles table.");  var newGroup = new Group { UserId = userID, EventId = groupID};
-            // _unitOfWork.Groups.Create(newGroup);
+            try
+            {
+                _unitOfWork.userGroup.Create(GetUserGroupEntity(userID, groupID));
+            }
+            catch (Exception)
+            {
+                throw new LingvaException("Failed to join User to group");
+            }
 
-            return new Group();
         }
 
         public void LeaveGroup(int userID, int groupID)
         {
-            //_unitOfWork.Groups.Delete(new Group { UserId = userID, EventId = groupID});
+            try
+            {
+                _unitOfWork.userGroup.Delete(GetUserGroupEntity(userID, groupID));
+            }
+            catch (Exception)
+            {
+                throw new LingvaException("Failed to join User to group");
+            }
         }
 
         public IEnumerable<Group> GetAll()
         {
-            return _unitOfWork.Groups.GetList();
+            return _unitOfWork.Group.GetList();
         }
 
         public IEnumerable<Group> GetGroupsList()
         {
-            return _unitOfWork.Groups.GetList();
+            return _unitOfWork.Group.GetList();
         }
 
         public Group GetGroup(int id)
         {
-            Group group = _unitOfWork.Groups.Get(id);
+            Group group = _unitOfWork.Group.Get(id);
             return group;
         }
 
         public Group GetGroupByTitle(string title)
         {
-            Group group = _unitOfWork.Groups.Get(g => g.Title.Contains(title));
+            Group group = _unitOfWork.Group.Get(g => g.Title.Contains(title));
             return group;
         }
 
         public void AddGroup(Group group)
         {
-            _unitOfWork.Groups.Create(group);
+            _unitOfWork.Group.Create(group);
             _unitOfWork.Save();
         }
 
         public void UpdateGroup(int id, Group group)
         {
-            Group myEvent = _unitOfWork.Groups.Get(id);
-            _unitOfWork.Groups.Update(group);
+            Group myEvent = _unitOfWork.Group.Get(id);
+            _unitOfWork.Group.Update(group);
             _unitOfWork.Save();
         }
 
         public void DeleteGroup(int id)
         {
-            Group group = _unitOfWork.Groups.Get(id);
+            Group group = _unitOfWork.Group.Get(id);
 
             if (group == null)
             {
                 return;
             }
 
-            _unitOfWork.Groups.Delete(group);
+            _unitOfWork.Group.Delete(group);
             _unitOfWork.Save();
+        }
+
+        private static UserGroup GetUserGroupEntity(int userID, int groupID)
+        {            
+            UserGroup userGroup = new UserGroup();
+            userGroup.UserId = userID;
+            userGroup.GroupId = groupID;
+
+            return userGroup;
         }
     }
 }

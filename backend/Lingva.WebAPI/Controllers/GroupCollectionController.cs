@@ -15,14 +15,11 @@ namespace Lingva.WebAPI.Controllers
     public class GroupCollectionController : ControllerBase
     {
         private readonly IGroupService _groupsService;
-        private readonly IFilmService _movieService;
         private readonly IMapper _mapper;
 
-        public GroupCollectionController(IGroupService groupsCollectionService,
-               IFilmService movieService, IMapper mapper)
+        public GroupCollectionController(IGroupService groupsCollectionService, IMapper mapper)
         {
             _groupsService = groupsCollectionService;
-
             _mapper = mapper;
         }
 
@@ -48,13 +45,11 @@ namespace Lingva.WebAPI.Controllers
 
             if (group == null)
             {
-                return NotFound();
+                return NotFound(BaseStatusDto.CreateErrorDto());
             }
 
             GroupViewDTO response = _mapper.Map<GroupViewDTO>(group);
-            //response.StatusCode = 200;
-            //response.Message = "ok";
-
+            response.CreateSuccess();
             return Ok(response);
         }
 
@@ -71,10 +66,13 @@ namespace Lingva.WebAPI.Controllers
 
             if (group == null)
             {
-                return NotFound();
+                return NotFound(BaseStatusDto.CreateErrorDto());
             }
 
-            return Ok(_mapper.Map<GroupViewDTO>(group));
+            var groupToReturn = _mapper.Map<GroupViewDTO>(group);
+            groupToReturn.CreateSuccess();
+
+            return Ok(groupToReturn);
         }
 
         // POST: api/groupcollection

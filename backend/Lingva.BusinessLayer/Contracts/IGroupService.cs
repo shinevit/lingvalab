@@ -7,7 +7,7 @@ namespace Lingva.DataAccessLayer.Entities
 {
     public interface IGroupService
     {
-        Group JoinGroup(int userID, int groupID);
+        void JoinGroup(int userID, int groupID);
         void LeaveGroup(int userID, int groupID);
 
         IEnumerable<Group> GetGroupsList();

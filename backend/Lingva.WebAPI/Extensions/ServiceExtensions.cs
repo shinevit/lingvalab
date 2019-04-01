@@ -73,7 +73,7 @@ namespace Lingva.WebAPI.Extensions
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
             services.AddScoped<IUnitOfWorkFilm, UnitOfWorkFilm>();
             services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
-            services.AddScoped<IUnitOfWorkStatistics, UnitOfWorkStatistics>();
+            services.AddScoped<IUnitOfWorkUserGroup, UnitOfWorkUserGroup>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)

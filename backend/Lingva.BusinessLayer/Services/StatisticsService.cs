@@ -14,9 +14,9 @@ namespace Lingva.BusinessLayer.Services
     {
         private const string WRONG_GROUPID = "Group not found";
         private const string WRON_USERID = "User not found";
-        private IUnitOfWorkStatistics _unitOfWork;
+        private IUnitOfWorkUserGroup _unitOfWork;
 
-        public StatisticsService(IUnitOfWorkStatistics unitOfWork)
+        public StatisticsService(IUnitOfWorkUserGroup unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

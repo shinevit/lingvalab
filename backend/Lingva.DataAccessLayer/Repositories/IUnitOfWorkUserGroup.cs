@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IUnitOfWorkStatistics : IUnitOfWork
+    public interface IUnitOfWorkUserGroup : IUnitOfWork
     {
         IRepositoryUser User { get; }
         IRepositoryGroup Group { get; }

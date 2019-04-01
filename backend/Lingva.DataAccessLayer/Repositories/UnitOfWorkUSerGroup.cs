@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class UnitOfWorkStatistics : IUnitOfWorkStatistics
+    public class UnitOfWorkUserGroup : IUnitOfWorkUserGroup
     {
         private static DictionaryContext _context;
 
@@ -21,7 +21,7 @@ namespace Lingva.DataAccessLayer.Repositories
         public IRepositoryUser User { get => _users; }
         public IRepositoryUserGroup userGroup { get => _userGroup; }
 
-        public UnitOfWorkStatistics(
+        public UnitOfWorkUserGroup(
             DictionaryContext context,
             IRepositoryUserGroup userGroup,
             IRepositoryGroup group,

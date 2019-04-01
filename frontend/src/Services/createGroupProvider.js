@@ -1,6 +1,8 @@
 import {Component} from 'react';
 import config from 'react-global-configuration';
 import CreateMovieProvider from './createMovieProvider';
+import UserInfoProvider from './userInfoProvider';
+import { authHeader } from '../Helpers';
 
 class CreateGroupProvider extends Component {
     
@@ -14,6 +16,7 @@ class CreateGroupProvider extends Component {
         const groupDescription = event.target.elements.description.value;
         const movieName = event.target.elements.movieName.value;        
         const apiUrl = config.get('backendAPIUrlEvents');
+        const authToken = authHeader().Authorization;        
 
         const newMovie = await this.AddNewMovie(movieName);        
 
@@ -22,6 +25,7 @@ class CreateGroupProvider extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': authToken
             },
             body: JSON.stringify({
                 title: inputGroupName,
@@ -34,6 +38,7 @@ class CreateGroupProvider extends Component {
                 groups : res.json(),
                 responseStatus: res.status         
             }
+            this.AutoJoinGroup(this.state.groups.id);
         }).catch(err => {console.log(err)});
 
         return this.state.groups;
@@ -43,6 +48,11 @@ class CreateGroupProvider extends Component {
         const movieAdder = new CreateMovieProvider();
         const newMovie = await movieAdder.AddMovie(movieName);
         return newMovie;
+    }
+
+    AutoJoinGroup = async (groupId) => {
+        const userInfoProvider = new UserInfoProvider();
+        await userInfoProvider.JoinGroup(groupId);
     }
 }
 

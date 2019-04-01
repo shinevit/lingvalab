@@ -7,9 +7,12 @@ using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
+using Microsoft.AspNetCore.Authorization;
+using Lingva.BusinessLayer.Services;
 
 namespace Lingva.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GroupCollectionController : ControllerBase
@@ -27,6 +30,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/groupcollection
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetGroupsList()
         {
@@ -36,6 +40,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/groupcollection/5
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetGroup([FromRoute] int id)
         {
@@ -59,6 +64,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/groupcollection/title
+        [AllowAnonymous]
         [HttpGet("{title}")]
         public async Task<IActionResult> GetGroupByTitle([FromRoute] string title)
         {
@@ -77,7 +83,7 @@ namespace Lingva.WebAPI.Controllers
             return Ok(_mapper.Map<GroupViewDTO>(group));
         }
 
-        // POST: api/groupcollection
+        // POST: api/groupcollection        
         [HttpPost]
         public async Task<IActionResult> PostGroup([FromBody] GroupCreatingDTO groupCreatingDTO)
         {
@@ -94,7 +100,7 @@ namespace Lingva.WebAPI.Controllers
                 Film movie = new Film();
 
                 await Task.Run(() => {
-                    _groupsService.AddGroup(group);
+                    _groupsService.AddGroup(group);                    
                 });
             }
             catch (ArgumentException ex)
@@ -102,7 +108,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
-            Group newGroup = _groupsService.GetGroup(group.Id);
+            Group newGroup = _groupsService.GetGroup(group.Id);            
 
             return Ok(_mapper.Map<GroupViewDTO>(newGroup));
         }

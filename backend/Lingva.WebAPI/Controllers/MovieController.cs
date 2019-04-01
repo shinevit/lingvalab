@@ -7,9 +7,11 @@ using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lingva.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MovieController : ControllerBase
@@ -24,6 +26,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/movie
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetMoviesList()
         {
@@ -32,6 +35,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/movie/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovie([FromRoute] int id)
         {

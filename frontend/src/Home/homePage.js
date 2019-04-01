@@ -10,6 +10,7 @@ import SearchForm from '../Components/searchForm';
 import EventProvider from '../Services/eventProvider';
 import OMDBImageGetter from '../Services/OMDBImageGetter';
 import {EventWindow} from '../Events/eventsPage';
+import { authHeader } from '../Helpers';
 
 const topGroupsDummy = {
     groups: [
@@ -124,7 +125,7 @@ class HomePage extends Component {
         this.UpdateCarousel();
     }
 
-    render() {
+    render() {        
         return(
             <div>
                 <Row className="top-bar">

@@ -7,5 +7,6 @@ export default {
     posterAPIURL: "http://img.omdbapi.com/?i=",
     backendAPIUrlEvents: "http://localhost:44341/api/groupcollection",
     backendAPIUrlMovies: "http://localhost:44341/api/movie",
-    backendUserAPI: "http://localhost:5000",
+    backendUserAPI: "http://localhost:44341/users",
+    backendJoinGroupAPI: "http://localhost:44341/join"
 }

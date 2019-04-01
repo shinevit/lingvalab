@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Lingva.WebAPI.Controllers
 {
 
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class StatisticsController : ControllerBase

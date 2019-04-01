@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,9 +46,8 @@ namespace Lingva.WebAPI
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration()
                 .UseUrls("http://localhost:5000")
@@ -60,7 +59,7 @@ namespace Lingva.WebAPI
                 })
                 .UseNLog()
                 .Build();
-        }
+
     }
 #pragma warning restore CS1591
 }

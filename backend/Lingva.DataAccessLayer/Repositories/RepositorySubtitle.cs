@@ -1,18 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositorySubtitle : Repository<Subtitles>, IRepositorySubtitle
+    public class RepositorySubtitle : Repository<Subtitle>, IRepositorySubtitle
     {
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Subtitle entity!";
 
         public RepositorySubtitle(DictionaryContext context)
-            : base(context)
+            :base(context)
         {
         }
 
@@ -28,7 +30,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override Subtitle Get(object id)
         {
-            return _context.Subtitles.Find((int) id);
+            return _context.Subtitles.Find((int)id);
         }
 
         public int? Get(string path)
@@ -55,7 +57,10 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Create(Subtitle subtitle)
         {
-            if (subtitle == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
+            if (subtitle == null)
+            {
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
+            }
 
             _context.Subtitles.Add(subtitle);
         }
@@ -68,7 +73,10 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Delete(Subtitle subtitle)
         {
-            if (_context.Entry(subtitle).State == EntityState.Detached) _context.Subtitles.Attach(subtitle);
+            if (_context.Entry(subtitle).State == EntityState.Detached)
+            {
+                _context.Subtitles.Attach(subtitle);
+            }
 
             _context.Subtitles.Remove(subtitle);
         }

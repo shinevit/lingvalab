@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Lingva.BusinessLayer.Contracts;
+﻿using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Lingva.BusinessLayer.Services
 {
-    public class WordService : IWordService
+    public class WordService: IWordService
     {
-        private readonly string[] _separators = {" ", ",", ".", "!", "?", ";", ":", "<i>", "<h>"};
         private readonly IUnitOfWorkParser _unitOfWork;
+
+        private readonly string[] _separators = { " ", ",", ".", "!", "?", ";", ":", "<i>", "<h>" };
 
         public WordService(IUnitOfWorkParser unitOfWork)
         {
@@ -20,18 +22,20 @@ namespace Lingva.BusinessLayer.Services
         {
             return _unitOfWork.ParserWords.GetList();
         }
-
         public ParserWord GetParserWordByName(string name)
         {
-            var word = _unitOfWork.ParserWords.Get(name);
+            ParserWord word = _unitOfWork.ParserWords.Get(name);
             return word;
         }
 
         public bool AddWordsFromRow(SubtitleRow row)
         {
-            if (row == null || string.IsNullOrEmpty(row.Value)) return false;
+            if (row == null || string.IsNullOrEmpty(row.Value))
+            {
+                return false;
+            }
 
-            var add = false;
+            bool add = false;
 
             string[] words;
 
@@ -39,19 +43,25 @@ namespace Lingva.BusinessLayer.Services
             {
                 add = true;
 
-                var language = _unitOfWork.Subtitles.Get(s => s.Id == row.SubtitleId).LanguageName ?? "en";
+                string language = _unitOfWork.Subtitles.Get(s => s.Id == row.SubtitleId).LanguageName ?? "en";
 
-                foreach (var word in words) AddWord(word, language, row.Id);
+                foreach (string word in words)
+                {
+                    AddWord(word, language, row.Id );
+                }
             }
-
+            
             return add;
         }
 
         public bool AddWordFromPhrase(string phrase, string language = "en", int? rowId = null)
         {
-            if (string.IsNullOrEmpty(phrase)) return false;
+            if (string.IsNullOrEmpty(phrase))
+            {
+                return false;
+            }
 
-            var add = false;
+            bool add = false;
 
             string[] words;
 
@@ -59,7 +69,10 @@ namespace Lingva.BusinessLayer.Services
             {
                 add = true;
 
-                foreach (var word in words) AddWord(word, language, rowId);
+                foreach (string word in words)
+                {
+                    AddWord(word, language, rowId);
+                }
             }
 
             return add;
@@ -80,16 +93,21 @@ namespace Lingva.BusinessLayer.Services
 
             words = line.Split(_separators, StringSplitOptions.RemoveEmptyEntries);
 
-            if (words.Length == 0) return false;
+            if (words.Length == 0)
+            {
+                return false;
+            }
 
             return true;
         }
-
         private bool AddWord(string word, string language = "en", int? subtitleRowId = null)
         {
-            if (ExistsWord(word)) return false;
+            if (ExistsWord(word))
+            {
+                return false;
+            }
 
-            var newWord = new ParserWord
+            ParserWord newWord = new ParserWord
             {
                 Name = word,
                 LanguageName = language,
@@ -103,3 +121,4 @@ namespace Lingva.BusinessLayer.Services
         }
     }
 }
+

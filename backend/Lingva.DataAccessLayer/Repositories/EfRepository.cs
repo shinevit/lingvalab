@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Lingva.DataAccessLayer.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class EfRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class EfRepository<TEntity>:IGenericRepository<TEntity> where TEntity : class
     {
         protected DictionaryContext _context;
         protected DbSet<TEntity> _dbSet;
@@ -26,7 +27,6 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             return _dbSet.AsNoTracking().Where(predicate).ToList();
         }
-
         public TEntity FindById(int id)
         {
             return _dbSet.Find(id);
@@ -37,13 +37,11 @@ namespace Lingva.DataAccessLayer.Repositories
             _dbSet.Add(item);
             _context.SaveChanges();
         }
-
         public void Update(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
             _context.SaveChanges();
         }
-
         public void Remove(TEntity item)
         {
             _dbSet.Remove(item);
@@ -52,8 +50,8 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void CreateRange(IEnumerable<TEntity> items)
         {
-            _dbSet.AddRange(items);
-            _context.SaveChanges();
+          _dbSet.AddRange(items);
+          _context.SaveChanges();
         }
     }
 }

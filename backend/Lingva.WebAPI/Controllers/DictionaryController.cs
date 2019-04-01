@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.WebAPI.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using AutoMapper;
+using Lingva.DataAccessLayer.Entities;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.WebAPI.Dto;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -51,11 +54,17 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDictionaryRecord([FromRoute] int id)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            var dictionaryRecord = _dictionaryService.GetDictionaryRecord(id);
+            DictionaryRecord dictionaryRecord = _dictionaryService.GetDictionaryRecord(id);
 
-            if (dictionaryRecord == null) return NotFound();
+            if (dictionaryRecord == null)
+            {
+                return NotFound();
+            }
 
             return Ok(_mapper.Map<DictionaryRecordViewDTO>(dictionaryRecord));
         }
@@ -86,11 +95,14 @@ namespace Lingva.WebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> PostDictionaryRecord([FromBody] DictionaryRecordCreatingDTO dictionaryRecordCreatingDTO)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {
-                var dictionaryRecord = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
+                DictionaryRecord dictionaryRecord  = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
                 await Task.Run(() => _dictionaryService.AddDictionaryRecord(dictionaryRecord));
             }
             catch (ArgumentException ex)
@@ -107,11 +119,14 @@ namespace Lingva.WebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> PutDictionaryRecord([FromRoute] int id, [FromBody] DictionaryRecordCreatingDTO dictionaryRecordCreatingDTO)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {
-                var dictionaryRecord = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
+                DictionaryRecord dictionaryRecord = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
                 await Task.Run(() => _dictionaryService.UpdateDictionaryRecord(id, dictionaryRecord));
             }
             catch (ArgumentException ex)
@@ -142,7 +157,10 @@ namespace Lingva.WebAPI.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteDictionaryRecord([FromRoute] int id)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {

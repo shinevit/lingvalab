@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Options;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-
 using Lingva.BusinessLayer.Contracts;
+using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
 using Lingva.WebAPI.Helpers;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.BusinessLayer.Services;
 using Lingva.DataAccessLayer.Exceptions;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -24,9 +17,9 @@ namespace Lingva.WebAPI.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
-        private IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
         public UsersController(
             IUserService userService,
@@ -50,7 +43,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
 
-            string tokenString = _userService.GetUserToken(user, _appSettings.Secret);
+            var tokenString = _userService.GetUserToken(user, _appSettings.Secret);
 
             SignInUserDto signInUser = _mapper.Map<SignInUserDto>(user);
             signInUser.Token = tokenString;
@@ -96,14 +89,14 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("me")]
         public async Task<IActionResult> GetMyInfo()
         {
-            return await GetUserInfo(UserService.GetLoggedInUserId(this));
+            return await GetUserInfo(UserHelper.GetLoggedInUserId(this));
         }
 
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody]SignUpUserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            user.Id = await Task.Run(() => UserService.GetLoggedInUserId(this));
+            user.Id = await Task.Run(() => UserHelper.GetLoggedInUserId(this));
             try
             {
                 await Task.Run(() => _userService.Update(user, userDto.Password));
@@ -132,6 +125,5 @@ namespace Lingva.WebAPI.Controllers
 
             return Ok(userDto);
         }
-
     }
 }

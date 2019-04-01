@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lingva.DataAccessLayer.Entities
 {
     public class User
-    {
+    {        
         [Key]
         public int Id { get; set; }
 
@@ -25,6 +22,7 @@ namespace Lingva.DataAccessLayer.Entities
         public string Username { get; set; }
 
         public byte[] PasswordHash { get; set; }
+
         public byte[] PasswordSalt { get; set; }
 
         [ForeignKey("UserId")]
@@ -34,7 +32,6 @@ namespace Lingva.DataAccessLayer.Entities
 
         public User()
         {
-
             UserDictionaryRecords = new List<DictionaryRecord>();
             UserGroups = new List<UserGroup>();
         }

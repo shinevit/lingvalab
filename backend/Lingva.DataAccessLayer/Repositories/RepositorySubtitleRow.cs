@@ -1,4 +1,4 @@
-﻿using Lingva.DataAccessLayer.Context;
+﻿﻿using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,17 +6,19 @@ using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositorySubtitleRow : Repository<SubtitleRow> ,IRepositorySubtitleRow
+    public class RepositorySubtitleRow : Repository<SubtitleRow>, IRepositorySubtitleRow
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
         private const string ERR_ARG_NULL_EXP = "Tried to insert null SubtitleRow entity!";
 
         public RepositorySubtitleRow(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -32,7 +34,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override SubtitleRow Get(object id)
         {
-            return _context.SubtitleRows.Find((int)id);
+            return _context.SubtitleRows.Find((int) id);
         }
 
         public override SubtitleRow Get(Expression<Func<SubtitleRow, bool>> predicator)
@@ -42,10 +44,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Create(SubtitleRow subtitle)
         {
-            if (subtitle == null)
-            {
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
-            }
+            if (subtitle == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
 
             _context.SubtitleRows.Add(subtitle);
         }
@@ -58,10 +57,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Delete(SubtitleRow subtitle)
         {
-            if (_context.Entry(subtitle).State == EntityState.Detached)
-            {
-                _context.SubtitleRows.Attach(subtitle);
-            }
+            if (_context.Entry(subtitle).State == EntityState.Detached) _context.SubtitleRows.Attach(subtitle);
 
             _context.SubtitleRows.Remove(subtitle);
         }

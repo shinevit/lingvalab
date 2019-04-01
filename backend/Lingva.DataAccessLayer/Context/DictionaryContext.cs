@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Lingva.DataAccessLayer.Entities;
+﻿using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Context
@@ -14,7 +10,7 @@ namespace Lingva.DataAccessLayer.Context
         public DbSet<Language> Languages { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Film> Films { get; set; }
-        public DbSet<Subtitle> Subtitles { get; set; }
+        public DbSet<Subtitles> Subtitles { get; set; }
         public DbSet<SubtitleRow> SubtitleRows { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<ParserWord> ParserWords { get; set; }
@@ -33,7 +29,7 @@ namespace Lingva.DataAccessLayer.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Film>().ToTable("Films");
-            modelBuilder.Entity<Subtitle>().ToTable("Subtitles");
+            modelBuilder.Entity<Subtitles>().ToTable("Subtitles");
             modelBuilder.Entity<SubtitleRow>().ToTable("SubtitleRows");
             modelBuilder.Entity<ParserWord>().ToTable("ParserWords");
             modelBuilder.Entity<Word>().ToTable("Words");
@@ -62,22 +58,20 @@ namespace Lingva.DataAccessLayer.Context
             //    .WithOne(f => f.Film)
             //    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Subtitle>()
-                  .HasMany(c => c.SubtitlesRow)
-                  .WithOne(t => t.Subtitles)
-                  .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Subtitles>()
+                .HasMany(c => c.SubtitlesRow)
+                .WithOne(t => t.Subtitles)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<SubtitleRow>()
-                  .HasOne(c => c.Subtitles)
-                  .WithMany(t => t.SubtitlesRow)
-                  .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(c => c.Subtitles)
+                .WithMany(t => t.SubtitlesRow)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Word>()
-                  .HasOne(c => c.Language)
-                  .WithMany(t => t.Words)
-                  .OnDelete(DeleteBehavior.Restrict);
-
-            base.OnModelCreating(modelBuilder);
+                .HasOne(c => c.Language)
+                .WithMany(t => t.Words)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

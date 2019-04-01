@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Lingva.DataAccessLayer.Context;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    using global::Lingva.DataAccessLayer.Context;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     namespace Lingva.DataAccessLayer.Repositories
     {
         public class UnitOfWorkParser : IUnitOfWorkParser

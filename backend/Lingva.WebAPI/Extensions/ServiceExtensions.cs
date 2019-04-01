@@ -1,20 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Repositories;
-using Lingva.BusinessLayer;
-using AutoMapper;
-using Lingva.DataAccessLayer.Entities;
-using System;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System;
 using System.Text;
-using Lingva.BusinessLayer.Contracts;
 using System.Threading.Tasks;
+using AutoMapper;
+using Lingva.BusinessLayer;
+using Lingva.BusinessLayer.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
-using Microsoft.IdentityModel.Protocols;
+using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Repositories;
 using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
 using Lingva.WebAPI.Initializer;
@@ -60,9 +53,9 @@ namespace Lingva.WebAPI.Extensions
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
             });
         }
 
@@ -125,15 +118,13 @@ namespace Lingva.WebAPI.Extensions
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
                 {
-                    OnTokenValidated = context =>
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.Events = new JwtBearerEvents
                     {
                         var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
                         var userId = int.Parse(context.Principal.Identity.Name);

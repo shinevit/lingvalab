@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -153,7 +152,7 @@ namespace Lingva.BusinessLayer.Services
                
         private Encoding DetectEncoding(Stream stream)
         {
-            Ude.CharsetDetector cdet = new Ude.CharsetDetector();
+            var cdet = new CharsetDetector();
             cdet.Feed(stream);
             cdet.DataEnd();
 

@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
-
 using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Context;
 using System.Linq;
 using Lingva.DataAccessLayer.Exceptions;
+using Lingva.DataAccessLayer;
+using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Lingva.BusinessLayer.Services
 {
     public class UserService : IUserService
     {
-        private IUnitOfWorkUser _unitOfWork;
+        private readonly IUnitOfWorkUser _unitOfWork;
 
         public UserService(IUnitOfWorkUser unitOfWork)
         {
@@ -114,28 +115,25 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork.Users.Delete(_unitOfWork.Users.Get(id));
         }
 
-        public static int GetLoggedInUserId(Microsoft.AspNetCore.Mvc.ControllerBase controllerBase)
-        {
-            return int.Parse(controllerBase.User.Claims.First(i => i.Type.Equals(System.Security.Claims.ClaimTypes.Name)).Value);
-        }
-
         public string GetUserToken(User user, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
             return tokenString;
         }
+
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null)
@@ -147,10 +145,10 @@ namespace Lingva.BusinessLayer.Services
                 throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
             }
 
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 

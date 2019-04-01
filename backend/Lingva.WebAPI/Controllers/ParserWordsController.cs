@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using System.ComponentModel.Design;
 using AutoMapper;
 using Lingva.BusinessLayer.Contracts;
+using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
 using System.Text;
 using NLog;

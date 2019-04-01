@@ -5,13 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="InitializeWithTestData\**" />
+    <EmbeddedResource Remove="InitializeWithTestData\**" />
+    <None Remove="InitializeWithTestData\**" />
+  </ItemGroup>
+
+<!--
+  <ItemGroup>
     <Compile Remove="Repositories\FilmRepository.cs" />
     <Compile Remove="Repositories\SubtitlesRepository.cs" />
     <Compile Remove="Repositories\SubtitlesRowRepository.cs" />
   </ItemGroup>
+-->
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.3" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="NLog" Version="4.6.1" />

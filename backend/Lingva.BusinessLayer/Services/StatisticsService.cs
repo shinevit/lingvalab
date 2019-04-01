@@ -21,10 +21,10 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<User> GetGroupParticipants(int groupId, int usersQuantity)
+        public IEnumerable<User> GetGroupParticipants(int groupId)
         {
 
-            var usersID = _unitOfWork.userGroup.GetList(usersQuantity, g => g.GroupId == groupId);
+            var usersID = _unitOfWork.userGroup.GetList(g => g.GroupId == groupId);
 
             if (usersID == null)
             {
@@ -37,9 +37,9 @@ namespace Lingva.BusinessLayer.Services
             }
         }
 
-        public IEnumerable<Group> GetUserGroups(int userId, int groupsQuantity)
+        public IEnumerable<Group> GetUserGroups(int userId)
         {
-            var groupsID = _unitOfWork.userGroup.GetList(groupsQuantity, g => g.UserId == userId);
+            var groupsID = _unitOfWork.userGroup.GetList( g => g.UserId == userId);
 
             if (groupsID == null)
             {

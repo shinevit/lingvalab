@@ -30,6 +30,11 @@ namespace Lingva.DataAccessLayer.Repositories
             return _entities.Where(predicator).Take(quantity).AsNoTracking();
         }
 
+        public virtual IQueryable<T> GetList(Expression<Func<T, bool>> predicator)
+        {
+            return _entities.Where(predicator).AsNoTracking();
+        }
+
         public virtual T Get(object id)
         {
             return _entities.Find((int)id);

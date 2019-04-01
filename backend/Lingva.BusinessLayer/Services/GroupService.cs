@@ -43,11 +43,6 @@ namespace Lingva.BusinessLayer.Services
             }
         }
 
-        public IEnumerable<Group> GetAll()
-        {
-            return _unitOfWork.Group.GetList();
-        }
-
         public IEnumerable<Group> GetGroupsList()
         {
             return _unitOfWork.Group.GetList();
@@ -65,9 +60,10 @@ namespace Lingva.BusinessLayer.Services
             return group;
         }
 
-        public void AddGroup(Group group)
+        public void AddGroup(Group group, int userId)
         {
             _unitOfWork.Group.Create(group);
+            _unitOfWork.userGroup.Create(GetUserGroupEntity(userId, group.Id));
             _unitOfWork.Save();
         }
 
@@ -99,5 +95,6 @@ namespace Lingva.BusinessLayer.Services
 
             return userGroup;
         }
+
     }
 }

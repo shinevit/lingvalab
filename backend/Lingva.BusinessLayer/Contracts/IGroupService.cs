@@ -16,7 +16,7 @@ namespace Lingva.DataAccessLayer.Entities
 
         Group GetGroupByTitle(string title);
 
-        void AddGroup(Group group);
+        void AddGroup(Group group, int userId);
 
         void UpdateGroup(int id, Group group);
 

@@ -50,12 +50,14 @@ namespace Lingva.DataAccessLayer.Context
             modelBuilder.Entity<UserGroup>()
                 .HasOne<Group>(ug => ug.Group)
                 .WithMany(g => g.UserGroups)
-                .HasForeignKey(ug => ug.GroupId);
+                .HasForeignKey(ug => ug.GroupId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserGroup>()
                .HasOne<User>(ug => ug.User)
                .WithMany(g => g.UserGroups)
-               .HasForeignKey(ug => ug.UserId);
+               .HasForeignKey(ug => ug.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             //modelBuilder.Entity<Film>()
             //    .HasMany(s => s.Subtitles)

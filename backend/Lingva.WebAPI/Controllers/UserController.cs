@@ -40,7 +40,7 @@ namespace Lingva.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticateUserDto userDto)
+        public async Task<IActionResult> Authenticate([FromBody]SignUpUserDto userDto)
 
         {
             var user = await Task.Run(() => _userService.Authenticate(userDto.Username, userDto.Password));

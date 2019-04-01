@@ -7,6 +7,7 @@ using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
+using Lingva.BusinessLayer.Services;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -93,7 +94,7 @@ namespace Lingva.WebAPI.Controllers
 
                 await Task.Run(() =>
                 {
-                    _groupsService.AddGroup(group);
+                    _groupsService.AddGroup(group, UserService.GetLoggedInUserId(this));
                 });
             }
             catch (ArgumentException ex)

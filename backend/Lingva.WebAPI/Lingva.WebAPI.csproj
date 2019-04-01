@@ -38,4 +38,7 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Dto\AuthenticateUserDto.cs" />
+  </ItemGroup>
 </Project>

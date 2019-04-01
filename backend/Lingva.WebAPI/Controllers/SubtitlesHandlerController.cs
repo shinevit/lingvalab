@@ -129,7 +129,7 @@ namespace Lingva.WebAPI.Controllers
                         "There are no any rows from parsing subtitle by the ParserWordService."));
                 }
 
-                return Ok(BaseStatusDTO.CreateSuccessDto("Subtitle parsing operation is successful."));
+                return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
             }
             catch (Exception ex)
             {

@@ -74,6 +74,7 @@ namespace Lingva.WebAPI.Controllers
 
             SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
             subtitleDTO.CreateSuccess("GET request by Subtitle Path succeeds.");
+
             return Ok(subtitleDTO);
         }
 
@@ -105,7 +106,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
-
+//---Parsing only with Path
         //POST: api/subtitle/parse
         [HttpPost]
         [Route("parse")]
@@ -128,7 +129,7 @@ namespace Lingva.WebAPI.Controllers
                         "There are no any rows from parsing subtitle by the ParserWordService."));
                 }
 
-                return BadRequest(BaseStatusDto.CreateErrorDto("Subtitle parsing operation is successful."));
+                return Ok(BaseStatusDTO.CreateSuccessDto("Subtitle parsing operation is successful."));
             }
             catch (Exception ex)
             {

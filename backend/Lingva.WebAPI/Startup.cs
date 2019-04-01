@@ -68,6 +68,7 @@ namespace Lingva.WebAPI
             app.UseMiddleware<ExceptionHandlerMIddleware>();
             app.UseAuthentication();
             app.UseMvc();
+            app.UseWelcomePage();
         }
     }
 }

@@ -19,7 +19,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
 
-RUN chmod +x prepare-docker.sh
-RUN prepare-docker.sh
-
 ENTRYPOINT ["dotnet", "Lingva.WebAPI.dll"]

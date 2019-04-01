@@ -14,7 +14,7 @@ namespace Lingva.DataAccessLayer.Repositories
         private const string ERR_ARG_NULL_EXP = "Tried to insert null DictionaryRecord entity!";
 
         public RepositoryDictionaryRecord(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 

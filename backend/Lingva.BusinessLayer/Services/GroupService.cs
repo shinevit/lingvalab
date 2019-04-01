@@ -23,7 +23,7 @@ namespace Lingva.BusinessLayer.Services
         public Group JoinGroup(int userID, int groupID)
         {
             //e is no Subtitle record with Path = {path} in the Subtitles table.");  var newGroup = new Group { UserId = userID, EventId = groupID};
-           // _unitOfWork.Groups.Create(newGroup);
+            // _unitOfWork.Groups.Create(newGroup);
 
             return new Group();
         }
@@ -56,14 +56,14 @@ namespace Lingva.BusinessLayer.Services
         }
 
         public void AddGroup(Group group)
-        {            
+        {
             _unitOfWork.Groups.Create(group);
-            _unitOfWork.Save();            
+            _unitOfWork.Save();
         }
 
         public void UpdateGroup(int id, Group group)
         {
-            Group myEvent = _unitOfWork.Groups.Get(id);            
+            Group myEvent = _unitOfWork.Groups.Get(id);
             _unitOfWork.Groups.Update(group);
             _unitOfWork.Save();
         }

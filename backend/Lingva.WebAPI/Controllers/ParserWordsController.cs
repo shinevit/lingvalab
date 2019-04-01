@@ -69,7 +69,7 @@ namespace Lingva.WebAPI.Controllers
                 ParserWordDTO wordDTO = _mapper.Map<ParserWordDTO>(word);
                 wordDTO.CreateSuccess("GET request succeeds.");
 
-                return Ok(wordDTO); 
+                return Ok(wordDTO);
             }
             catch (Exception ex)
             {
@@ -230,7 +230,7 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                ParserWord parserWord = await Task.Run(() => _wordService.DeleteParserWord(name) );
+                ParserWord parserWord = await Task.Run(() => _wordService.DeleteParserWord(name));
 
                 ParserWordDTO parserWordDTO = _mapper.Map<ParserWordDTO>(parserWord);
 

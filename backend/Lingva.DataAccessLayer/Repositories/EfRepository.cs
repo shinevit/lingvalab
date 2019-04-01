@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class EfRepository<TEntity>:IGenericRepository<TEntity> where TEntity : class
+    public class EfRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         protected DictionaryContext _context;
         protected DbSet<TEntity> _dbSet;
@@ -50,8 +50,8 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void CreateRange(IEnumerable<TEntity> items)
         {
-          _dbSet.AddRange(items);
-          _context.SaveChanges();
+            _dbSet.AddRange(items);
+            _context.SaveChanges();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IRepositorySimpleEnWord: IRepository<SimpleEnWord>
+    public interface IRepositorySimpleEnWord : IRepository<SimpleEnWord>
     {
     }
 }

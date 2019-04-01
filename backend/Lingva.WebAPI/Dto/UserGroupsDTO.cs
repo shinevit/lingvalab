@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
 {
-    public class UserGroupsDTO:BaseStatusDto
+    public class UserGroupsDTO : BaseStatusDto
     {
     }
 }

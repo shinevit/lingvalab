@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public abstract class Repository<T> : IRepository<T> 
+    public abstract class Repository<T> : IRepository<T>
         where T : class
     {
         protected DictionaryContext _context;
@@ -73,7 +73,7 @@ namespace Lingva.DataAccessLayer.Repositories
                 throw new ArgumentNullException("Tried to delete null entity!");
             }
 
-            if(!_entities.Select(e => e == entity).Any())
+            if (!_entities.Select(e => e == entity).Any())
             {
                 throw new ArgumentNullException("Attempt to delete non-existent entity has occured.");
             }

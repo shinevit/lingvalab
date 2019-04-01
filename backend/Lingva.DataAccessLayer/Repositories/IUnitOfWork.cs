@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IUnitOfWork 
+    public interface IUnitOfWork
     {
         void Save();
     }

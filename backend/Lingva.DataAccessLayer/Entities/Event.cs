@@ -14,9 +14,9 @@ namespace Lingva.DataAccessLayer.Entities
         [Required]
         [StringLength(250)]
         public string Name { get; set; }
-        
+
         public DateTime Date { get; set; }
-        
+
         public int? FilmId { get; set; }
 
         public virtual Film Film { get; set; }

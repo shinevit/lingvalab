@@ -40,7 +40,7 @@ namespace Lingva.WebAPI
 
                 host.Run();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.Error(e, e.Message);
             }

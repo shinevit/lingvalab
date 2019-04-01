@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IRepositoryLanguage: IRepository<Language>
+    public interface IRepositoryLanguage : IRepository<Language>
     {
     }
 }

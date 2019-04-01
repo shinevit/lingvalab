@@ -11,7 +11,7 @@ namespace Lingva.BusinessLayer.Services
     public class LivesearchService : ILivesearchService
     {
         private readonly IUnitOfWorkDictionary _unitOfWork;
-        
+
         public LivesearchService(IUnitOfWorkDictionary unitOfWork)
         {
             _unitOfWork = unitOfWork;

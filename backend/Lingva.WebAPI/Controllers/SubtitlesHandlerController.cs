@@ -51,7 +51,7 @@ namespace Lingva.WebAPI.Controllers
             subtitleDTO.CreateSuccess("GET request by Subtitle Id succeeds.");
 
             return Ok(subtitleDTO);
-            
+
         }
 
         //GET: api/subtitle/path
@@ -106,7 +106,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
-//---Parsing only with Path
+        //---Parsing only with Path
         //POST: api/subtitle/parse
         [HttpPost]
         [Route("parse")]
@@ -121,7 +121,7 @@ namespace Lingva.WebAPI.Controllers
             {
                 Subtitle subtitle = _mapper.Map<Subtitle>(subtitleDto);
 
-                IEnumerable<SubtitleRow>  rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
+                IEnumerable<SubtitleRow> rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
 
                 if (rows == null)
                 {

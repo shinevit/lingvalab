@@ -9,11 +9,11 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryEvent: Repository<Event>, IRepositoryEvent
+    public class RepositoryEvent : Repository<Event>, IRepositoryEvent
     {
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Event entity!";
         public RepositoryEvent(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 

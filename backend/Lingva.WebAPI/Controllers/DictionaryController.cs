@@ -102,7 +102,7 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                DictionaryRecord dictionaryRecord  = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
+                DictionaryRecord dictionaryRecord = _mapper.Map<DictionaryRecord>(dictionaryRecordCreatingDTO);
                 await Task.Run(() => _dictionaryService.AddDictionaryRecord(dictionaryRecord));
             }
             catch (ArgumentException ex)

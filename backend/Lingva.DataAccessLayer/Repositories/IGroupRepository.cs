@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IGroupRepository: IRepository<Group>
+    public interface IGroupRepository : IRepository<Group>
     {
     }
 }

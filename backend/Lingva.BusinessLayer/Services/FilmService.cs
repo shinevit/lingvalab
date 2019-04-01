@@ -40,7 +40,7 @@ namespace Lingva.BusinessLayer.Services
 
         public void UpdateFilm(int id, Film film)
         {
-            Film myFilm = _unitOfWork.Films.Get(id);            
+            Film myFilm = _unitOfWork.Films.Get(id);
             _unitOfWork.Films.Update(film);
             _unitOfWork.Save();
         }

@@ -10,13 +10,13 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositorySubtitleRow : Repository<SubtitleRow> ,IRepositorySubtitleRow
+    public class RepositorySubtitleRow : Repository<SubtitleRow>, IRepositorySubtitleRow
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
         private const string ERR_ARG_NULL_EXP = "Tried to insert null SubtitleRow entity!";
 
         public RepositorySubtitleRow(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -88,9 +88,9 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public bool Exists(string value)
         {
-            if(string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value))
             {
-                _logger.Warn("Tried to check the SubtitleRow record with Value is empty or null for existence.", 
+                _logger.Warn("Tried to check the SubtitleRow record with Value is empty or null for existence.",
                     new ArgumentNullException());
 
                 throw new ArgumentNullException("Tried to check the SubtitleRow record with Value is empty or null for existence.");

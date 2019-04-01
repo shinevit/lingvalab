@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Lingva.BusinessLayer.Services
 {
-    public class ParserWordService: IParserWordService
+    public class ParserWordService : IParserWordService
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IUnitOfWorkParser _unitOfWork;
@@ -46,7 +46,7 @@ namespace Lingva.BusinessLayer.Services
 
             ParserWord parserWord = _unitOfWork.ParserWords.Get(name);
 
-            if(parserWord == null)
+            if (parserWord == null)
             {
                 _logger.Info($"There is no ParserWord record with \"{name}\" in the ParserWords table.");
 
@@ -114,7 +114,7 @@ namespace Lingva.BusinessLayer.Services
 
                 AddRangeParserWords(wordsToCreate);
 
-                IEnumerable<ParserWordDTO> results = (IEnumerable<ParserWordDTO>)wordsDto; 
+                IEnumerable<ParserWordDTO> results = (IEnumerable<ParserWordDTO>)wordsDto;
 
                 return results;
             }
@@ -124,7 +124,7 @@ namespace Lingva.BusinessLayer.Services
 
         public void AddRangeParserWords(IEnumerable<ParserWord> words)
         {
-            if(words == null)
+            if (words == null)
             {
                 return;
             }
@@ -132,7 +132,7 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork.ParserWords.CreateRange(words);
             _unitOfWork.Save();
         }
-       
+
         public void AddParserWord(ParserWord word)
         {
             if (word == null || string.IsNullOrEmpty(word.Name))
@@ -158,7 +158,7 @@ namespace Lingva.BusinessLayer.Services
 
         public ParserWord DeleteParserWord(string name)
         {
-            if(String.IsNullOrEmpty(name))
+            if (String.IsNullOrEmpty(name))
             {
                 return null;
             }

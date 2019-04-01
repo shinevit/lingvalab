@@ -42,7 +42,7 @@ namespace Lingva.BusinessLayer.Services
                 {
                     text += str;
                 }
-            } 
+            }
             return text;
         }
 

@@ -14,7 +14,7 @@ namespace Lingva.DataAccessLayer.Repositories
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Subtitle entity!";
 
         public RepositorySubtitle(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 
@@ -35,7 +35,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public int? Get(string path)
         {
-            if(string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return null;
             }

@@ -12,11 +12,11 @@ namespace Lingva.DataAccessLayer.Repositories
     public class RepositoryWord : Repository<Word>, IRepositoryWord
     {
         private DictionaryContext _context;
-        
+
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Word entity!";
 
         public RepositoryWord(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 

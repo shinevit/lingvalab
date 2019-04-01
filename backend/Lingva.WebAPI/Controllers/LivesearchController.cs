@@ -36,7 +36,7 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                resultArr = await Task.Run(() =>_livesearchService.Find(substring, qantityOfResult));
+                resultArr = await Task.Run(() => _livesearchService.Find(substring, qantityOfResult));
             }
             catch
             {

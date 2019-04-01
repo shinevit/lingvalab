@@ -65,7 +65,8 @@ namespace Lingva.WebAPI.Controllers
             {
                 movie = _mapper.Map<Film>(movieCreatingDTO);
 
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     Film searchedMovie = _filmService.GetFilmByTitle(movie.Title);
                     if (searchedMovie == null)
                     {
@@ -84,7 +85,8 @@ namespace Lingva.WebAPI.Controllers
 
             Film newMovie = new Film();
 
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 newMovie = _filmService.GetFilm(movie.Id);
             });
 

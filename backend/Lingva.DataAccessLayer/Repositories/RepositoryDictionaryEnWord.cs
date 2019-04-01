@@ -11,7 +11,7 @@ namespace Lingva.DataAccessLayer.Repositories
     public class RepositoryDictionaryEnWord : Repository<DictionaryEnWord>, IRepositoryDictionaryEnWord
     {
         public RepositoryDictionaryEnWord(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
         public void Create(DictionaryEnWord entity)

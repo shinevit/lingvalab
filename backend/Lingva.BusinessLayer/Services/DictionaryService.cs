@@ -47,7 +47,7 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork.DictionaryRecords.Update(dictionaryRecord);
             _unitOfWork.Save();
         }
-       
+
         public void DeleteDictionaryRecord(int id)
         {
             DictionaryRecord dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
@@ -83,7 +83,7 @@ namespace Lingva.BusinessLayer.Services
         }
 
         private bool ExistDictionaryRecord(DictionaryRecord dictionaryRecord)
-        {           
+        {
             return _unitOfWork.DictionaryRecords.Get(c => c.UserId == dictionaryRecord.UserId
                                         && c.WordName == dictionaryRecord.WordName
                                         && c.Translation == dictionaryRecord.Translation

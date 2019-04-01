@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Lingva.BusinessLayer.Services
 {
-    public class WordService: IWordService
+    public class WordService : IWordService
     {
         private readonly IUnitOfWorkParser _unitOfWork;
 
@@ -47,10 +47,10 @@ namespace Lingva.BusinessLayer.Services
 
                 foreach (string word in words)
                 {
-                    AddWord(word, language, row.Id );
+                    AddWord(word, language, row.Id);
                 }
             }
-            
+
             return add;
         }
 

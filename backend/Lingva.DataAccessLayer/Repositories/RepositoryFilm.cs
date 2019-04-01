@@ -9,16 +9,16 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryFilm : Repository<Film>, IRepositoryFilm 
+    public class RepositoryFilm : Repository<Film>, IRepositoryFilm
     {
         protected DictionaryContext _context;
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Film entity!";
         public RepositoryFilm(DictionaryContext context)
-           :base(context)
+           : base(context)
         {
             _context = context;
         }
-        
+
         public IQueryable<Film> GetList()
         {
             return _context.Films.AsNoTracking();

@@ -93,7 +93,8 @@ namespace Lingva.WebAPI.Controllers
                 group = _mapper.Map<Group>(groupCreatingDTO);
                 Film movie = new Film();
 
-                await Task.Run(() => {
+                await Task.Run(() =>
+                {
                     _groupsService.AddGroup(group);
                 });
             }

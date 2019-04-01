@@ -19,7 +19,7 @@ namespace Lingva.DataAccessLayer.Entities
         public string Link { get; set; }
         [StringLength(250)]
 
-        public string Poster { get; set; }        
+        public string Poster { get; set; }
 
         public string Description { get; set; }
 
@@ -30,7 +30,7 @@ namespace Lingva.DataAccessLayer.Entities
         public virtual ICollection<Group> Groups { get; set; }
 
         public Film()
-        {            
+        {
             Groups = new List<Group>();
         }
     }

@@ -35,7 +35,7 @@ namespace Lingva.WebAPI
 
             CreateMap<SubtitleRow, SubtitleRowDTO>();
             CreateMap<SubtitleRowDTO, SubtitleRow>();
-                
+
             CreateMap<ParserWord, ParserWordDTO>();
             CreateMap<ParserWordDTO, ParserWord>();
 

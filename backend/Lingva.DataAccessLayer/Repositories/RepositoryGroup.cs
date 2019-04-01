@@ -9,13 +9,13 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryGroup: Repository<Group>, IRepositoryGroup
+    public class RepositoryGroup : Repository<Group>, IRepositoryGroup
     {
         private DictionaryContext _context;
 
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Group entity!";
         public RepositoryGroup(DictionaryContext context)
-            :base(context)
+            : base(context)
         {
         }
 

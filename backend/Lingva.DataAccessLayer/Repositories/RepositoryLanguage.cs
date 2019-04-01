@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositoryLanguage: Repository<Language>, IRepositoryLanguage
+    public class RepositoryLanguage : Repository<Language>, IRepositoryLanguage
     {
         public RepositoryLanguage(DictionaryContext context)
             : base(context)

@@ -73,9 +73,9 @@ namespace Lingva.BusinessLayer.Services
                 return subtitle;
             }
 
- 
-                return null;
-            }
+
+            return null;
+        }
 
         public IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle)
         {
@@ -104,9 +104,9 @@ namespace Lingva.BusinessLayer.Services
         }
 
 
-        private void AddSubtitleWithRows(Subtitle subtitle, IEnumerable<SubtitleRow> rows)  
+        private void AddSubtitleWithRows(Subtitle subtitle, IEnumerable<SubtitleRow> rows)
         {
-            if(subtitle == null)
+            if (subtitle == null)
             {
                 throw new ArgumentNullException("Tried to operate with a null Subtitle object.");
             }
@@ -150,7 +150,7 @@ namespace Lingva.BusinessLayer.Services
 
             return rows;
         }
-               
+
         private Encoding DetectEncoding(Stream stream)
         {
             Ude.CharsetDetector cdet = new Ude.CharsetDetector();

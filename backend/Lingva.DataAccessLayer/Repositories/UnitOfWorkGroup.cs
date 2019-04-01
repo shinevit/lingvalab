@@ -6,7 +6,7 @@ using Lingva.DataAccessLayer.Repositories;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class UnitOfWorkGroup:IUnitOfWorkGroup
+    public class UnitOfWorkGroup : IUnitOfWorkGroup
     {
         private static DictionaryContext _context;
 

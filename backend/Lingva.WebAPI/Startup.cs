@@ -27,7 +27,7 @@ namespace Lingva.WebAPI
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
@@ -73,8 +73,8 @@ namespace Lingva.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            
-            app.UseCors("CorsPolicy"); 
+
+            app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             //app.UseHttpsRedirection();
             app.UseAuthentication();

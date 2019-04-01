@@ -43,7 +43,7 @@ namespace Lingva.WebAPI.Initializer
             {
                 return;
             }
-            
+
             foreach (ParserWord word in _parserWords)
             {
                 unitOfWork.ParserWords.InsertOrUpdate(word);
@@ -75,7 +75,7 @@ namespace Lingva.WebAPI.Initializer
 
             foreach (ParserWord word in _parserWords)
             {
-                if(unitOfWork.ParserWords.Get(w => w.Name == word.Name) != null)
+                if (unitOfWork.ParserWords.Get(w => w.Name == word.Name) != null)
                 {
                     unitOfWork.ParserWords.Delete(word);
                 }

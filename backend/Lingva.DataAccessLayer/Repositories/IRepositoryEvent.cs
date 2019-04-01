@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IRepositoryEvent: IRepository<Event>
+    public interface IRepositoryEvent : IRepository<Event>
     {
     }
 }

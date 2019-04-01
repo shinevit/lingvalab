@@ -78,7 +78,7 @@ namespace Lingva.WebAPI.Controllers
 
             return Ok(BaseStatusDto.CreateSuccessDto());
         }
-        
+
         /// <summary>
         /// Deletes user from group.
         /// </summary>

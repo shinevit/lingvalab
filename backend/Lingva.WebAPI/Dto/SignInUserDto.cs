@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
 {
-
-    public class SignInUserDto : BaseStatusDto
+    public class SignInUserDto:BaseStatusDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -15,5 +14,3 @@ namespace Lingva.WebAPI.Dto
         public string Token { get; set; }
     }
 }
-
-

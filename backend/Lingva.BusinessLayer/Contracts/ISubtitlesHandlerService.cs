@@ -1,20 +1,13 @@
-﻿using Lingva.BusinessLayer.DTO;
-using Lingva.DataAccessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using Lingva.BusinessLayer.DTO;
 
 namespace Lingva.BusinessLayer.Contracts
 {
     public interface ISubtitlesHandlerService
     {
-        Subtitle GetSubtitleById(int id);
+        void AddSubtitles(SubtitlesRowDTO[] subDTO, string path,
+            int? filmId); //public void AddSubtitles(SubtitleRow[] subDTO, string path, int? filmId)  
 
-        Subtitle GetSubtitleByPath(string path);
-
-        void AddSubtitle(Subtitle subtitle);
-
-        IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle);
+        SubtitlesRowDTO[] Parse(Stream subtitles); //public SubtitlesRowDTO[] Parse(Stream subtitles)
     }
 }

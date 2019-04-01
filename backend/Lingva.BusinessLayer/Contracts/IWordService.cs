@@ -1,7 +1,5 @@
-﻿using Lingva.DataAccessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.BusinessLayer.Contracts
 {

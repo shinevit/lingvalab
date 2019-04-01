@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Lingva.BusinessLayer.WordsSelector
 {
@@ -17,16 +15,10 @@ namespace Lingva.BusinessLayer.WordsSelector
 
         public int CompareTo(object obj)
         {
-            Word word = obj as Word;
+            var word = obj as Word;
 
-            if (word.Count > Count)
-            {
-                return 1;
-            }
-            if (word.Count < Count)
-            {
-                return -1;
-            }
+            if (word.Count > Count) return 1;
+            if (word.Count < Count) return -1;
 
             return 0;
         }

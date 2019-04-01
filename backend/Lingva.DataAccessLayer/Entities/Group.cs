@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Lingva.DataAccessLayer.Entities
 {
@@ -8,18 +7,17 @@ namespace Lingva.DataAccessLayer.Entities
         [Key]
         public int Id { get; set; }
 
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Picture { get; set; }
+        public int? UserId { get; set; }
 
-        public int? FilmId { get; set; }
-        public virtual Film Film { get; set; }
+        public virtual User Users { get; set; }
 
-        public virtual ICollection<UserGroup> UserGroups { get; set; }
+        [StringLength(100)]
+        public string RoleName { get; set; }
 
-        public Group()
-        {
-            UserGroups = new List<UserGroup>();
-        }
+        public virtual Role Role { get; set; }
+
+        public int? EventId { get; set; }
+
+        public virtual Event Event { get; set; }
     }
 }

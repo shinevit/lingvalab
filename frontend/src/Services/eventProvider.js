@@ -1,33 +1,29 @@
 import {Component} from 'react';
 import config from 'react-global-configuration';
 
-class EventProvider extends Component {    
+class EventProvider extends Component {
     
     state = {
         data: undefined,
         requestStatus: undefined                  
     }       
     
-    GetSearchResults = async (event = null) => {        
-        const url = config.get('backendAPIUrlEvents');        
-        let fetchUrl;        
+    GetSearchResults = async (event = null) => {
+        let request;
+        let url = config.get('backendAPIUrlEvents');        
 
         if (event === null) {
-            fetchUrl = url;            
+            request = await fetch(url);
         } else {
-            fetchUrl = `${url}/${event}`;            
-        }
+            request = await fetch(`${url}/${event}`);
+        }       
+                      
+        const data = await request.json();
 
-        await fetch(fetchUrl)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('No valid resporse from Server!');
-                }
-            })
-            .then(data => this.state = { data: data })
-            .catch(error => this.state = { data : error });
+        this.state = {
+            data : data,
+            requestStatus: request.status         
+        }
 
         return this.state;
     }

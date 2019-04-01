@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Lingva.DataAccessLayer.Entities
 {
@@ -15,6 +12,9 @@ namespace Lingva.DataAccessLayer.Entities
         [StringLength(250)]
         public string Name { get; set; }
 
+        [StringLength(50)]
+        public string Tag { get; set; }
+
         public DateTime Date { get; set; }
 
         public int? FilmId { get; set; }
@@ -23,14 +23,6 @@ namespace Lingva.DataAccessLayer.Entities
 
         public int? SubtitleId { get; set; }
 
-        public virtual Subtitle Subtitle { get; set; }
-
-        //[ForeignKey("EventId")]
-        //public virtual ICollection<Group> Groups { get; set; }
-
-        //public Event()
-        //{
-        //    Groups = new List<Group>();
-        //}
+        public virtual Subtitles Subtitle { get; set; }
     }
 }

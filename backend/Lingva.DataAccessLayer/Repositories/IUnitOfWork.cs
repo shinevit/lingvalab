@@ -1,12 +1,8 @@
-﻿using Lingva.DataAccessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         void Save();
     }

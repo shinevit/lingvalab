@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Lingva.DataAccessLayer.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +26,7 @@ namespace Lingva.DataAccessLayer.Repositories
         {
             return _dbSet.AsNoTracking().Where(predicate).ToList();
         }
+
         public TEntity FindById(int id)
         {
             return _dbSet.Find(id);
@@ -37,11 +37,13 @@ namespace Lingva.DataAccessLayer.Repositories
             _dbSet.Add(item);
             _context.SaveChanges();
         }
+
         public void Update(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
         public void Remove(TEntity item)
         {
             _dbSet.Remove(item);

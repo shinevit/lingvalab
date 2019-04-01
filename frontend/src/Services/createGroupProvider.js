@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import config from 'react-global-configuration';
-import CreateMovieProvider from './createMovieProvider';
 
 class CreateGroupProvider extends Component {
     
@@ -9,15 +8,12 @@ class CreateGroupProvider extends Component {
         responseStatus: undefined                  
     }
 
-    AddGroup = async (event) => {
+    AddGroup = async (event) => {        
         const inputGroupName = event.target.elements.groupName.value;
-        const groupDescription = event.target.elements.description.value;
-        const movieName = event.target.elements.movieName.value;        
+        const groupDescription = event.target.elements.description.value        
         const apiUrl = config.get('backendAPIUrlEvents');
 
-        const newMovie = await this.AddNewMovie(movieName);        
-
-        await fetch(apiUrl, {
+        var response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -25,24 +21,20 @@ class CreateGroupProvider extends Component {
             },
             body: JSON.stringify({
                 title: inputGroupName,
-                description: groupDescription,
-                filmId: newMovie.id,
-                picture: newMovie.poster                 
+                description: groupDescription                
             })
-        }).then(res => {
-            this.state = {
-                groups : res.json(),
-                responseStatus: res.status         
-            }
-        }).catch(err => {console.log(err)});
+        })
 
-        return this.state.groups;
-    }
+        console.log(response);
 
-    AddNewMovie = async (movieName) => {
-        const movieAdder = new CreateMovieProvider();
-        const newMovie = await movieAdder.AddMovie(movieName);
-        return newMovie;
+        const data = await response.json();
+
+        this.state = {
+            groups : data,
+            responseStatus: response.status         
+        }
+
+        return this.state;
     }
 }
 

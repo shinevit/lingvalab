@@ -1,11 +1,7 @@
-﻿using Lingva.BusinessLayer.Contracts;
+﻿using System.Collections.Generic;
+using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lingva.BusinessLayer.Services
 {
@@ -25,14 +21,13 @@ namespace Lingva.BusinessLayer.Services
 
         public DictionaryRecord GetDictionaryRecord(int id)
         {
-            DictionaryRecord dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
+            var dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
             return dictionaryRecord;
         }
 
         public void AddDictionaryRecord(DictionaryRecord dictionaryRecord)
         {
             AddWord(dictionaryRecord.WordName);
-
             if (!ExistDictionaryRecord(dictionaryRecord))
             {
                 _unitOfWork.DictionaryRecords.Create(dictionaryRecord);
@@ -42,7 +37,7 @@ namespace Lingva.BusinessLayer.Services
 
         public void UpdateDictionaryRecord(int id, DictionaryRecord dictionaryRecordUpdate)
         {
-            DictionaryRecord dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
+            var dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
             dictionaryRecord.Translation = dictionaryRecordUpdate.Translation;
             _unitOfWork.DictionaryRecords.Update(dictionaryRecord);
             _unitOfWork.Save();
@@ -50,12 +45,9 @@ namespace Lingva.BusinessLayer.Services
 
         public void DeleteDictionaryRecord(int id)
         {
-            DictionaryRecord dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
+            var dictionaryRecord = _unitOfWork.DictionaryRecords.Get(id);
 
-            if (dictionaryRecord == null)
-            {
-                return;
-            }
+            if (dictionaryRecord == null) return;
 
             _unitOfWork.DictionaryRecords.Delete(dictionaryRecord);
             _unitOfWork.Save();
@@ -63,15 +55,12 @@ namespace Lingva.BusinessLayer.Services
 
         private void AddWord(string word)
         {
-            if (ExistWord(word))
-            {
-                return;
-            }
+            if (ExistWord(word)) return;
 
-            Word newWord = new Word
+            var newWord = new Word
             {
                 Name = word,
-                LanguageName = "en",
+                LanguageName = "en"
             };
             _unitOfWork.Words.Create(newWord);
             _unitOfWork.Save();
@@ -85,10 +74,9 @@ namespace Lingva.BusinessLayer.Services
         private bool ExistDictionaryRecord(DictionaryRecord dictionaryRecord)
         {
             return _unitOfWork.DictionaryRecords.Get(c => c.UserId == dictionaryRecord.UserId
-                                        && c.WordName == dictionaryRecord.WordName
-                                        && c.Translation == dictionaryRecord.Translation
-                                        && c.LanguageName == dictionaryRecord.LanguageName) != null;
+                                                          && c.WordName == dictionaryRecord.WordName
+                                                          && c.Translation == dictionaryRecord.Translation
+                                                          && c.LanguageName == dictionaryRecord.LanguageName) != null;
         }
     }
 }
-

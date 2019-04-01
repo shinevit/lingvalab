@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import { Switch, Route, NavLink } from 'react-router-dom';
-import config from 'react-global-configuration';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import EventProvider from '../Services/eventProvider';
 import VideoPlayer from '../Components/videoPlayer';
-import MovieProvider from '../Services/getMovieProvider';
-import { debug } from 'util';
+import OMDBImageGetter from '../Services/OMDBImageGetter';
+
+const dummyImage250 = "https://via.placeholder.com/250x250.png";
 
 class EventsPage extends Component{
     render(){
@@ -69,56 +69,42 @@ class EventWindow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: this.props.data.title,
-            posterURL: this.props.data.picture,
+            movieName: this.props.data.title,
+            posterURL: dummyImage250,
             id: this.props.data.id,
             description: this.props.data.description
-        }       
-    }
-    
-    GenerateWindow = () => {
-        if (this.props.windowRight) {
-            return(
-                <Row className="event-row">
-                    <Col lg={6}>
-                        <NavLink to={`/events/${this.state.id}`}>
-                            <h4>{this.state.title}</h4>
-                            <img 
-                                src={this.state.posterURL}
-                                alt={this.state.title} 
-                            />
-                        </NavLink>                    
-                    </Col>                    
-                    <Col lg={6}>
-                        <h4>Description</h4>
-                        <p>
-                            {this.props.data.description}
-                        </p>
-                    </Col>   
-                </Row>
-            )
-        } else {
-            return(
-                <Col lg={4}>                        
-                    <NavLink to={`/events/${this.state.id}`}>
-                        <h4>{this.state.title}</h4>
-                        <img 
-                            src={this.state.posterURL}
-                            alt={this.state.title} 
-                        />
-                    </NavLink>                        
-                    <p> 
-                        {this.props.data.description}
-                    </p>
-                </Col>
-            );
         }
+        
+        this.GetPoster = this.GetPoster.bind(this);        
+    }
+
+    GetPoster = async () => {        
+        let getter = new OMDBImageGetter();
+        let response = await getter.GetImageURLByName(this.state.movieName);            
+
+        this.setState({
+            posterURL: response
+        });
+    }
+
+    componentDidMount() {
+        this.GetPoster(this.state.movieName);
     }
 
     render() {
-        console.log(this.props.data);
         return(
-            this.GenerateWindow()
+            <Col lg={4}>                        
+                <NavLink to={`/events/${this.state.id}`}>
+                    <h4>{this.state.title}</h4>
+                    <img 
+                        src={this.state.posterURL}
+                        alt={this.state.title} 
+                    />
+                </NavLink>                        
+                <p> 
+                    {this.props.data.description}
+                </p>
+            </Col>
         );
     }
 }
@@ -128,30 +114,19 @@ class SingleEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            event: <div>Empty</div>,
-            eventId: this.props.match.params.id,
-            movieData: undefined                          
+            events: <div>Empty</div>,
+            eventId: this.props.match.params.id                          
         }
         
         this.GetSingleEvent = this.GetSingleEvent.bind(this);
-        this.GetMovieData = this.GetMovieData.bind(this);
     }
 
-    GetSingleEvent = async (eventId) => {              
-        const getter = new EventProvider();
-        const response = await getter.GetSearchResults(eventId);
-
-        console.log("S Event");
+    GetSingleEvent = async (eventId) => {        
+        let getter = new EventProvider();
+        let response = await getter.GetSearchResults(eventId);
         console.log(response);
-        
-        // if (!response.data.statusCode || response.data.statusCode !== 200) {
-        //     window.location.assign(`/error404`);
-        // }
-
-        const movieData = await this.GetMovieData(response.data.filmId);
-        
         let group =                 
-                <Row className="event-block">
+                <Row>
                     <Col lg={6}>
                     <h3>Welcome to {response.data.title}</h3>
                         <ButtonToolbar>
@@ -167,21 +142,15 @@ class SingleEvent extends Component {
                             Our Movie
                         </h4>
                         <h5>
-                            {movieData.data.title}
+                            {response.data.title}
                         </h5>
                         <VideoPlayer />
                     </Col>
                 </Row>            
 
         this.setState({
-            event: group
+            events: group
         });
-    }
-
-    GetMovieData = async (movieId) => {        
-        const getter = new MovieProvider();
-        const response = await getter.GetMovieData(movieId);        
-        return response;
     }
 
     componentDidMount() {
@@ -190,11 +159,13 @@ class SingleEvent extends Component {
 
     render() {                
         return(            
-            <div>                    
-                {this.state.event}                
+            <div>
+                <h3>Events</h3>    
+                {this.state.events}                
             </div>
         )
     }
 }
 
-export {EventsPage, EventWindow};
+
+export default EventsPage;

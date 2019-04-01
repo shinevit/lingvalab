@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import config from 'react-global-configuration';
 import CarouselMain from '../Components/carouselMain';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,7 +8,16 @@ import CreateGroupProvider from '../Services/createGroupProvider';
 import SearchForm from '../Components/searchForm';
 import EventProvider from '../Services/eventProvider';
 import OMDBImageGetter from '../Services/OMDBImageGetter';
-import {EventWindow} from '../Events/eventsPage';
+
+const dummyText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                     nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                     reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                     deserunt mollit anim id est laborum.`;
+
+const dummyImage250 = "https://via.placeholder.com/250x250.png";
 
 const topGroupsDummy = {
     groups: [
@@ -17,6 +25,11 @@ const topGroupsDummy = {
         {id: 2, groupName: "Harley 'n' the Cowboy", movieName: "Harley Davidson and the Marlboro Man", memberCount: 1000}
     ]
 };
+
+const carouselImagesDummy = [
+        {imgUrl: "https://via.placeholder.com/800x400.png", imgHead: "Image 1", imgText: "Image 1 text"},
+        {imgUrl: "https://via.placeholder.com/800x400.png", imgHead: "Image 2", imgText: "Image 2 text"}
+];
 
 class HomePage extends Component {
     constructor(props, context) {
@@ -33,13 +46,6 @@ class HomePage extends Component {
             carousel: <div>NO CAROUSEL</div>
         }        
     }
-
-    carouselPictureDummy = config.get('dummyImage800x400');
-
-    carouselImagesDummy = [
-        {imgUrl: this.carouselPictureDummy, imgHead: "Image 1", imgText: "Image 1 text"},
-        {imgUrl: this.carouselPictureDummy, imgHead: "Image 2", imgText: "Image 2 text"}
-    ];
     
     GroupsViewEmpty = 
         <Row>
@@ -51,40 +57,30 @@ class HomePage extends Component {
 
     SendAddRequest = async (event) => {
         event.preventDefault();
-        const sender = new CreateGroupProvider();
-        const response = await sender.AddGroup(event);        
+        let sender = new CreateGroupProvider();
+        let response = await sender.AddGroup(event);
+        let data = await response.json();
         
-        window.location.assign(`/events/${response.id}`)
+        console.log(response.data);
     }
 
     SendSearchRequest = async (event) => {
         event.preventDefault();
-        const eventId = event.target.elements.groupName.value;
-        const getter = new EventProvider();
-        const response = await getter.GetSearchResults(eventId);        
+        let eventId = event.target.elements.groupName.value;
+        let getter = new EventProvider();
+        let response = await getter.GetSearchResults(eventId);        
            
         window.location.assign(`/events/${response.data.id}`)        
     }
 
     GetGroupsView = async () => {
-        let eventViews = [];
-        let topGroups = {groups: []};        
-        
-        const getter = new EventProvider();
-        const response = await getter.GetSearchResults();        
+        let eventViews = [];                
 
-        response.data.map(
+        await topGroupsDummy.groups.map(
            async (element, elementKey) => {
-                eventViews.push(                    
-                    <EventWindow key={elementKey} data={element} windowRight={true}/>
-                );
 
-                topGroups.groups.push(
-                    {
-                        id: element.id,
-                        groupName: element.title,
-                        movieName: "The Twilight Saga",
-                    }
+                eventViews.push(
+                    <EventInfo key={elementKey} info={element} />
                 );
 
                 return true;
@@ -93,7 +89,6 @@ class HomePage extends Component {
         
         this.setState({
             eventsView: eventViews,
-            topGroups: topGroups
         });        
     }
 
@@ -112,7 +107,7 @@ class HomePage extends Component {
             }
         )
 
-        let caro = <CarouselMain images={this.carouselImagesDummy} />
+        let caro = <CarouselMain images={carouselImagesDummy} />
 
         this.setState({                        
             carousel: caro         
@@ -145,6 +140,56 @@ class HomePage extends Component {
                     </Col>                    
                 </Row>
             </div>
+        )
+    }
+}
+
+class EventInfo extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            groupId : this.props.info.id,
+            posterURL: dummyImage250,
+            groupName: this.props.info.groupName,
+            movieName: this.props.info.movieName                                  
+        }
+        
+        this.GetSingleEvent = this.GetSingleEvent.bind(this);        
+    }
+
+    GetSingleEvent = async () => {        
+        let getter = new OMDBImageGetter();
+        let response = await getter.GetImageURLByName(this.state.movieName);            
+
+        this.setState({
+            posterURL: response
+        });
+    }
+
+    componentDidMount() {
+        this.GetSingleEvent();
+    }
+
+    render() {                
+        return(
+            <Row>
+                <Col lg={6}>
+                <div onClick={(e) => {window.location.assign(`/events/${this.state.groupId}`)}}>
+                    <h4>{this.state.groupName}</h4>
+                    <img 
+                        src={this.state.posterURL}
+                        alt={this.state.movieName} 
+                    />
+                </div>                    
+                </Col>                    
+                <Col lg={6}>
+                    <h4>Description</h4>
+                    <p>
+                        {dummyText}
+                    </p>
+                </Col>   
+            </Row>
         )
     }
 }

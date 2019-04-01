@@ -4,50 +4,81 @@ using System.Linq;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.DataAccessLayer.Repositories;
-using Lingva.DataAccessLayer.Exceptions;
+using Lingva.DataAccessLayer.Context;
 
 namespace Lingva.BusinessLayer.Services
 {
     public class GroupService : IGroupService
     {
-        private IRepositoryUserGroup _userGroup;
-        
-        public GroupService(IRepositoryUserGroup userGroup)
+        private IUnitOfWorkGroup _unitOfWork;
+        private IUnitOfWorkUser _unitOfWorkUser;
+
+        public GroupService(IUnitOfWorkGroup unitOfWorkGroup, IUnitOfWorkUser unitOfWorkUser)
         {
-            _userGroup = userGroup;
+            _unitOfWork = unitOfWorkGroup;
+            _unitOfWorkUser = unitOfWorkUser;
+
         }
 
-        public void JoinGroup(int userID, int groupID)
+        public Group JoinGroup(int userID, int groupID)
         {
-            try
-            {
-                _userGroup.Create(GetUSerGroupEntity(userID, groupID));
-            }
-            catch (Exception)
-            {
-                throw new LingvaException("Failed to join User to group");
-            }
+            //e is no Subtitle record with Path = {path} in the Subtitles table.");  var newGroup = new Group { UserId = userID, EventId = groupID};
+           // _unitOfWork.Groups.Create(newGroup);
+
+            return new Group();
         }
 
         public void LeaveGroup(int userID, int groupID)
         {
-            try
-            {
-                _userGroup.Delete(GetUSerGroupEntity(userID, groupID));
-            }
-            catch (Exception)
-            {
-                throw new LingvaException("Failed to leave User to group");
-            }
+            //_unitOfWork.Groups.Delete(new Group { UserId = userID, EventId = groupID});
         }
-        
-        private static UserGroup GetUSerGroupEntity(int userID, int groupID)
-        {
-            UserGroup userGroup = new UserGroup();
-            userGroup.UserId = userID;
-            userGroup.GroupId = groupID;
 
-            return userGroup;
+        public IEnumerable<Group> GetAll()
+        {
+            return _unitOfWork.Groups.GetList();
+        }
+
+        public IEnumerable<Group> GetGroupsList()
+        {
+            return _unitOfWork.Groups.GetList();
+        }
+
+        public Group GetGroup(int id)
+        {
+            Group group = _unitOfWork.Groups.Get(id);
+            return group;
+        }
+
+        public Group GetGroupByTitle(string title)
+        {
+            Group group = _unitOfWork.Groups.Get(g => g.Title.Contains(title));
+            return group;
+        }
+
+        public void AddGroup(Group group)
+        {            
+            _unitOfWork.Groups.Create(group);
+            _unitOfWork.Save();            
+        }
+
+        public void UpdateGroup(int id, Group group)
+        {
+            Group myEvent = _unitOfWork.Groups.Get(id);            
+            _unitOfWork.Groups.Update(group);
+            _unitOfWork.Save();
+        }
+
+        public void DeleteGroup(int id)
+        {
+            Group group = _unitOfWork.Groups.Get(id);
+
+            if (group == null)
+            {
+                return;
+            }
+
+            _unitOfWork.Groups.Delete(group);
+            _unitOfWork.Save();
         }
     }
 }

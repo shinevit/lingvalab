@@ -25,12 +25,12 @@ namespace Lingva.DataAccessLayer.Entities
 
         public virtual Subtitle Subtitle { get; set; }
 
-        [ForeignKey("EventId")]
-        public virtual ICollection<Group> Groups { get; set; }
+        //[ForeignKey("EventId")]
+        //public virtual ICollection<Group> Groups { get; set; }
 
-        public Event()
-        {
-            Groups = new List<Group>();
-        }
+        //public Event()
+        //{
+        //    Groups = new List<Group>();
+        //}
     }
 }

@@ -8,18 +8,54 @@ namespace Lingva.BusinessLayer.Services
 {
     public class FilmService : IFilmService
     {
-        private IUnitOfWorkFilm _unitOfWorkFilm;
+        private readonly IUnitOfWorkFilm _unitOfWork;
 
-        public FilmService(IUnitOfWorkFilm unitOfWorkFilm)
+        public FilmService(IUnitOfWorkFilm unitOfWork)
         {
-            _unitOfWorkFilm = unitOfWorkFilm;
+            _unitOfWork = unitOfWork;
         }
 
-        public Film GetFilmInfo (int FilmID)
+        public IEnumerable<Film> GetFilmList()
         {
-            Film film = _unitOfWorkFilm.Films.Get(FilmID);
+            return _unitOfWork.Films.GetList();
+        }
 
+        public Film GetFilm(int id)
+        {
+            Film film = _unitOfWork.Films.Get(id);
             return film;
+        }
+
+        public Film GetFilmByTitle(string title)
+        {
+            Film film = _unitOfWork.Films.Get(f => f.Title == title);
+            return film;
+        }
+
+        public void AddFilm(Film film)
+        {
+            _unitOfWork.Films.Create(film);
+            _unitOfWork.Save();
+        }
+
+        public void UpdateFilm(int id, Film film)
+        {
+            Film myFilm = _unitOfWork.Films.Get(id);            
+            _unitOfWork.Films.Update(film);
+            _unitOfWork.Save();
+        }
+
+        public void DeleteFilm(int id)
+        {
+            Film film = _unitOfWork.Films.Get(id);
+
+            if (film == null)
+            {
+                return;
+            }
+
+            _unitOfWork.Films.Delete(film);
+            _unitOfWork.Save();
         }
     }
 

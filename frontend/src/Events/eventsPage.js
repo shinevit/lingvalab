@@ -140,12 +140,15 @@ class SingleEvent extends Component {
     GetSingleEvent = async (eventId) => {              
         const getter = new EventProvider();
         const response = await getter.GetSearchResults(eventId);
-        
-        if (!response.data.statusCode || response.data.statusCode !== 200) {
-            window.location.assign(`/error404`);
-        }
 
-        const movieData = await this.GetMovieData(response.data.movieId);
+        console.log("S Event");
+        console.log(response);
+        
+        // if (!response.data.statusCode || response.data.statusCode !== 200) {
+        //     window.location.assign(`/error404`);
+        // }
+
+        const movieData = await this.GetMovieData(response.data.filmId);
         
         let group =                 
                 <Row className="event-block">

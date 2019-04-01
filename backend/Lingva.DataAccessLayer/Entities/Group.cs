@@ -8,13 +8,12 @@ namespace Lingva.DataAccessLayer.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(250)]
-        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Picture { get; set; }
 
-        public int? EventId { get; set; }
-
-        public virtual Event Event { get; set; }
+        public int? FilmId { get; set; }
+        public virtual Film Film { get; set; }
 
         public virtual ICollection<UserGroup> UserGroups { get; set; }
 

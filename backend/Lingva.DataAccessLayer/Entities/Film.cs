@@ -13,25 +13,25 @@ namespace Lingva.DataAccessLayer.Entities
         [Required]
 
         [StringLength(100)]
-        public string Name { get; set; }
+        public string Title { get; set; }
         [StringLength(250)]
 
         public string Link { get; set; }
         [StringLength(250)]
 
-        public string PosterLink { get; set; }
-        [StringLength(3)]
+        public string Poster { get; set; }        
+
+        public string Description { get; set; }
 
         public string LanguageName { get; set; }
 
-        public virtual ICollection<Subtitle> Subtitles { get; set; }
+        public int SubtitleId { get; set; }
 
-        public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
 
         public Film()
-        {
-            Subtitles = new List<Subtitle>();
-            Events = new List<Event>();
+        {            
+            Groups = new List<Group>();
         }
     }
 }

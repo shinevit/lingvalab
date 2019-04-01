@@ -26,7 +26,7 @@ class CreateGroupProvider extends Component {
             body: JSON.stringify({
                 title: inputGroupName,
                 description: groupDescription,
-                movieId: newMovie.id,
+                filmId: newMovie.id,
                 picture: newMovie.poster                 
             })
         }).then(res => {

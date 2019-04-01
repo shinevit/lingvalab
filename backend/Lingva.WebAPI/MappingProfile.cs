@@ -45,6 +45,12 @@ namespace Lingva.WebAPI
             CreateMap<SignInUserDto, User>();
             CreateMap<SignUpUserDto, SignInUserDto>();
             CreateMap<SignInUserDto, SignUpUserDto>();
+
+            CreateMap<GroupCreatingDTO, Group>();
+            CreateMap<FilmCreatingDTO, Film>();
+
+            CreateMap<Group, GroupViewDTO>();
+            CreateMap<Film, FilmViewDTO>();
         }
     }
 }

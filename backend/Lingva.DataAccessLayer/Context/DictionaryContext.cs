@@ -57,10 +57,10 @@ namespace Lingva.DataAccessLayer.Context
                .WithMany(g => g.UserGroups)
                .HasForeignKey(ug => ug.UserId);
 
-            modelBuilder.Entity<Film>()
-                .HasMany(s => s.Subtitles)
-                .WithOne(f => f.Film)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Film>()
+            //    .HasMany(s => s.Subtitles)
+            //    .WithOne(f => f.Film)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Subtitle>()
                   .HasMany(c => c.SubtitlesRow)

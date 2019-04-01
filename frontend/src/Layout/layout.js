@@ -6,12 +6,13 @@ import Header from './header';
 import Footer from './footer';
 import AboutUs from '../About/aboutUs';
 import MediaPage from '../Media/mediaPage';
-import ReduxTest from '../Media/reduxTest';
 import HomePage from '../Home/homePage';
 import HomePageUnsigned from '../Home/homePageUnsigned';
-import EventsPage from '../Events/eventsPage';
-import {LoginPage} from '../Login'
-import {RegisterPage} from '../RegisterPage'
+import {EventsPage} from '../Events/eventsPage';
+import {LoginPage} from '../Login';
+import {RegisterPage} from '../RegisterPage';
+import UserProfilePage from '../UserProfile/userProfilePage';
+import Error404Page from '../Specials/error404page';
 
 class Layout extends Component{
 
@@ -26,15 +27,16 @@ class Layout extends Component{
     }
 
     Main = () => {
-      if (this.state.userLoggedIn == true || this.state.userLoggedIn == "true") {
+      if (this.state.userLoggedIn === true || this.state.userLoggedIn === "true") {
         return(
           <main>      
             <Switch>
               <Route exact path='/' component={HomePage}/>
               <Route exact path='/home' component={HomePage}/>                    
               <Route path='/events' component={EventsPage}/>
-              <Route path='/media' component={MediaPage}/>
-              <Route path='/redux_test' component={ReduxTest}/>          
+              <Route path='/media' component={MediaPage}/>              
+              <Route path='/userProfile' component={UserProfilePage}/>              
+              <Route path='/error404' component={Error404Page}/>          
             </Switch>
           </main>
         )      

@@ -1,7 +1,5 @@
 import { authHeader } from '../Helpers';
-import config from 'react-global-configuration';
 import {configuration} from '../Constants';
-
 
 export const userService = {
     login,

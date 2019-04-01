@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Lingva.DataAccessLayer.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Lingva.DataAccessLayer.Context;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
@@ -30,7 +32,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual T Get(object id)
         {
-            return _entities.Find((int) id);
+            return _entities.Find((int)id);
         }
 
         public virtual T Get(Expression<Func<T, bool>> predicator)
@@ -40,16 +42,25 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual void Create(T entity)
         {
-            if (entity == null) throw new ArgumentNullException("Tried to insert null entity!");
+            if (_entities == null)
+            {
+                throw new ArgumentNullException("Tried to work with null entity set!");
+            }
 
-            if (_entities == null) throw new ArgumentNullException("Tried to work with null entity set!");
+            if (entity == null)
+            {
+                throw new ArgumentNullException("Tried to insert null entity!");
+            }
 
             _entities.Add(entity);
         }
 
         public virtual void Update(T entity)
         {
-            if (entity == null) throw new ArgumentNullException("Tried to update null entity!");
+            if (entity == null)
+            {
+                throw new ArgumentNullException("Tried to update null entity!");
+            }
 
             _entities.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
@@ -57,9 +68,20 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual void Delete(T entity)
         {
-            if (entity == null) throw new ArgumentNullException("Tried to delete null entity!");
+            if (entity == null)
+            {
+                throw new ArgumentNullException("Tried to delete null entity!");
+            }
 
-            if (_context.Entry(entity).State == EntityState.Detached) _entities.Attach(entity);
+            if (!_entities.Select(e => e == entity).Any())
+            {
+                throw new ArgumentNullException("Attempt to delete non-existent entity has occured.");
+            }
+
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _entities.Attach(entity);
+            }
             _entities.Remove(entity);
         }
     }

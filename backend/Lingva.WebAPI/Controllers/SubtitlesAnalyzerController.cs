@@ -1,9 +1,18 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.WordsSelector;
-using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using AutoMapper;
+using Lingva.DataAccessLayer.Entities;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.WebAPI.Dto;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Lingva.BusinessLayer.WordsSelector;
+using Word = Lingva.BusinessLayer.WordsSelector.Word;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -13,21 +22,24 @@ namespace Lingva.WebAPI.Controllers
     {
         public List<Word> PostAnalyze(IFormFile upload)
         {
-            if (upload == null) return null;
+            if (upload == null)
+            {
+                return null;
+            }
 
             string allText;
-            using (var txt = new StreamReader(upload.OpenReadStream()))
+            using (StreamReader txt = new StreamReader(upload.OpenReadStream()))
             {
                 allText = txt.ReadToEnd();
             }
 
             ICommonWord conection = new CommonWord();
-            Analyzer analyzer = new BusinessLayer.WordsSelector.Analyzer(conection);
+            Analyzer analyzer = new Analyzer(conection);
             List<Word> words = analyzer.ParseToWords(allText);
             words = analyzer.RemoveSimpleWords(words);
             words = analyzer.RemoveNonExistent(words);
 
-            return words;           
+            return words;
         }
     }
 }

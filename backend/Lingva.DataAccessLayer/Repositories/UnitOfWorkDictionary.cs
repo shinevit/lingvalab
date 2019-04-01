@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Lingva.DataAccessLayer.Context;
+using Lingva.DataAccessLayer.Entities;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
@@ -7,36 +10,42 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         private static DictionaryContext _context;
 
-        private bool disposed;
+        private bool disposed = false;
 
-        public UnitOfWorkDictionary(DictionaryContext context, IRepositoryWord words,
-            IRepositoryDictionaryRecord dictionaryRecords)
+        private readonly IRepositoryDictionaryRecord _dictionaryRecords;
+        private readonly IRepositoryWord _words;
+
+        public UnitOfWorkDictionary(DictionaryContext context, IRepositoryWord words, IRepositoryDictionaryRecord dictionaryRecords)
         {
             _context = context;
-            DictionaryRecords = dictionaryRecords;
-            Words = words;
+            _dictionaryRecords = dictionaryRecords;
+            _words = words;
         }
 
-        public IRepositoryDictionaryRecord DictionaryRecords { get; }
-        public IRepositoryWord Words { get; }
+        public IRepositoryDictionaryRecord DictionaryRecords { get => _dictionaryRecords; }
+        public IRepositoryWord Words { get => _words; }
 
         public void Save()
         {
             _context.SaveChanges();
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-                if (disposing)
-                    _context.Dispose();
-            disposed = true;
         }
     }
 }

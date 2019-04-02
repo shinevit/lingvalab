@@ -7,7 +7,7 @@ namespace Lingva.BusinessLayer.Contracts
 {
     public interface IStatisticsService
     {
-        IEnumerable<Group> GetUserGroups(int userId, int groupsQuantity);
-        IEnumerable<User> GetGroupParticipants(int groupId, int usersQuantity);
+        IEnumerable<Group> GetUserGroups(int userId);
+        IEnumerable<User> GetGroupParticipants(int groupId);
     }
 }

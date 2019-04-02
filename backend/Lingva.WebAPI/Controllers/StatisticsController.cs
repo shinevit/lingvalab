@@ -22,13 +22,10 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     [Route("[controller]")]
     public class StatisticsController : ControllerBase
-    {
-        private const int DEFAULT_LIST_QUANTITY_COUNT = 10;
-
+    {       
         private IMapper _mapper;
         private IStatisticsService _statistics;
-
-
+        
         public StatisticsController(IMapper mapper, IStatisticsService statistics)
         {
             _mapper = mapper;
@@ -38,7 +35,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("user/{id}/groups")]
         public async Task<IActionResult> GetUserStatistic([FromRoute] int userId)
         {
-            var usersStatistics = await Task.Run(() => _statistics.GetUserGroups(userId, DEFAULT_LIST_QUANTITY_COUNT));
+            var usersStatistics = await Task.Run(() => _statistics.GetUserGroups(userId));
 
             if (usersStatistics == null)
             {
@@ -53,7 +50,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("groups/{id}/users")]
         public async Task<IActionResult> GetGroupUsers([FromRoute] int groupId)
         {
-            var groupStatistics = await Task.Run(() => _statistics.GetGroupParticipants(groupId, DEFAULT_LIST_QUANTITY_COUNT));
+            var groupStatistics = await Task.Run(() => _statistics.GetGroupParticipants(groupId));
 
             if (groupStatistics == null)
             {

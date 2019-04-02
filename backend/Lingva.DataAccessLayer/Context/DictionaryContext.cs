@@ -26,12 +26,12 @@ namespace Lingva.DataAccessLayer.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Film>().ToTable("Films");
             modelBuilder.Entity<Subtitle>().ToTable("Subtitles");
             modelBuilder.Entity<SubtitleRow>().ToTable("SubtitleRows");
@@ -59,15 +59,10 @@ namespace Lingva.DataAccessLayer.Context
                .HasForeignKey(ug => ug.UserId)
                .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<Film>()
-            //    .HasMany(s => s.Subtitles)
-            //    .WithOne(f => f.Film)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Subtitle>()
-                  .HasMany(c => c.SubtitlesRow)
-                  .WithOne(t => t.Subtitles)
-                  .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(c => c.SubtitlesRow)
+                .WithOne(t => t.Subtitles)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<SubtitleRow>()
                   .HasOne(c => c.Subtitles)

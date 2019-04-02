@@ -20,9 +20,10 @@
 
   <ItemGroup>
     <Folder Include="Models\Enums\" />
+    <Folder Include="Extensions\" />
     <Folder Include="Utility\" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Lingva.DataAccessLayer\Lingva.DataAccessLayer.csproj" />
   </ItemGroup>

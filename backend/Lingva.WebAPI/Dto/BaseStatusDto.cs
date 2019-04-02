@@ -19,7 +19,6 @@ namespace Lingva.WebAPI.Dto
         public string Message { get; private set; }
 
         public void SetResponseInfo(int statusCode, string message)
-
         {
             this.StatusCode = statusCode;
             this.Message = message;
@@ -33,6 +32,7 @@ namespace Lingva.WebAPI.Dto
 
             return result;
         }
+
         public void CreateSuccess(string message = SUCCESS_MESSAGE)
         {
             this.StatusCode = SUCCESS_STATUS_CODE;
@@ -46,7 +46,6 @@ namespace Lingva.WebAPI.Dto
             result.CreateError(message);
 
             return result;
-
         }
 
         public void CreateError(string message = ERROR_MESSAGE)

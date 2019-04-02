@@ -17,6 +17,11 @@ namespace Lingva.WebAPI.Initializer
         private const string INIT_PARSER_WORDS_ERR = "Initialization is not performed because the database has already been initialized.";
         private const string DEINIT_PARSER_WORDS_ERR = "Deinitialization is not performed because the base is not initialized.";
 
+        //public static string Film[] _films = new Film[]
+        //    {
+        //        new Film { Name = "Avatar", Link = "aaa"}
+        //    }
+
         public static SubtitleRow[] _subtitleRows = new SubtitleRow[]
         {
             new SubtitleRow { Value = "nothing occurred that seemed important.", LanguageName = "en"},

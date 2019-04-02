@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Repositories;
@@ -15,7 +14,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Lingva.BusinessLayer.Services;
 using Microsoft.IdentityModel.Protocols;
-using Lingva.DataAccessLayer.Repositories.Lingva.DataAccessLayer.Repositories;
 using Lingva.WebAPI.Helpers;
 using Lingva.WebAPI.Initializer;
 using Swashbuckle.AspNetCore.Swagger;
@@ -24,6 +22,7 @@ using System.Reflection;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace Lingva.WebAPI.Extensions
 {

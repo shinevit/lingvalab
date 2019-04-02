@@ -100,7 +100,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(BaseStatusDto.CreateErrorDto("The Path of the subtitle is incorrect."));
             }
 
-            Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);
+            Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);//GetSubtitleByPath(path);
 
             if (subtitle == null)
             {
@@ -161,6 +161,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
+        
         //---Parsing only with Path
         //POST: api/subtitle/parse
         /// <summary>

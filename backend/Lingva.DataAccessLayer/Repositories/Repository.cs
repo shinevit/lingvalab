@@ -78,7 +78,7 @@ namespace Lingva.DataAccessLayer.Repositories
                 throw new ArgumentNullException("Tried to delete null entity!");
             }
 
-            if (!_entities.Select(e => e == entity).Any())
+            if(!_entities.Select(e => e == entity).Any())
             {
                 throw new ArgumentNullException("Attempt to delete non-existent entity has occured.");
             }

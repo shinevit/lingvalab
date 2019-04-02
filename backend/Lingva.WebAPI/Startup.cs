@@ -40,7 +40,6 @@ namespace Lingva.WebAPI
             services.ConfigureRepositories();
             services.ConfigureMVC();
             services.ConfigureServices();
-
             services.AddTransient<IDictionaryService, DictionaryService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
             services.AddTransient<TranslaterGoogleService>();

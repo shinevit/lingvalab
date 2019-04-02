@@ -10,6 +10,7 @@ using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
 using NLog;
 using SubtitlesParser.Classes;
+using Ude;
 
 namespace Lingva.BusinessLayer.Services
 {
@@ -84,11 +85,11 @@ namespace Lingva.BusinessLayer.Services
             using (var sourceStream = File.OpenRead(subtitle.Path))
             {
                 rows = ParseStream(sourceStream);
+
+                AddSubtitleWithRows(subtitle, rows);
+
+                return rows;
             }
-
-            AddSubtitleWithRows(subtitle, rows);
-
-            return rows;
         }
 
         public void AddSubtitle(Subtitle subtitle)
@@ -164,5 +165,7 @@ namespace Lingva.BusinessLayer.Services
 
             return Encoding.GetEncoding(cdet.Charset);
         }
+
+           
     }
 }

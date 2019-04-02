@@ -8,6 +8,12 @@ namespace Lingva.DataAccessLayer.Entities
 {
     public class Subtitle
     {
+        public Subtitle()
+        {
+            SubtitlesRow = new List<SubtitleRow>();
+            //Events = new List<Event>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -21,19 +27,9 @@ namespace Lingva.DataAccessLayer.Entities
 
         public string LanguageName { get; set; }
 
-        public virtual Language Language { get; set; }
+        public virtual IEnumerable<SubtitleRow> SubtitlesRow { get; set; }
 
-        public virtual ICollection<SubtitleRow> SubtitlesRow { get; set; }
+       // public virtual IEnumerable<Event> Events { get; set; }
 
-        public virtual ICollection<Event> Events { get; set; }
-
-        public Subtitle()
-        {
-            SubtitlesRow = new List<SubtitleRow>();
-            Events = new List<Event>();
-        }
     }
 }
-
-
-

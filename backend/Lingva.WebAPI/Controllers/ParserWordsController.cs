@@ -23,7 +23,6 @@ namespace Lingva.WebAPI.Controllers
         private readonly IParserWordService _wordService;
         private readonly IMapper _mapper;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
-
         private const string ERR_ID_NOT_FOUND = "There is no ParserWord object with Name = ";
 
         public ParserWordsController(IParserWordService wordService, IMapper mapper)
@@ -121,7 +120,7 @@ namespace Lingva.WebAPI.Controllers
             {
                 var parserWords = _wordService.GetAllParserWords();
 
-                if (!parserWords.Any())
+                if (parserWords == null)
                 {
                     return NotFound(BaseStatusDto.CreateErrorDto("There is no any record in the ParserWord table."));
                 }

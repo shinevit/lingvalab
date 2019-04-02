@@ -14,11 +14,11 @@ namespace Lingva.DataAccessLayer.Repositories
         public class UnitOfWorkParser : IUnitOfWorkParser
         {
             private static DictionaryContext _context;
-
+            
+            private readonly IRepositoryFilm _films;
             private readonly IRepositorySubtitle _subtitles;
             private readonly IRepositorySubtitleRow _subtitleRows;
             private readonly IRepositoryParserWord _parserWords;
-            private readonly IRepositoryFilm _films;
             public UnitOfWorkParser(DictionaryContext context, IRepositorySubtitle subtitles, IRepositorySubtitleRow subtitleRows,
                 IRepositoryParserWord words, IRepositoryFilm films)
             {
@@ -28,10 +28,11 @@ namespace Lingva.DataAccessLayer.Repositories
                 _parserWords = words;
                 _films = films;
             }
+
             public IRepositorySubtitle Subtitles { get => _subtitles; }
 
             public IRepositorySubtitleRow SubtitleRows { get => _subtitleRows; }
-
+      
             public IRepositoryParserWord ParserWords { get => _parserWords; }
 
             public IRepositoryFilm Films { get => _films; }
@@ -40,6 +41,7 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 _context.SaveChanges();
             }
+
         }
     }
 }

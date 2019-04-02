@@ -45,7 +45,7 @@ namespace Lingva.WebAPI.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /join/{groupID}
+        ///     POST Membership/join/{groupID}
         ///     {
         ///        "Id" : 1
         ///        "FirstName" : string
@@ -54,10 +54,11 @@ namespace Lingva.WebAPI.Controllers
         ///        "Token" : string
         ///     }
         ///
-        /// </remarks>      
-        /// <returns>Joining complete</returns>
-        /// <response code="200">Returns the newly created item</response>
-        /// <response code="404">If the item is null</response> 
+        /// </remarks> 
+        /// <param name="groupID">Id of group to join</param>        
+        /// <returns>Joining complete status</returns>
+        /// <response code="200">Returns Ok status</response>
+        /// <response code="404">If the exception handled</response> 
         [HttpPost("join/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -85,7 +86,7 @@ namespace Lingva.WebAPI.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /leave/{groupID}
+        ///     DELETE membership/leave/{groupID}
         ///     {
         ///        "Id" : 1
         ///        "FirstName" : string
@@ -96,6 +97,7 @@ namespace Lingva.WebAPI.Controllers
         ///
         /// </remarks>      
         /// <returns>Leaving complete</returns>
+        /// <param name="groupID">Id of group to leave</param> 
         /// <response code="200">Returns status</response>
         /// <response code="404">If the exception is handled</response> 
         [HttpDelete("leave/{groupID}")]

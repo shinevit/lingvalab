@@ -14,6 +14,7 @@ using Lingva.DataAccessLayer.Exceptions;
 using Lingva.BusinessLayer.Services;
 using Lingva.DataAccessLayer;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -30,8 +31,22 @@ namespace Lingva.WebAPI.Controllers
             _statistics = statistics;
         }
 
-        [HttpGet("users/{userId}/groups")]
-        public async Task<IActionResult> GetUserStatistic(int userId)
+        /// <summary>
+        /// Returns groups of requested user
+        /// </summary>
+        /// <remarks>
+        /// 
+        ///     GET: Statics/user/{id}/groups
+        /// 
+        /// </remarks>
+        /// <param name="userId">Id of requested user</param>
+        /// <response code="200">Returns status and user`s groups</response>
+        /// <response code="404">If the exception is handled</response>
+        /// <returns></returns>
+        [HttpGet("user/{id}/groups")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetUserStatistic([FromRoute] int userId)
         {
             var usersStatistics = await Task.Run(() => _statistics.GetUserGroups(userId));
 
@@ -45,7 +60,21 @@ namespace Lingva.WebAPI.Controllers
             return Ok(userStatistics);
         }
 
-        [HttpGet("groups/{groupId}/users")]
+        /// <summary>
+        /// Returns user in requested group
+        /// </summary>
+        /// <remarks>
+        /// 
+        ///     GET: Statics/groups/{id}/users
+        /// 
+        /// </remarks>
+        /// <param name="groupId">Id of requested group</param>
+        /// <response code="200">Returns status and users in group</response>
+        /// <response code="404">If the exception is handled</response>
+        /// <returns>Users in requested group</returns>
+        [HttpGet("groups/{id}/users")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetGroupUsers([FromRoute] int groupId)
         {
             var groupStatistics = await Task.Run(() => _statistics.GetGroupParticipants(groupId));

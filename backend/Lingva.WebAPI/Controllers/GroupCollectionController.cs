@@ -9,6 +9,7 @@ using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
 using Lingva.BusinessLayer.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -27,7 +28,20 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/groupcollection
+        /// <summary>
+        /// Returns group list
+        /// </summary>
+        /// <remarks>
+        /// 
+        ///     GET: api/groupcollection
+        ///      
+        /// </remarks>
+        /// <returns></returns>
+        /// <response code="200">Returns OK if dictionary record updated</response>
+        /// <response code="400">If the exception handled</response> 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetGroupsList()
         {
             var groups = await Task.Run(() => _groupsService.GetGroupsList());
@@ -52,7 +66,23 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/groupcollection/title
+        /// <summary>
+        /// Return info about chosen group
+        /// </summary>
+        /// <remarks>
+        /// 
+        ///     GET: api/groupcollection/{title}
+        /// 
+        /// </remarks>
+        /// <param name="title"></param>
+        /// <returns>Group info</returns>
+        /// <response code="200">Returns OK and group Dto</response>
+        /// <response code="400">If model state is not valid</response> 
+        /// <response code="404">If the group is null</response>
         [HttpGet("{title}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetGroupByTitle([FromRoute] string title)
         {
 
@@ -70,7 +100,28 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // POST: api/groupcollection
+        /// <summary>
+        /// Creates new group
+        /// </summary>
+        /// <remarks>
+        /// 
+        ///     POST: groupcollection
+        ///     
+        /// Sample request
+        ///         {
+        ///             "Title" : "title"
+        ///             "Desciption" : "descrioption"
+        ///             "FilmId" : "filmId"
+        ///             "Picture" : "picture"
+        ///         }
+        /// </remarks>
+        /// <param name="groupCreatingDTO"></param>
+        /// <returns>Status and group info if created</returns>
+        /// <response code="200">Returns OK if created and group Dto</response>
+        /// <response code="400">If exception is handled</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PostGroup([FromBody] GroupCreatingDTO groupCreatingDTO)
         {
 
@@ -101,7 +152,28 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // PUT: api/groupcollection/5
+        /// <summary>
+        /// Updates gruop info by chosen id
+        /// </summary>
+        /// <remarks>
+        ///     PUT: groupcollection/{id}
+        ///     
+        /// Sample request
+        ///         {
+        ///             "Title" : "title"
+        ///             "Desciption" : "descrioption"
+        ///             "FilmId" : "filmId"
+        ///             "Picture" : "picture"
+        ///         }
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="groupCreatingDTO"></param>
+        /// <returns>Status of operation</returns>
+        /// <response code="200">Returns OK if group updated</response>
+        /// <response code="400">If the exception handled</response>  
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutGroup([FromRoute] int id, [FromBody] GroupCreatingDTO groupCreatingDTO)
         {
 
@@ -122,7 +194,21 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // DELETE: api/groupcollection/5
+        /// <summary>
+        /// Deletes chosen group 
+        /// </summary>
+        /// <remarks>
+        ///     
+        ///     DELETE: groupcollection/{id}
+        ///         
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <returns>Status</returns>
+        /// <response code="200">Returns OK if deleted</response>
+        /// <response code="400">If exception is hendled</response> 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteGroup([FromRoute] int id)
         {
             try

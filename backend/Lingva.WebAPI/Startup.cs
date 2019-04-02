@@ -82,7 +82,7 @@ namespace Lingva.WebAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("./v1/swagger.json", "Lingvalab V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lingvalab V1");
             });
         }
     }

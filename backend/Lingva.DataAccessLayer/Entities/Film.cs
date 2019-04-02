@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lingva.DataAccessLayer.Entities
 {
@@ -8,10 +9,11 @@ namespace Lingva.DataAccessLayer.Entities
         public Film()
         {
             Subtitles = new List<Subtitle>();
-            Events = new List<Event>();
+            //Events = new List<Event>();
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -29,6 +31,6 @@ namespace Lingva.DataAccessLayer.Entities
 
         public virtual ICollection<Subtitle> Subtitles { get; set; }
 
-        public virtual ICollection<Event> Events { get; set; }
+       // public virtual ICollection<Event> Events { get; set; }
     }
 }

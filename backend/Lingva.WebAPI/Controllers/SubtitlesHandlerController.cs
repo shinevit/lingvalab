@@ -106,7 +106,8 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
-//---Parsing only with Path
+
+        //---Parsing only with Path
         //POST: api/subtitle/parse
         [HttpPost]
         [Route("parse")]

@@ -33,6 +33,17 @@ namespace Lingva.WebAPI
             CreateMap<ParserWord, WordDTO>()
                 .ForMember("Word", opt => opt.MapFrom(c => c.Name));
 
+            CreateMap<Subtitle, SubtitleDTO>();
+            //.ForMember("FilmId", opt => opt.MapFrom(c => c.FilmId))
+            //.ForMember("Path", opt => opt.MapFrom(c => c.Path))
+            //.ForMember("LanguageName", opt => opt.MapFrom(c => c.LanguageName))
+            //.ForAllOtherMembers(opt => opt.Ignore());
+            CreateMap<SubtitleDTO, Subtitle>();
+                //.ForMember("FilmId", opt => opt.MapFrom(c => c.FilmId))
+                //.ForMember("Path", opt => opt.MapFrom(c => c.Path))
+                //.ForMember("LanguageName", opt => opt.MapFrom(c => c.LanguageName))
+                //.ForAllOtherMembers(opt => opt.Ignore());
+
             CreateMap<SubtitleRow, SubtitleRowDTO>();
             CreateMap<SubtitleRowDTO, SubtitleRow>();
                 

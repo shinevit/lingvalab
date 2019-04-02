@@ -104,6 +104,25 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork.Save();
         }
 
+        public Subtitle DeleteSubtitle(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("Id of Subtitle record can not be equal zero or negative.");
+            }
+
+            Subtitle subtitle = _unitOfWork.Subtitles.Get(id);
+
+            if (subtitle == null)
+            {
+                throw new ArgumentNullException("The Subtitle entity does not exist in the database.");
+            }
+
+            _unitOfWork.Subtitles.Delete(subtitle);
+            _unitOfWork.Save();
+
+            return subtitle;
+        }
 
         private void AddSubtitleWithRows(Subtitle subtitle, IEnumerable<SubtitleRow> rows)
         {

@@ -206,7 +206,7 @@ namespace Lingva.WebAPI.Controllers
                 if (rows == null)
                 {
                     return BadRequest(BaseStatusDto.CreateSuccessDto(
-                        "There are no any rows from parsing subtitle by the ParserWordService."));
+                        "There are no any rows from parsing subtitle by the SubtitlesHandlerService."));
                 }
 
                 return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
@@ -222,7 +222,7 @@ namespace Lingva.WebAPI.Controllers
 
         [HttpPost]
         [Route("parsepath")]
-        public async Task<IActionResult> PostParse([FromBody]string path)
+        public async Task<IActionResult> PostParsePath([FromBody]string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -243,7 +243,7 @@ namespace Lingva.WebAPI.Controllers
                 if (rows == null)
                 {
                     return BadRequest(BaseStatusDto.CreateSuccessDto(
-                        "There are no any rows from parsing subtitle by the ParserWordService."));
+                        "There are no any rows from parsing subtitle by the SubtitlesHandlerService."));
                 }
 
                 return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
@@ -254,6 +254,43 @@ namespace Lingva.WebAPI.Controllers
                 _logger.Debug($"{ex.Message}");
 
                 return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+        }
+
+        [HttpDelete("/delete/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteSubtitle(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status404NotFound,
+                    message = $"Id:{id} of Subtitle record is not correct."
+                });
+            }
+
+            try
+            {
+                Subtitle subtitle = await Task.Run(() => _subtitleService.DeleteSubtitle(id));
+
+                SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = $"Id:<{id}> => Subtitle record is deleted.",
+                    data = subtitleDTO
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status404NotFound,
+                    message = ex.Message
+                });
             }
         }
     }

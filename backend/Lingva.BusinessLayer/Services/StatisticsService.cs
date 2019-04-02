@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Exceptions;
@@ -39,7 +40,7 @@ namespace Lingva.BusinessLayer.Services
 
         public IEnumerable<Group> GetUserGroups(int userId)
         {
-            var groupsID = _unitOfWork.userGroup.GetList( g => g.UserId == userId);
+            var groupsID = _unitOfWork.userGroup.GetList(g => g.UserId == userId);
 
             if (groupsID == null)
             {
@@ -50,8 +51,8 @@ namespace Lingva.BusinessLayer.Services
             {
                 yield return _unitOfWork.Group.Get(g => g.Id == (item.GroupId));
             }
-        }
 
+        }
 
     }
 }

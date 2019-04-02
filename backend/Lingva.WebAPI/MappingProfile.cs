@@ -51,6 +51,7 @@ namespace Lingva.WebAPI
 
             CreateMap<Group, GroupViewDTO>();
             CreateMap<Film, FilmViewDTO>();
+
         }
     }
 }

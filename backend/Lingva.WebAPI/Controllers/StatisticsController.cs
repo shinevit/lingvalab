@@ -40,7 +40,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(BaseStatusDto.CreateErrorDto());
             }
 
-            var userStatistics = _mapper.Map<IList<UserGroupsDTO>>(usersStatistics);
+            var userStatistics = _mapper.Map<IList<GroupViewDTO>>(usersStatistics);
 
             return Ok(userStatistics);
         }

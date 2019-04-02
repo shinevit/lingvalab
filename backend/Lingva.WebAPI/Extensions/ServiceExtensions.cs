@@ -22,6 +22,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using Lingva.DataAccessLayer.InitializeWithTestData;
 using System.Reflection;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -51,6 +53,17 @@ namespace Lingva.WebAPI.Extensions
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
+                c.AddSecurityDefinition("Bearer", 
+                new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                { "Bearer", Enumerable.Empty<string>() },
+                });
             });
         }
 

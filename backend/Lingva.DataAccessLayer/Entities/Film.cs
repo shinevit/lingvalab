@@ -7,7 +7,7 @@ namespace Lingva.DataAccessLayer.Entities
     {
         public Film()
         {
-            Subtitles = new List<Subtitles>();
+            Subtitles = new List<Subtitle>();
             Events = new List<Event>();
         }
 
@@ -27,7 +27,7 @@ namespace Lingva.DataAccessLayer.Entities
         [StringLength(3)]
         public string LanguageName { get; set; }
 
-        public virtual ICollection<Subtitles> Subtitles { get; set; }
+        public virtual ICollection<Subtitle> Subtitles { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
     }

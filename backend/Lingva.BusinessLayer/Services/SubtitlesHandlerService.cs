@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using Lingva.BusinessLayer.DTO;
 using Lingva.BusinessLayer.Extensions;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
+using SubtitlesParser.Classes;
 using Ude;
 
 namespace Lingva.BusinessLayer.Services
@@ -82,9 +84,10 @@ namespace Lingva.BusinessLayer.Services
             {
                 rows = ParseStream(sourceStream);
 
-            AddSubtitleWithRows(subtitle, rows);
+                AddSubtitleWithRows(subtitle, rows);
 
-            return rows;
+                return rows;
+            }
         }
 
         public void AddSubtitle(Subtitle subtitle)
@@ -100,9 +103,9 @@ namespace Lingva.BusinessLayer.Services
         }
 
 
-        private void AddSubtitleWithRows(Subtitle subtitle, IEnumerable<SubtitleRow> rows)  
+        private void AddSubtitleWithRows(Subtitle subtitle, IEnumerable<SubtitleRow> rows)
         {
-            if(subtitle == null)
+            if (subtitle == null)
             {
                 throw new ArgumentNullException("Tried to operate with a null Subtitle object.");
             }
@@ -146,7 +149,7 @@ namespace Lingva.BusinessLayer.Services
 
             return rows;
         }
-               
+
         private Encoding DetectEncoding(Stream stream)
         {
             var cdet = new CharsetDetector();
@@ -154,9 +157,13 @@ namespace Lingva.BusinessLayer.Services
             cdet.DataEnd();
 
             if (cdet.Charset == null)
+            {
                 throw new FormatException("Encoding unrecognized.");
-        }
+            }
 
             return Encoding.GetEncoding(cdet.Charset);
+        }
+
+           
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
-    public class RepositorySubtitle : Repository<Subtitles>, IRepositorySubtitle
+    public class RepositorySubtitle : Repository<Subtitle>, IRepositorySubtitle
     {
         private const string ERR_ARG_NULL_EXP = "Tried to insert null Subtitle entity!";
 

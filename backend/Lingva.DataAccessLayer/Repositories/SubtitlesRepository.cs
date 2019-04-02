@@ -17,35 +17,35 @@ namespace Lingva.DataAccessLayer.Repositories
             _context = context;
         }
 
-        public void Create(Subtitles entity)
+        public void Create(Subtitle entity)
         {
             _context.Subtitles.Add(entity);
             _context.SaveChanges();
         }
 
-        public void CreateRange(IEnumerable<Subtitles> entities)
+        public void CreateRange(IEnumerable<Subtitle> entities)
         {
             _context.Subtitles.AddRange(entities);
             _context.SaveChanges();
         }
 
-        public void Delete(Subtitles entity)
+        public void Delete(Subtitle entity)
         {
             _context.Subtitles.Remove(entity);
             _context.SaveChanges();
         }
 
-        public IEnumerable<Subtitles> Get(Expression<Func<Subtitles, bool>> predicate)
+        public IEnumerable<Subtitle> Get(Expression<Func<Subtitle, bool>> predicate)
         {
             return _context.Subtitles.AsNoTracking().Where(predicate).ToList();
         }
 
-        public IEnumerable<Subtitles> GetList()
+        public IEnumerable<Subtitle> GetList()
         {
             return _context.Subtitles.AsNoTracking();
         }
 
-        public void Update(Subtitles entity)
+        public void Update(Subtitle entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();

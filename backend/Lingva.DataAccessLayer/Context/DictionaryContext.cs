@@ -10,7 +10,7 @@ namespace Lingva.DataAccessLayer.Context
         public DbSet<Language> Languages { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Film> Films { get; set; }
-        public DbSet<Subtitles> Subtitles { get; set; }
+        public DbSet<Subtitle> Subtitles { get; set; }
         public DbSet<SubtitleRow> SubtitleRows { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<ParserWord> ParserWords { get; set; }
@@ -30,7 +30,7 @@ namespace Lingva.DataAccessLayer.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Film>().ToTable("Films");
-            modelBuilder.Entity<Subtitles>().ToTable("Subtitles");
+            modelBuilder.Entity<Subtitle>().ToTable("Subtitles");
             modelBuilder.Entity<SubtitleRow>().ToTable("SubtitleRows");
             modelBuilder.Entity<ParserWord>().ToTable("ParserWords");
             modelBuilder.Entity<Word>().ToTable("Words");
@@ -59,7 +59,7 @@ namespace Lingva.DataAccessLayer.Context
                 .WithOne(f => f.Film)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Subtitles>()
+            modelBuilder.Entity<Subtitle>()
                 .HasMany(c => c.SubtitlesRow)
                 .WithOne(t => t.Subtitles)
                 .OnDelete(DeleteBehavior.Restrict);

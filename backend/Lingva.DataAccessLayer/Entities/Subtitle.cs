@@ -3,15 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Lingva.DataAccessLayer.Entities
 {
-    public class Subtitles
+    public class Subtitle
     {
-        public Subtitles()
+        public Subtitle()
         {
             SubtitlesRow = new List<SubtitleRow>();
             Events = new List<Event>();
         }
-
-
 
         [Key] public int Id { get; set; }
 

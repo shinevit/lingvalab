@@ -22,7 +22,7 @@ namespace Lingva.DataAccessLayer.Entities
 
         public int? SubtitleId { get; set; }
 
-        public virtual Subtitles Subtitle { get; set; }
+        public virtual Subtitle Subtitle { get; set; }
 
         [ForeignKey("EventId")]
         public virtual ICollection<Group> Groups { get; set; }

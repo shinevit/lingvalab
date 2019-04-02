@@ -27,7 +27,7 @@ namespace Lingva.DataAccessLayer.Entities
 
         public string LanguageName { get; set; }
 
-        public virtual Subtitles Subtitles { get; set; }
+        public virtual Subtitle Subtitles { get; set; }
 
         public virtual ICollection<ParserWord> ParserWords { get; set; }
 

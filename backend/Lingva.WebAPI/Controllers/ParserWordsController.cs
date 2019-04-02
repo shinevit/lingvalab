@@ -7,6 +7,8 @@ using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
 using System.Text;
 using NLog;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -84,7 +86,7 @@ namespace Lingva.WebAPI.Controllers
             {
                 var parserWords = _wordService.GetAllParserWords();
 
-                if (!parserWords.Any())
+                if (parserWords == null)
                 {
                     return NotFound(BaseStatusDTO.CreateErrorDto("There is no any record in the ParserWord table."));
                 }

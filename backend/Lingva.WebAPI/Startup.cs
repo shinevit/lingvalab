@@ -61,7 +61,6 @@ namespace Lingva.WebAPI
 
             services.AddScoped<IParserWordService, ParserWordService>();
 
-            services.AddScoped<IWordService, WordService>();
             services.AddScoped<IFilmService, FilmService>();
 
         }

@@ -40,7 +40,7 @@ namespace Lingva.WebAPI.Controllers
                 _logger.Error("ModelState is not valid.");
                 _logger.Error("400 StatusCode is generated.");
 
-                return BadRequest(BaseStatusDTO.CreateErrorDto("Bad request. Model state is not valid."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("Bad request. Model state is not valid."));
             }
 
             try
@@ -54,7 +54,7 @@ namespace Lingva.WebAPI.Controllers
                     _logger.Debug("The ParserWord record with Name = \"{name}\" is not found.");
                     _logger.Debug("404 StatusCode is generated.");
 
-                    return NotFound(BaseStatusDTO.CreateErrorDto(ERR_ID_NOT_FOUND + $"\"{name}\""));
+                    return NotFound(BaseStatusDto.CreateErrorDto(ERR_ID_NOT_FOUND + $"\"{name}\""));
                 }
 
                 _logger.Debug("The ParserWord record with Name = \"{name}\" is found.");
@@ -71,7 +71,7 @@ namespace Lingva.WebAPI.Controllers
                 _logger.Error($"{ex.GetType()} exception is generated.");
                 _logger.Error($"{ex.Message}");
 
-                return BadRequest(BaseStatusDTO.CreateErrorDto(ex.Message));
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
 
@@ -88,7 +88,7 @@ namespace Lingva.WebAPI.Controllers
 
                 if (parserWords == null)
                 {
-                    return NotFound(BaseStatusDTO.CreateErrorDto("There is no any record in the ParserWord table."));
+                    return NotFound(BaseStatusDto.CreateErrorDto("There is no any record in the ParserWord table."));
                 }
 
                 return Ok(new
@@ -116,7 +116,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || word == null)
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto("WordParserDTO request object is not correct."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("WordParserDTO request object is not correct."));
             }
 
             try
@@ -131,7 +131,7 @@ namespace Lingva.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto(ex.Message));
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
 
@@ -144,7 +144,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || rowDto == null || string.IsNullOrEmpty(rowDto.Value))
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto("SubtitleRowDTO request object is not correct."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("SubtitleRowDTO request object is not correct."));
             }
 //------------------------------------------------------------------------------------------------------------------------
             try

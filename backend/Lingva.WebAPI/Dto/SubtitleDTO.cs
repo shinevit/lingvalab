@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Lingva.WebAPI.Dto
 {
-    public class SubtitleDTO: BaseStatusDTO
+    public class SubtitleDTO: BaseStatusDto
     {
         public string Path { get; set; }
 

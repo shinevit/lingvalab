@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
 {
-    public class BaseStatusDTO
+    public class BaseStatusDto
     {
         private const int SUCCESS_STATUS_CODE = 200;
         private const int ERROR_STATUS_CODE = 404;
@@ -23,9 +23,9 @@ namespace Lingva.WebAPI.Dto
             this.Message = message;
         }
 
-        public static BaseStatusDTO CreateSuccessDto(string message = SUCCESS_MESSAGE)
+        public static BaseStatusDto CreateSuccessDto(string message = SUCCESS_MESSAGE)
         {
-            BaseStatusDTO result = new BaseStatusDTO();
+            BaseStatusDto result = new BaseStatusDto();
 
             result.CreateSuccess(message);
 
@@ -38,9 +38,9 @@ namespace Lingva.WebAPI.Dto
             this.Message = message;
         }
 
-        public static BaseStatusDTO CreateErrorDto(string message = ERROR_MESSAGE)
+        public static BaseStatusDto CreateErrorDto(string message = ERROR_MESSAGE)
         {
-            BaseStatusDTO result = new BaseStatusDTO();
+            BaseStatusDto result = new BaseStatusDto();
 
             result.CreateError(message);
 

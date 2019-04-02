@@ -37,14 +37,14 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto("Id of subtitle is incorrect."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("Id of subtitle is incorrect."));
             }
 
             Subtitle subtitle = _subtitleService.GetSubtitleById(id);
 
             if (subtitle == null)
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto($"There is no a Subtitle record with Id = {id} in the Subtitles table."));
+                return BadRequest(BaseStatusDto.CreateErrorDto($"There is no a Subtitle record with Id = {id} in the Subtitles table."));
             }
 
             SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
@@ -61,14 +61,14 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || string.IsNullOrEmpty(path))
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto("The Path of the subtitle is incorrect."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("The Path of the subtitle is incorrect."));
             }
 
             Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);//GetSubtitleByPath(path);
 
             if (subtitle == null)
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto(
+                return BadRequest(BaseStatusDto.CreateErrorDto(
                     $"There is no any Subtitle record with Path = {path} in the Subtitles table."));
             }
 
@@ -85,7 +85,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || subtitleDto == null)
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto("ModelState is not valid or the SubtitleDTO object is null."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("ModelState is not valid or the SubtitleDTO object is null."));
             }
 
             try
@@ -103,7 +103,7 @@ namespace Lingva.WebAPI.Controllers
                 _logger.Debug($"{ex.GetType()} exception is generated.");
                 _logger.Debug($"{ex.Message}");
 
-                return BadRequest(BaseStatusDTO.CreateErrorDto(ex.Message));
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
 //---Parsing only with Path
@@ -114,7 +114,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || subtitleDto == null)
             {
-                return BadRequest(BaseStatusDTO.CreateErrorDto("WordParserDTO request object is not correct."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("WordParserDTO request object is not correct."));
             }
 
             try
@@ -125,18 +125,18 @@ namespace Lingva.WebAPI.Controllers
 
                 if (rows == null)
                 {
-                    return BadRequest(BaseStatusDTO.CreateSuccessDto(
+                    return BadRequest(BaseStatusDto.CreateSuccessDto(
                         "There are no any rows from parsing subtitle by the ParserWordService."));
                 }
 
-                return Ok(BaseStatusDTO.CreateSuccessDto("Subtitle parsing operation is successful."));
+                return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
             }
             catch (Exception ex)
             {
                 _logger.Debug($"{ex.GetType()} exception is generated.");
                 _logger.Debug($"{ex.Message}");
 
-                return BadRequest(BaseStatusDTO.CreateErrorDto(ex.Message));
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
     }

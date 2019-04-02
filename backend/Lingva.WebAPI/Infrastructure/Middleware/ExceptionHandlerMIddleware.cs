@@ -47,7 +47,7 @@ namespace Lingva.WebAPI.Infrastructure.Middleware
 
             var responseDto = new BaseStatusDto();
 
-            responseDto.AddResponseInfo(context.Response.StatusCode, exception.Message);
+            //responseDto.AddResponseInfo(context.Response.StatusCode, exception.Message);
 
             return context.Response.WriteAsync(JsonConvert.SerializeObject(responseDto, serializerSettings)); // 
         }

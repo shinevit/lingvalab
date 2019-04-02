@@ -10,13 +10,16 @@ namespace Lingva.DataAccessLayer.Repositories
             private static DictionaryContext _context;
             
             private readonly IRepositoryFilm _films;
+            private readonly IRepositorySubtitle _subtitles;
+            private readonly IRepositorySubtitleRow _subtitleRows;
+            private readonly IRepositoryParserWord _parserWords;
             public UnitOfWorkParser(DictionaryContext context, IRepositorySubtitle subtitles, IRepositorySubtitleRow subtitleRows,
                 IRepositoryParserWord words, IRepositoryFilm films)
             {
                 _context = context;
-                Subtitles = subtitles;
-                SubtitleRows = subtitleRows;
-                ParserWords = words;
+                _subtitles = subtitles;
+                _subtitleRows = subtitleRows;
+                _parserWords = words;
                 _films = films;
             }
 

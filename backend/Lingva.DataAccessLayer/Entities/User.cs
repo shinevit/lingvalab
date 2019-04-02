@@ -6,11 +6,6 @@ namespace Lingva.DataAccessLayer.Entities
 {
     public class User
     {
-        public User()
-        {
-            UserDictionaryRecords = new List<DictionaryRecord>();
-        }
-
         [Key]
         public int Id { get; set; }
 

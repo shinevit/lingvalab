@@ -5,11 +5,6 @@ namespace Lingva.DataAccessLayer.Entities
 {
     public class Genre
     {
-        public Genre()
-        {
-            Films = new List<Film>();
-        }
-
         [Key]
         public int Id { get; set; }
 

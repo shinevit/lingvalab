@@ -8,6 +8,7 @@ using Lingva.BusinessLayer.DTO;
 using Lingva.BusinessLayer.Extensions;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.DataAccessLayer.Repositories;
+using NLog;
 using SubtitlesParser.Classes;
 using Ude;
 

@@ -1,4 +1,5 @@
 ﻿using Lingva.DataAccessLayer.Entities;
+using System.Collections.Generic;
 
 namespace Lingva.DataAccessLayer.Repositories
 {

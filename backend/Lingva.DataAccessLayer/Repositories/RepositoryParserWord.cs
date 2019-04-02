@@ -6,6 +6,7 @@ using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Lingva.DataAccessLayer.Repositories
 {

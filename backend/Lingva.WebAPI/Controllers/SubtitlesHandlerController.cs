@@ -184,17 +184,59 @@ namespace Lingva.WebAPI.Controllers
         /// <param name="subtitleDto"></param>
         /// <returns>Status</returns>
         [HttpPost]
-        [Route("parse")]
+        [Route("parsesub")]
         public async Task<IActionResult> PostParse([FromBody]SubtitleDTO subtitleDto)
         {
             if (!ModelState.IsValid || subtitleDto == null)
             {
-                return BadRequest(BaseStatusDto.CreateErrorDto("WordParserDTO request object is not correct."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("SubtitleDTO request object is not correct."));
             }
 
             try
             {
                 Subtitle subtitle = _mapper.Map<Subtitle>(subtitleDto);
+
+                if (subtitle == null)
+                {
+                    throw new NullReferenceException("AutoMapper with SubtitleDTO=>Subtitle failed.");
+                }
+
+                IEnumerable<SubtitleRow> rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
+
+                if (rows == null)
+                {
+                    return BadRequest(BaseStatusDto.CreateSuccessDto(
+                        "There are no any rows from parsing subtitle by the ParserWordService."));
+                }
+
+                return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
+            }
+            catch (Exception ex)
+            {
+                _logger.Debug($"{ex.GetType()} exception is generated.");
+                _logger.Debug($"{ex.Message}");
+
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+        }
+
+        [HttpPost]
+        [Route("parsepath")]
+        public async Task<IActionResult> PostParse([FromBody]string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto("Path string is not correct."));
+            }
+
+            try
+            {
+                Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);
+
+                if(subtitle == null)
+                {
+                    return BadRequest(BaseStatusDto.CreateErrorDto($"There is not any Subtitle record with Path = {path}."));
+                }
 
                 IEnumerable<SubtitleRow> rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
 

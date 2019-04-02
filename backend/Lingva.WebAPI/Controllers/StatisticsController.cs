@@ -17,10 +17,8 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-
     [Authorize]
-    [ApiController]
-    [Route("[controller]")]
+    [ApiController]   
     public class StatisticsController : ControllerBase
     {       
         private IMapper _mapper;
@@ -32,8 +30,8 @@ namespace Lingva.WebAPI.Controllers
             _statistics = statistics;
         }
 
-        [HttpGet("user/{id}/groups")]
-        public async Task<IActionResult> GetUserStatistic([FromRoute] int userId)
+        [HttpGet("users/{userId}/groups")]
+        public async Task<IActionResult> GetUserStatistic(int userId)
         {
             var usersStatistics = await Task.Run(() => _statistics.GetUserGroups(userId));
 
@@ -47,7 +45,7 @@ namespace Lingva.WebAPI.Controllers
             return Ok(userStatistics);
         }
 
-        [HttpGet("groups/{id}/users")]
+        [HttpGet("groups/{groupId}/users")]
         public async Task<IActionResult> GetGroupUsers([FromRoute] int groupId)
         {
             var groupStatistics = await Task.Run(() => _statistics.GetGroupParticipants(groupId));

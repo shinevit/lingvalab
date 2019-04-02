@@ -8,10 +8,12 @@ using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
 using Lingva.BusinessLayer.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]")]    
     [ApiController]
     public class GroupCollectionController : ControllerBase
     {
@@ -28,7 +30,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetGroupsList()
         {
-            var groups = _groupsService.GetGroupsList();
+            var groups = await Task.Run(() => _groupsService.GetGroupsList());
 
             return Ok(_mapper.Map<IEnumerable<GroupViewDTO>>(groups));
         }
@@ -37,12 +39,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetGroup([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            Group group = _groupsService.GetGroup(id);
+            Group group = await Task.Run(() => _groupsService.GetGroup(id));
 
             if (group == null)
             {
@@ -58,12 +55,8 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("{title}")]
         public async Task<IActionResult> GetGroupByTitle([FromRoute] string title)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            Group group = _groupsService.GetGroupByTitle(title);
+            Group group = await Task.Run(() => _groupsService.GetGroupByTitle(title));
 
             if (group == null)
             {
@@ -80,16 +73,12 @@ namespace Lingva.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostGroup([FromBody] GroupCreatingDTO groupCreatingDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             Group group;
 
             try
             {
-                group = _mapper.Map<Group>(groupCreatingDTO);
+                group = await Task.Run(() => _mapper.Map<Group>(groupCreatingDTO));
                 Film movie = new Film();
 
                 await Task.Run(() =>
@@ -98,6 +87,10 @@ namespace Lingva.WebAPI.Controllers
                 });
             }
             catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -111,10 +104,6 @@ namespace Lingva.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGroup([FromRoute] int id, [FromBody] GroupCreatingDTO groupCreatingDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             try
             {
@@ -125,7 +114,10 @@ namespace Lingva.WebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return Ok();
         }
 
@@ -133,11 +125,6 @@ namespace Lingva.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGroup([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await Task.Run(() => _groupsService.DeleteGroup(id));

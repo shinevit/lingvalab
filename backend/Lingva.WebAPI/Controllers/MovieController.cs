@@ -7,9 +7,11 @@ using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lingva.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MovieController : ControllerBase

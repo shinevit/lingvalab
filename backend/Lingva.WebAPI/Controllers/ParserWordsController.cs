@@ -33,8 +33,24 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/parser/car
+        /// <summary>
+        /// Returns parsed words.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /ParserWords/{name}
+        ///     { }
+        ///
+        /// </remarks>
+        /// <param name="name">Word to parse</param>
+        /// <returns>Parsed words</returns>
+        /// <response code="200">Returns the parsed words</response>
+        /// <response code="400">If model state is not valid</response> 
+        /// <response code="404">If the exception handled</response> 
         [HttpGet("{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetParserWord(string name)
         {
@@ -81,6 +97,20 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/parser
+        /// <summary>
+        /// Returns all parsed words.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /ParserWords
+        ///     { }
+        ///
+        /// </remarks>
+        /// <response code="200">Returns the parsed words</response>
+        /// <response code="400">If the exception handled</response> 
+        /// <response code="404">No founded words</response>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -114,9 +144,29 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // PUT: api/parser
+        ///<summary>
+        /// Updates dictionary record.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post /ParserWords
+        ///     {        
+        ///        "Name" : "string"
+        ///        "LanguageName" : "languageName"
+        ///        "SubtitleRowId" : 132
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="word"></param>
+        /// <response code="200">Returns OK if parser word updated</response>
+        /// <response code="400">If model state is not valid</response>
+        /// <response code="404">If the exception handled</response>
+        /// <returns>Parsed words Dto</returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutInsertOrUpdateParserWord([FromBody]ParserWordDTO word)
         {
             if (!ModelState.IsValid || word == null)
@@ -141,10 +191,31 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // POST: api/parser/fromrow
+        /// <summary>
+        /// Creates parsed words from requested row.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post /ParserWords
+        ///     {
+        ///        "Id" : 1
+        ///        "Value" : "string"
+        ///        "LanguageName" : "languageName"
+        ///        "SubtitleId" : 135
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns OK if created</response>
+        /// <response code="400">If model state is not valid</response> 
+        /// <response code="404">If the exception handled</response> 
+        /// <param name="rowDto">Row for parsing</param>
+        /// <returns>Status and parsed words</returns>
         [HttpPost]
         [Route("fromrow")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AddParserWordsFromRow([FromBody]SubtitleRowDTO rowDto)
         {
             if (!ModelState.IsValid || rowDto == null || string.IsNullOrEmpty(rowDto.Value))
@@ -175,6 +246,24 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // POST: api/parser
+        /// <summary>
+        /// Creates parsed words.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post /ParserWords
+        ///     {
+        ///         "Name" : "string"
+        ///        "LanguageName" : "languageName"
+        ///        "SubtitleRowId" : 132
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns OK if created</response>
+        /// <response code="400">If the exception handled</response> 
+        /// <param name="word">Word to create</param>
+        /// <returns>Status and parsed words</returns>
         [HttpPost]
         [Route("word")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -214,6 +303,20 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // DELETE: api/parser
+        /// <summary>
+        /// Deletes record from dictionary.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE /ParserWords/{name}
+        ///     { }
+        ///
+        /// </remarks>
+        /// <response code="200">Returns OK if deleted</response>
+        /// <response code="400">If exception is hendled</response> 
+        /// <param name="name">Word to delete</param>
+        /// <returns>Status of operation</returns>
         [HttpDelete("{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

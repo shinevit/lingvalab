@@ -32,7 +32,24 @@ namespace Lingva.WebAPI.Controllers
         }
 
         //GET: api/subtitle/3
+        /// <summary>
+        /// Getting subtitles by ID.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /subltitle/{id}
+        ///     { }
+        ///
+        /// </remarks>
+        /// <returns>Subtitles</returns>
+        /// <response code="200">Returns subtitles</response>
+        /// <response code="404">If the exception is handled</response> 
+        /// <param name="id">id of needed subtitles</param>
+        /// <returns>Subtitles by requested id</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetSubtitleById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -55,6 +72,25 @@ namespace Lingva.WebAPI.Controllers
         }
 
         //GET: api/subtitle/path
+        /// <summary>
+        /// Getting subtitles by path.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /subltitle/path
+        ///     { 
+        ///         "Path" : "string"
+        ///         "FilmId" : 123
+        ///         "LanguageName" : "language"
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>Subtitles</returns>
+        /// <response code="200">Returns subtitles from path</response>
+        /// <response code="404">If the exception is handled</response> 
+        /// <param name="path"></param>
+        /// <returns>Returns subtitle from chosen path</returns>
         [HttpGet]
         [Route("path")]
         public async Task<IActionResult> GetSubtitleByPath([FromBody] string path)
@@ -79,6 +115,25 @@ namespace Lingva.WebAPI.Controllers
         }
 
         //POST: api/subtitle/add
+        /// <summary>
+        /// Adding subtitles into database.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /subtitle/add
+        ///      { 
+        ///         "Path" : "string"
+        ///         "FilmId" : 123
+        ///         "LanguageName" : "language"
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>Sutiltle adding complete</returns>
+        /// <response code="200">Returns status</response>
+        /// <response code="404">If the exception is handled</response> 
+        /// <param name="subtitleDto"></param>
+        /// <returns>Status and added subtitles</returns>
         [HttpPost]
         [Route("add")]
         public async Task<IActionResult> AddSubtitle([FromBody]SubtitleDTO subtitleDto)
@@ -108,6 +163,25 @@ namespace Lingva.WebAPI.Controllers
         }
         //---Parsing only with Path
         //POST: api/subtitle/parse
+        /// <summary>
+        /// Parsing subtitles.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /subtitle/parse
+        ///      { 
+        ///         "Path" : "string"
+        ///         "FilmId" : 123
+        ///         "LanguageName" : "language"
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>Parsing complete</returns>
+        /// <response code="200">Returns status</response>
+        /// <response code="404">If the exception is handled</response>
+        /// <param name="subtitleDto"></param>
+        /// <returns>Status</returns>
         [HttpPost]
         [Route("parse")]
         public async Task<IActionResult> PostParse([FromBody]SubtitleDTO subtitleDto)

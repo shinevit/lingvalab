@@ -9,6 +9,7 @@ using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.BusinessLayer.Contracts;
 using Lingva.WebAPI.Dto;
+using Microsoft.AspNetCore.Http;
 
 namespace Lingva.WebAPI.Controllers
 {
@@ -26,23 +27,18 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/Dictionary
-
         /// <summary>
-        /// Returns Dictionary record.
+        ///  Translates words withing choosen services.
         /// </summary>
         /// <remarks>
-        /// Sample request:
-        ///
-        ///     Get /Dictionary
-        ///     { }
-        ///
+        /// 
         /// </remarks>
-        /// <response code="200">Returns the dictionary record</response>
-        /// <response code="404">If the item is null</response> 
-
+        /// <returns>List of Translations</returns>
+        /// <response code="200">Returns list of translations</response>
+        /// <response code="404">If the exception is handled</response> 
         [HttpGet]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDictionary()
         {
             var dictionaryRecords = _dictionaryService.GetDictionary();
@@ -51,7 +47,31 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/Dictionary/5
+        /// <summary>
+        /// Creates dictionary record.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post /Dictionary
+        ///     {
+        ///        "Id" : 1
+        ///        "UserId" : 12
+        ///        "WordName" : "string"
+        ///        "Translation" : "translation"
+        ///        "LanguageName" : "languageName"
+        ///        "Context" : "context"
+        ///        "Picture" : "picture"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="dictionaryRecordCreatingDTO">Dictionary record</param>
+        /// <returns>Status of operation</returns>
+        /// <response code="200">Returns OK if dictionary record created</response>
+        /// <response code="404">If the exception handled</response> 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetDictionaryRecord([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -71,12 +91,12 @@ namespace Lingva.WebAPI.Controllers
 
         // POST: api/Dictionary
         /// <summary>
-        /// Deletes user from group.
+        /// Creates dictionary record.
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     Post /Dictionary
+        ///     POST /Dictionary
         ///     {
         ///        "Id" : 1
         ///        "UserId" : 12
@@ -88,11 +108,13 @@ namespace Lingva.WebAPI.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <response code="200">Returns the dictionary record</response>
-        /// <response code="404">If the item is null</response> 
+        /// <param name="dictionaryRecordCreatingDTO"></param>
+        /// <returns>Status of operation</returns>
+        /// <response code="200">Returns OK if dictionary record created</response>
+        /// <response code="400">If the exception handled</response> 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PostDictionaryRecord([FromBody] DictionaryRecordCreatingDTO dictionaryRecordCreatingDTO)
         {
             if (!ModelState.IsValid)
@@ -114,6 +136,29 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // PUT: api/Dictionary/5
+        /// <summary>
+        /// Updates dictionary record.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Dictionary{id}
+        ///     {
+        ///        "Id" : 1
+        ///        "UserId" : 12
+        ///        "WordName" : "string"
+        ///        "Translation" : "translation"
+        ///        "LanguageName" : "languageName"
+        ///        "Context" : "context"
+        ///        "Picture" : "picture"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="dictionaryRecordCreatingDTO"></param>
+        /// <returns>Status of opertion</returns>
+        /// <response code="200">Returns OK if dictionary record updated</response>
+        /// <response code="400">If the exception handled</response>       
         [HttpPut("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -151,10 +196,10 @@ namespace Lingva.WebAPI.Controllers
         ///
         /// </remarks>
         /// <response code="200">Returns the newly created item</response>
-        /// <response code="404">If the item is null</response> 
+        /// <response code="400">If the item is null</response> 
         [HttpDelete("{id}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteDictionaryRecord([FromRoute] int id)
         {
             if (!ModelState.IsValid)

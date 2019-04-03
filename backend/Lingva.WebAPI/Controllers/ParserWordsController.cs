@@ -227,7 +227,7 @@ namespace Lingva.WebAPI.Controllers
 
                 var dataWords = await Task.Run(() => _wordService.AddParserWordsFromRow(row));
 
-                return Ok(new
+                return Ok( new
                 {
                     status = StatusCodes.Status201Created,
                     message = "The new records of the ParserWords table was successfully added.",
@@ -236,11 +236,7 @@ namespace Lingva.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message
-                });
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
 
@@ -271,11 +267,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || word == null)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = "WordParserDTO request object is not correct."
-                });
+                return BadRequest(BaseStatusDto.CreateErrorDto("WordParserDTO request object is not correct."));
             }
 
             try
@@ -284,20 +276,13 @@ namespace Lingva.WebAPI.Controllers
 
                 await Task.Run(() => _wordService.AddParserWord(parserWord));
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status201Created,
-                    message = "The new record of the ParserWords table was successfully added.",
-                    data = word
-                });
+                word.CreateSuccess("The new record of the ParserWords table was successfully added.");
+
+                return Ok(word);
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message
-                });
+                return BadRequest(BaseStatusDto.CreateErrorDto("WordParserDTO request object is not correct."));
             }
         }
 
@@ -323,11 +308,7 @@ namespace Lingva.WebAPI.Controllers
         {
             if (!ModelState.IsValid || string.IsNullOrEmpty(name))
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = "Request is not correct."
-                });
+                return BadRequest(BaseStatusDto.CreateErrorDto("Request is not correct."));
             }
 
             try
@@ -336,20 +317,13 @@ namespace Lingva.WebAPI.Controllers
 
                 ParserWordDTO parserWordDTO = _mapper.Map<ParserWordDTO>(parserWord);
 
-                return Ok(new
-                {
-                    status = StatusCodes.Status200OK,
-                    message = $"The <{name}> ParserWord record is deleted.",
-                    data = parserWordDTO
-                });
+                parserWordDTO.CreateSuccess($"The <{name}> ParserWord record is deleted.");
+
+                return Ok(parserWordDTO);
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    status = StatusCodes.Status400BadRequest,
-                    message = ex.Message
-                });
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
         }
     }

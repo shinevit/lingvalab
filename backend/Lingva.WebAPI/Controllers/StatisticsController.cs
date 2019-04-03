@@ -61,7 +61,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Returns user in requested group
+        /// Returns users in requested group
         /// </summary>
         /// <remarks>
         /// 

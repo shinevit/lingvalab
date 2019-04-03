@@ -43,10 +43,10 @@ namespace Lingva.WebAPI.Controllers
         /// <response code="200">Returns status and user`s groups</response>
         /// <response code="404">If the exception is handled</response>
         /// <returns></returns>
-        [HttpGet("user/{id}/groups")]
+        [HttpGet("users/{userId}/groups")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetUserStatistic([FromRoute] int userId)
+        public async Task<IActionResult> GetUserGroups([FromRoute] int userId)
         {
             var usersStatistics = await Task.Run(() => _statistics.GetUserGroups(userId));
 
@@ -72,7 +72,7 @@ namespace Lingva.WebAPI.Controllers
         /// <response code="200">Returns status and users in group</response>
         /// <response code="404">If the exception is handled</response>
         /// <returns>Users in requested group</returns>
-        [HttpGet("groups/{id}/users")]
+        [HttpGet("groups/{groupId}/users")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetGroupUsers([FromRoute] int groupId)
@@ -84,7 +84,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(BaseStatusDto.CreateErrorDto());
             }
 
-            var groupsUsers = _mapper.Map<IList<UserGroupsDTO>>(groupStatistics);
+            var groupsUsers = _mapper.Map<IList<SignInUserDto>>(groupStatistics);
 
             return Ok(groupsUsers);
         }

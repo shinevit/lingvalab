@@ -257,14 +257,30 @@ namespace Lingva.WebAPI.Controllers
             }
         }
 
+        //GET: api/subtitle/3
+        /// <summary>
+        /// Getting subtitles by ID.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE /subltitle/delete/{id:int}
+        ///     { }
+        ///
+        /// </remarks>
+        /// <returns>Subtitles</returns>
+        /// <response code="200">Returns subtitles</response>
+        /// <response code="404">If the exception is handled</response> 
+        /// <param name="id">id of Subtitle record needed to delete</param>
+        /// <returns>Subtitle record by id</returns>
         [HttpDelete("/delete/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteSubtitle(int id)
         {
             if (id <= 0)
             {
-                return BadRequest(new
+                return NotFound(new
                 {
                     status = StatusCodes.Status404NotFound,
                     message = $"Id:{id} of Subtitle record is not correct."
@@ -286,7 +302,7 @@ namespace Lingva.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new
+                return NotFound(new
                 {
                     status = StatusCodes.Status404NotFound,
                     message = ex.Message

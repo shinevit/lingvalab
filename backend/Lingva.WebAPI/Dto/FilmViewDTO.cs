@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
 {
-    public class FilmViewDTO
+    public class FilmViewDTO : BaseStatusDto
     {
         public string Id { get; set; }
         public string Title { get; set; }

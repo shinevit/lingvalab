@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import config from 'react-global-configuration';
+import { authHeader } from '../Helpers';
 
 class MovieProvider extends Component {
     
@@ -11,7 +12,10 @@ class MovieProvider extends Component {
     GetMovieData = async (movieId) => {        
         let fetchUrl = `${config.get("backendAPIUrlMovies")}/${movieId}`;
 
-        await fetch(fetchUrl)
+        await fetch(fetchUrl, {
+            method: 'GET',
+            headers: authHeader()
+        })
             .then(response => {
                 if (response.ok) {
                     return response.json();

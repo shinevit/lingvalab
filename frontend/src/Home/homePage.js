@@ -10,6 +10,8 @@ import SearchForm from '../Components/searchForm';
 import EventProvider from '../Services/eventProvider';
 import OMDBImageGetter from '../Services/OMDBImageGetter';
 import {EventWindow} from '../Events/eventsPage';
+import { authHeader } from '../Helpers';
+import UserInfoProvider from '../Services/userInfoProvider';
 
 const topGroupsDummy = {
     groups: [
@@ -52,7 +54,7 @@ class HomePage extends Component {
     SendAddRequest = async (event) => {
         event.preventDefault();
         const sender = new CreateGroupProvider();
-        const response = await sender.AddGroup(event);        
+        const response = await sender.AddGroup(event);
         
         window.location.assign(`/events/${response.id}`)
     }
@@ -125,6 +127,7 @@ class HomePage extends Component {
     }
 
     render() {
+        console.log(sessionStorage.user);        
         return(
             <div>
                 <Row className="top-bar">

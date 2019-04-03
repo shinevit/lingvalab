@@ -26,9 +26,10 @@ namespace Lingva.WebAPI.Controllers
         private readonly IMapper _mapper;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public SubtitlesHandlerController(ISubtitlesHandlerService parser)
+        public SubtitlesHandlerController(ISubtitlesHandlerService parser, IMapper mapper)
         {
             _subtitleService = parser;
+            _mapper = mapper;
         }
 
         //GET: api/subtitle/3

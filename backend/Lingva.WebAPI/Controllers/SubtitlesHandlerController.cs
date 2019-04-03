@@ -184,24 +184,29 @@ namespace Lingva.WebAPI.Controllers
         /// <param name="subtitleDto"></param>
         /// <returns>Status</returns>
         [HttpPost]
-        [Route("parse")]
+        [Route("parsesub")]
         public async Task<IActionResult> PostParse([FromBody]SubtitleDTO subtitleDto)
         {
             if (!ModelState.IsValid || subtitleDto == null)
             {
-                return BadRequest(BaseStatusDto.CreateErrorDto("WordParserDTO request object is not correct."));
+                return BadRequest(BaseStatusDto.CreateErrorDto("SubtitleDTO request object is not correct."));
             }
 
             try
             {
                 Subtitle subtitle = _mapper.Map<Subtitle>(subtitleDto);
 
+                if (subtitle == null)
+                {
+                    throw new NullReferenceException("AutoMapper with SubtitleDTO=>Subtitle failed.");
+                }
+
                 IEnumerable<SubtitleRow> rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
 
                 if (rows == null)
                 {
                     return BadRequest(BaseStatusDto.CreateSuccessDto(
-                        "There are no any rows from parsing subtitle by the ParserWordService."));
+                        "There are no any rows from parsing subtitle by the SubtitlesHandlerService."));
                 }
 
                 return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
@@ -212,6 +217,80 @@ namespace Lingva.WebAPI.Controllers
                 _logger.Debug($"{ex.Message}");
 
                 return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+        }
+
+        [HttpPost]
+        [Route("parsepath")]
+        public async Task<IActionResult> PostParsePath([FromBody]string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto("Path string is not correct."));
+            }
+
+            try
+            {
+                Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);
+
+                if(subtitle == null)
+                {
+                    return BadRequest(BaseStatusDto.CreateErrorDto($"There is not any Subtitle record with Path = {path}."));
+                }
+
+                IEnumerable<SubtitleRow> rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
+
+                if (rows == null)
+                {
+                    return BadRequest(BaseStatusDto.CreateSuccessDto(
+                        "There are no any rows from parsing subtitle by the SubtitlesHandlerService."));
+                }
+
+                return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
+            }
+            catch (Exception ex)
+            {
+                _logger.Debug($"{ex.GetType()} exception is generated.");
+                _logger.Debug($"{ex.Message}");
+
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+        }
+
+        [HttpDelete("/delete/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteSubtitle(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status404NotFound,
+                    message = $"Id:{id} of Subtitle record is not correct."
+                });
+            }
+
+            try
+            {
+                Subtitle subtitle = await Task.Run(() => _subtitleService.DeleteSubtitle(id));
+
+                SubtitleDTO subtitleDTO = _mapper.Map<SubtitleDTO>(subtitle);
+
+                return Ok(new
+                {
+                    status = StatusCodes.Status200OK,
+                    message = $"Id:<{id}> => Subtitle record is deleted.",
+                    data = subtitleDTO
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    status = StatusCodes.Status404NotFound,
+                    message = ex.Message
+                });
             }
         }
     }

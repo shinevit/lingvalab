@@ -96,3 +96,37 @@
 .event-descr-input {
   margin-top: 10px;
 }
+
+.greeting-message {
+  margin-top: 35px;
+}
+
+.userpic {
+  margin-top: 30px;
+}
+
+.userpic-holder {
+  text-align: center;
+}
+
+.footer-main {
+  background-color:#055451;
+  margin-bottom: 15px;  
+}
+
+.footer-brand {
+  color: white !important;
+}
+
+.footer-copyright {
+  color: white !important;
+}
+
+.event-block {
+  margin-bottom: 20px;
+}
+
+.event-row {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

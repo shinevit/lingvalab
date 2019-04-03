@@ -1,29 +1,37 @@
 import {Component} from 'react';
 import config from 'react-global-configuration';
+import { authHeader } from '../Helpers';
 
-class EventProvider extends Component {
+class EventProvider extends Component {    
     
     state = {
         data: undefined,
         requestStatus: undefined                  
     }       
     
-    GetSearchResults = async (event = null) => {
-        let request;
-        let url = config.get('backendAPIUrlEvents');        
+    GetSearchResults = async (event = null) => {        
+        const url = config.get('backendAPIUrlEvents');        
+        let fetchUrl;        
 
         if (event === null) {
-            request = await fetch(url);
+            fetchUrl = url;            
         } else {
-            request = await fetch(`${url}/${event}`);
-        }       
-                      
-        const data = await request.json();
-
-        this.state = {
-            data : data,
-            requestStatus: request.status         
+            fetchUrl = `${url}/${event}`;            
         }
+
+        await fetch(fetchUrl, {
+            method: 'GET',
+            headers: authHeader()
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('No valid resporse from Server!');
+                }
+            })
+            .then(data => this.state = { data: data })
+            .catch(error => this.state = { data : error });
 
         return this.state;
     }

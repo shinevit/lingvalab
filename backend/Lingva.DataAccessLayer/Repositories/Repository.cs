@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Lingva.DataAccessLayer.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Lingva.DataAccessLayer.Context;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
@@ -28,9 +30,14 @@ namespace Lingva.DataAccessLayer.Repositories
             return _entities.Where(predicator).Take(quantity).AsNoTracking();
         }
 
+        public virtual IQueryable<T> GetList(Expression<Func<T, bool>> predicator)
+        {
+            return _entities.Where(predicator).AsNoTracking();
+        }
+
         public virtual T Get(object id)
         {
-            return _entities.Find((int) id);
+            return _entities.Find((int)id);
         }
 
         public virtual T Get(Expression<Func<T, bool>> predicator)
@@ -55,20 +62,17 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public virtual void Update(T entity)
         {
-            if (entity == null) throw new ArgumentNullException("Tried to update null entity!");
             if (entity == null)
             {
                 throw new ArgumentNullException("Tried to update null entity!");
             }
 
             _entities.Attach(entity);
-
             _context.Entry(entity).State = EntityState.Modified;
         }
 
         public virtual void Delete(T entity)
         {
-            if (entity == null) throw new ArgumentNullException("Tried to delete null entity!");
             if (entity == null)
             {
                 throw new ArgumentNullException("Tried to delete null entity!");
@@ -83,7 +87,6 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 _entities.Attach(entity);
             }
-
             _entities.Remove(entity);
         }
     }

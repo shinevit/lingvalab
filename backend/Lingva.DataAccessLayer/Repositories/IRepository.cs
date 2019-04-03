@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -9,6 +10,7 @@ namespace Lingva.DataAccessLayer.Repositories
     {
         IQueryable<T> GetList();
         IQueryable<T> GetList(int quantity, Expression<Func<T, bool>> predicator);
+        IQueryable<T> GetList(Expression<Func<T, bool>> predicator);
 
         T Get(object id);
         T Get(Expression<Func<T, bool>> predicator);

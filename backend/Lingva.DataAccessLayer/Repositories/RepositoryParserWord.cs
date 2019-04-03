@@ -29,7 +29,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override ParserWord Get(object name)
         {
-            if(name == null)
+            if (name == null)
             {
                 _logger.ErrorException(ERR_ARG_NULL_EXP_GET, new ArgumentNullException(ERR_ARG_NULL_EXP_GET));
 
@@ -54,7 +54,7 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 _logger.ErrorException(ERR_ARG_NULL_EXP_CREATE, new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE));
 
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE); 
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE);
             }
 
             _context.ParserWords.Add(word);
@@ -98,7 +98,7 @@ namespace Lingva.DataAccessLayer.Repositories
             {
                 _logger.ErrorException(ERR_ARG_NULL_EXP_UPDATE, new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE));
 
-                throw new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE); 
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP_UPDATE);
             }
 
             ParserWord wordDB = Get(w => w.Name == wordUpdate.Name);
@@ -138,3 +138,4 @@ namespace Lingva.DataAccessLayer.Repositories
         }
     }
 }
+

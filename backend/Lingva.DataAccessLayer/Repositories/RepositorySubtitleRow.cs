@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-
 namespace Lingva.DataAccessLayer.Repositories
 {
     public class RepositorySubtitleRow : Repository<SubtitleRow>, IRepositorySubtitleRow
@@ -33,7 +32,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override SubtitleRow Get(object id)
         {
-            return _context.SubtitleRows.Find((int) id);
+            return _context.SubtitleRows.Find((int)id);
         }
 
         public override SubtitleRow Get(Expression<Func<SubtitleRow, bool>> predicator)
@@ -43,7 +42,10 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Create(SubtitleRow subtitle)
         {
-            if (subtitle == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
+            if (subtitle == null)
+            {
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
+            }
 
             _context.SubtitleRows.Add(subtitle);
         }
@@ -56,14 +58,16 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Delete(SubtitleRow subtitle)
         {
-            if (_context.Entry(subtitle).State == EntityState.Detached) _context.SubtitleRows.Attach(subtitle);
+            if (_context.Entry(subtitle).State == EntityState.Detached)
+            {
+                _context.SubtitleRows.Attach(subtitle);
+            }
 
             _context.SubtitleRows.Remove(subtitle);
         }
 
         public void InsertOrUpdate(SubtitleRow subtitle)
         {
-            if (subtitle == null || string.IsNullOrEmpty(subtitle.Value))
             {
                 return;
             }
@@ -84,9 +88,9 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public bool Exists(string value)
         {
-            if(string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value))
             {
-                _logger.Warn("Tried to check the SubtitleRow record with Value is empty or null for existence.", 
+                _logger.Warn("Tried to check the SubtitleRow record with Value is empty or null for existence.",
                     new ArgumentNullException());
 
                 throw new ArgumentNullException("Tried to check the SubtitleRow record with Value is empty or null for existence.");

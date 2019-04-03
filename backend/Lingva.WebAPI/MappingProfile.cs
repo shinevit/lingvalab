@@ -15,38 +15,38 @@ namespace Lingva.WebAPI
         public MappingProfile()
         {
             CreateMap<DictionaryRecord, DictionaryRecordViewDTO>()
-                .ForMember("Language", opt => opt.MapFrom(c => c.LanguageName))
-                .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
+            .ForMember("Language", opt => opt.MapFrom(c => c.LanguageName))
+            .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
 
             CreateMap<DictionaryRecordCreatingDTO, DictionaryRecord>()
-                .ForMember("UserId", opt => opt.MapFrom(c => c.UserId))
-                .ForMember("WordName", opt => opt.MapFrom(c => c.Word))
-                .ForMember("LanguageName", opt => opt.MapFrom(c => c.Language))
-                .ForMember("Translation", opt => opt.MapFrom(c => c.Translation))
-                .ForMember("Context", opt => opt.MapFrom(c => c.Context))
-                .ForMember("Picture", opt => opt.MapFrom(c => c.Picture))
-                .ForAllOtherMembers(opt => opt.Ignore());
+            .ForMember("UserId", opt => opt.MapFrom(c => c.UserId))
+            .ForMember("WordName", opt => opt.MapFrom(c => c.Word))
+            .ForMember("LanguageName", opt => opt.MapFrom(c => c.Language))
+            .ForMember("Translation", opt => opt.MapFrom(c => c.Translation))
+            .ForMember("Context", opt => opt.MapFrom(c => c.Context))
+            .ForMember("Picture", opt => opt.MapFrom(c => c.Picture))
+            .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<DictionaryRecord, WordViewDTO>()
-                .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
+            .ForMember("Word", opt => opt.MapFrom(c => c.WordName));
 
             CreateMap<ParserWord, WordDTO>()
-                .ForMember("Word", opt => opt.MapFrom(c => c.Name));
+            .ForMember("Word", opt => opt.MapFrom(c => c.Name));
 
-            CreateMap<Subtitle, SubtitleDTO>();
-            //.ForMember("FilmId", opt => opt.MapFrom(c => c.FilmId))
-            //.ForMember("Path", opt => opt.MapFrom(c => c.Path))
-            //.ForMember("LanguageName", opt => opt.MapFrom(c => c.LanguageName))
-            //.ForAllOtherMembers(opt => opt.Ignore());
-            CreateMap<SubtitleDTO, Subtitle>();
-                //.ForMember("FilmId", opt => opt.MapFrom(c => c.FilmId))
-                //.ForMember("Path", opt => opt.MapFrom(c => c.Path))
-                //.ForMember("LanguageName", opt => opt.MapFrom(c => c.LanguageName))
-                //.ForAllOtherMembers(opt => opt.Ignore());
+            CreateMap<Subtitle, SubtitleDTO>()
+            .ForMember("FilmId", opt => opt.MapFrom(c => c.FilmId))
+            .ForMember("Path", opt => opt.MapFrom(c => c.Path))
+            .ForMember("LanguageName", opt => opt.MapFrom(c => c.LanguageName))
+            .ForAllOtherMembers(opt => opt.Ignore());
+            CreateMap<SubtitleDTO, Subtitle>()
+             .ForMember("FilmId", opt => opt.MapFrom(c => c.FilmId))
+             .ForMember("Path", opt => opt.MapFrom(c => c.Path))
+             .ForMember("LanguageName", opt => opt.MapFrom(c => c.LanguageName))
+             .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<SubtitleRow, SubtitleRowDTO>();
             CreateMap<SubtitleRowDTO, SubtitleRow>();
-                
+
             CreateMap<ParserWord, ParserWordDTO>();
             CreateMap<ParserWordDTO, ParserWord>();
 
@@ -56,6 +56,13 @@ namespace Lingva.WebAPI
             CreateMap<SignInUserDto, User>();
             CreateMap<SignUpUserDto, SignInUserDto>();
             CreateMap<SignInUserDto, SignUpUserDto>();
+
+            CreateMap<GroupCreatingDTO, Group>();
+            CreateMap<FilmCreatingDTO, Film>();
+
+            CreateMap<Group, GroupViewDTO>();
+            CreateMap<Film, FilmViewDTO>();
+
         }
     }
 }

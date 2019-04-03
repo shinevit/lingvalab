@@ -17,6 +17,7 @@ using NLog;
 
 namespace Lingva.WebAPI
 {
+#pragma warning disable CS1591
     public class Program
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
@@ -39,18 +40,17 @@ namespace Lingva.WebAPI
 
                 host.Run();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.Error(e, e.Message);
             }
         }
 
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration()
-                //.UseUrls("http://localhost:5000")
+                .UseUrls("http://localhost:5000")
                 .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .ConfigureLogging(logging =>
                 {
@@ -59,6 +59,7 @@ namespace Lingva.WebAPI
                 })
                 .UseNLog()
                 .Build();
-        }
+
     }
+#pragma warning restore CS1591
 }

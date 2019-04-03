@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Dto
@@ -45,7 +46,6 @@ namespace Lingva.WebAPI.Dto
             result.CreateError(message);
 
             return result;
-
         }
 
         public void CreateError(string message = ERROR_MESSAGE)

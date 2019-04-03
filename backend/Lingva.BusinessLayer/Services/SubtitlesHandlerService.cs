@@ -69,12 +69,13 @@ namespace Lingva.BusinessLayer.Services
             {
                 _logger.Info($"There is no Subtitle record with Path = {path} in the Subtitles table.");
 
-                return null;
+                _logger.Info($"Attempt to get a Subtitle record with Path = {path} from the Subtitles table is successful.");
+
+                return subtitle;
             }
 
-            _logger.Info($"Attempt to get a Subtitle record with Path = {path} from the Subtitles table is successful.");
 
-            return subtitle;
+            return null;
         }
 
         public IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle)
@@ -103,6 +104,25 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork.Save();
         }
 
+        public Subtitle DeleteSubtitle(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentNullException("Id of Subtitle record can not be equal zero or negative.");
+            }
+
+            Subtitle subtitle = _unitOfWork.Subtitles.Get(id);
+
+            if (subtitle == null)
+            {
+                throw new ArgumentNullException("The Subtitle entity does not exist in the database.");
+            }
+
+            _unitOfWork.Subtitles.Delete(subtitle);
+            _unitOfWork.Save();
+
+            return subtitle;
+        }
 
         private void AddSubtitleWithRows(Subtitle subtitle, IEnumerable<SubtitleRow> rows)
         {
@@ -153,7 +173,7 @@ namespace Lingva.BusinessLayer.Services
 
         private Encoding DetectEncoding(Stream stream)
         {
-            var cdet = new CharsetDetector();
+            Ude.CharsetDetector cdet = new Ude.CharsetDetector();
             cdet.Feed(stream);
             cdet.DataEnd();
 

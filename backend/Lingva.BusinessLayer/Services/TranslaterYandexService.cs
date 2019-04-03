@@ -1,8 +1,12 @@
-﻿using System.IO;
-using System.Net;
-using Lingva.BusinessLayer.Contracts;
+﻿using Lingva.BusinessLayer.Contracts;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Lingva.BusinessLayer.Services
 {
@@ -17,23 +21,28 @@ namespace Lingva.BusinessLayer.Services
 
         public string Translate(string text, string originalLanguage, string translationLanguage)
         {
-            if (text.Length == 0) return "";
-
-            var request = WebRequest.Create("https://translate.yandex.net/api/v1.5/tr.json/translate?"
-                                            + "key=" + _storageOptions.Value.ServicesYandexTranslaterKey
-                                            + "&text=" + text
-                                            + "&lang=" + originalLanguage + "-" + translationLanguage);
-
-            var response = request.GetResponse();
-
-            using (var stream = new StreamReader(response.GetResponseStream()))
+            if (text.Length == 0)
             {
-                var line = stream.ReadToEnd();
-                var translation = JsonConvert.DeserializeObject<dynamic>(line);
-                text = "";
-                foreach (string str in translation.text) text += str;
+                return "";
             }
 
+            WebRequest request = WebRequest.Create("https://translate.yandex.net/api/v1.5/tr.json/translate?"
+                + "key=" + _storageOptions.Value.ServicesYandexTranslaterKey
+                + "&text=" + text
+                + "&lang=" + originalLanguage + "-" + translationLanguage);
+
+            WebResponse response = request.GetResponse();
+
+            using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+            {
+                string line = stream.ReadToEnd();
+                dynamic translation = JsonConvert.DeserializeObject<dynamic>(line);
+                text = "";
+                foreach (string str in translation.text)
+                {
+                    text += str;
+                }
+            }
             return text;
         }
 
@@ -47,23 +56,24 @@ namespace Lingva.BusinessLayer.Services
                 return translations;
             }
 
-            var request = WebRequest.Create("https://dictionary.yandex.net/api/v1/dicservice.json/lookup?"
-                                            + "key=" + _storageOptions.Value.ServicesYandexDictionaryKey
-                                            + "&lang=" + originalLanguage + "-" + translationLanguage
-                                            + "&text=" + text);
+            WebRequest request = WebRequest.Create("https://dictionary.yandex.net/api/v1/dicservice.json/lookup?"
+                + "key=" + _storageOptions.Value.ServicesYandexDictionaryKey
+                + "&lang=" + originalLanguage + "-" + translationLanguage
+                + "&text=" + text);
 
-            var response = request.GetResponse();
+            WebResponse response = request.GetResponse();
 
-            using (var stream = new StreamReader(response.GetResponseStream()))
+            using (StreamReader stream = new StreamReader(response.GetResponseStream()))
             {
-                var line = stream.ReadToEnd();
-                var translation = JsonConvert.DeserializeObject<dynamic>(line);
+                string line = stream.ReadToEnd();
+                dynamic translation = JsonConvert.DeserializeObject<dynamic>(line);
                 translations = new string[translation.def[0].tr[0].syn.Count + 1];
                 translations[0] = translation.def[0].tr[0].text;
-                for (var i = 1; i <= translation.def[0].tr[0].syn.Count; i++)
+                for (int i = 1; i <= translation.def[0].tr[0].syn.Count; i++)
+                {
                     translations[i] = translation.def[0].tr[0].syn[i - 1].text;
+                }
             }
-
             return translations;
         }
     }

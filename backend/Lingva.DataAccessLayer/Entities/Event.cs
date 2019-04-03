@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Lingva.DataAccessLayer.Entities
 {
@@ -13,7 +14,7 @@ namespace Lingva.DataAccessLayer.Entities
         [Required]
         [StringLength(250)]
         public string Name { get; set; }
-        
+
         public DateTime Date { get; set; }
 
         public int? FilmId { get; set; }
@@ -24,12 +25,12 @@ namespace Lingva.DataAccessLayer.Entities
 
         public virtual Subtitle Subtitle { get; set; }
 
-        [ForeignKey("EventId")]
-        public virtual ICollection<Group> Groups { get; set; }
+        //[ForeignKey("EventId")]
+        //public virtual ICollection<Group> Groups { get; set; }
 
-        public Event()
-        {
-            Groups = new List<Group>();
-        }
+        //public Event()
+        //{
+        //    Groups = new List<Group>();
+        //}
     }
 }

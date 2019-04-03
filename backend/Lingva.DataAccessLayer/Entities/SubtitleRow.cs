@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace Lingva.DataAccessLayer.Entities
 {
     public class SubtitleRow
     {
-        public SubtitleRow()
-        {
-            ParserWords = new List<ParserWord>();
-        }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-       public int Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(200)]
@@ -31,5 +27,10 @@ namespace Lingva.DataAccessLayer.Entities
         public virtual Subtitle Subtitles { get; set; }
 
         public virtual ICollection<ParserWord> ParserWords { get; set; }
+
+        public SubtitleRow()
+        {
+            ParserWords = new List<ParserWord>();
+        }
     }
 }

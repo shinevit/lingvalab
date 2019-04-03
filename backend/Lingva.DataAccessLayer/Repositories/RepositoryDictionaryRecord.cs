@@ -1,9 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using Lingva.DataAccessLayer.Context;
+﻿using Lingva.DataAccessLayer.Context;
 using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
 
 namespace Lingva.DataAccessLayer.Repositories
 {
@@ -28,7 +30,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override DictionaryRecord Get(object id)
         {
-            return _context.Dictionary.Find((int) id);
+            return _context.Dictionary.Find((int)id);
         }
 
         public DictionaryRecord Get(Expression<Func<DictionaryRecord, bool>> predicator)
@@ -38,7 +40,10 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Create(DictionaryRecord entity)
         {
-            if (entity == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(ERR_ARG_NULL_EXP);
+            }
 
             _context.Dictionary.Add(entity);
         }
@@ -51,7 +56,10 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public void Delete(DictionaryRecord entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached) _context.Dictionary.Attach(entity);
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _context.Dictionary.Attach(entity);
+            }
             _context.Dictionary.Remove(entity);
         }
     }

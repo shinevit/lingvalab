@@ -1,12 +1,8 @@
 ﻿using System;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.Models.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lingva.BusinessLayer.Services;
-using Lingva.WebAPI.Extensions;
-using Lingva.WebAPI.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +27,7 @@ namespace Lingva.WebAPI
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
@@ -40,6 +36,7 @@ namespace Lingva.WebAPI
             services.ConfigureOptions(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureUnitOfWork();
+            services.ConfigureSwagger(Configuration);
             services.ConfigureRepositories();
             services.ConfigureMVC();
             services.ConfigureServices();
@@ -47,13 +44,13 @@ namespace Lingva.WebAPI
             services.AddTransient<ILivesearchService, LivesearchService>();
             services.AddTransient<TranslaterGoogleService>();
             services.AddTransient<TranslaterYandexService>();
-            services.AddTransient<Func<TranslaterServiceEnum, ITranslaterService>>(serviceProvider => key =>
+            services.AddTransient<Func<TranslaterServices, ITranslaterService>>(serviceProvider => key =>
             {
                 switch (key)
                 {
-                    case TranslaterServiceEnum.Yandex:
+                    case TranslaterServices.Yandex:
                         return serviceProvider.GetService<TranslaterYandexService>();
-                    case TranslaterServiceEnum.Google:
+                    case TranslaterServices.Google:
                         return serviceProvider.GetService<TranslaterGoogleService>();
                     default:
                         return null;
@@ -61,7 +58,11 @@ namespace Lingva.WebAPI
             });
 
             services.AddScoped<ISubtitlesHandlerService, SubtitlesHandlerService>();
+
             services.AddScoped<IParserWordService, ParserWordService>();
+
+            services.AddScoped<IFilmService, FilmService>();
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -70,13 +71,17 @@ namespace Lingva.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseCors("CorsPolicy");
             app.UseStaticFiles();
-            app.UseHttpsRedirection();
-            app.UseMiddleware<ExceptionHandlerMIddleware>();
+            //app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lingvalab V1");
+            });
         }
     }
 }

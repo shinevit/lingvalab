@@ -17,30 +17,53 @@ class OMDBImageGetter extends Component {
     OMDBAPIKey = config.get('OMDBAPIKey');
     OMDBAPIURL = config.get('OMDBAPIURL');
     posterAPIURL = config.get('posterAPIURL');
+    dummyImage300x444 = config.get('dummyImage300x444');
 
     GetImageURLByName = async (movieName) => {
-        let request = await fetch(`${this.OMDBAPIURL}${movieName}${this.OMDBAPIKey}`);                       
-        let data = await request.json();
+        const request = await fetch(`${this.OMDBAPIURL}${movieName}${this.OMDBAPIKey}`);                       
+        const data = await request.json();
 
-        let output;
+        let poster;
 
         if(request.status !== 200 || data.Response === "False" || data.Poster === "N/A") {
-            output = "https://via.placeholder.com/300x444.png"
+            poster = this.dummyImage300x444
         } else {
-            output = data.Poster;
+            poster = data.Poster;
+        }
+
+        console.log(data);
+
+        this.state = {
+            imgUrl : poster,
+            requestStatus: request.status         
+        }
+
+        return this.state.imgUrl;
+    }
+
+    GetMovieDataByName = async (movieName) => {
+        const request = await fetch(`${this.OMDBAPIURL}${movieName}${this.OMDBAPIKey}`);                       
+        const data = await request.json();
+
+        let poster;
+        let info = undefined;
+
+        if(request.status !== 200 || data.Response === "False") {
+            poster = this.dummyImage300x444
+        } else {
+            poster = data.Poster;
+            info = data;
         }
 
         this.state = {
-            imgUrl : output,
+            imgUrl : poster,
+            movieInfo: info,
             requestStatus: request.status         
         }
-        console.log("Request:");
-        console.log(movieName);
-        console.log("Output");
-        console.log(data);
 
-        return output;
+        return this.state;
     }
+
 }
 
 export default OMDBImageGetter;

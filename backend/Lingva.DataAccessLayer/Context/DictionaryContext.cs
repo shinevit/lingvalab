@@ -1,4 +1,8 @@
-﻿using Lingva.DataAccessLayer.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Context
@@ -22,8 +26,8 @@ namespace Lingva.DataAccessLayer.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
-
-            Database.EnsureCreated();
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,17 +51,14 @@ namespace Lingva.DataAccessLayer.Context
             modelBuilder.Entity<UserGroup>()
                 .HasOne<Group>(ug => ug.Group)
                 .WithMany(g => g.UserGroups)
-                .HasForeignKey(ug => ug.GroupId);
+                .HasForeignKey(ug => ug.GroupId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<UserGroup>()
                .HasOne<User>(ug => ug.User)
                .WithMany(g => g.UserGroups)
-               .HasForeignKey(ug => ug.UserId);
-
-            modelBuilder.Entity<Film>()
-                .HasMany(s => s.Subtitles)
-                .WithOne(f => f.Film)
-                .OnDelete(DeleteBehavior.Restrict);
+               .HasForeignKey(ug => ug.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Subtitle>()
                 .HasMany(c => c.SubtitlesRow)
@@ -65,14 +66,16 @@ namespace Lingva.DataAccessLayer.Context
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<SubtitleRow>()
-                .HasOne(c => c.Subtitles)
-                .WithMany(t => t.SubtitlesRow)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .HasOne(c => c.Subtitles)
+                  .WithMany(t => t.SubtitlesRow)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Word>()
-                .HasOne(c => c.Language)
-                .WithMany(t => t.Words)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .HasOne(c => c.Language)
+                  .WithMany(t => t.Words)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

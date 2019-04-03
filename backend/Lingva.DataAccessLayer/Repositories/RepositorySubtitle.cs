@@ -30,12 +30,12 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override Subtitle Get(object id)
         {
-            return _context.Subtitles.Find((int) id);
+            return _context.Subtitles.Find((int)id);
         }
 
         public int? Get(string path)
         {
-            if(string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return null;
             }
@@ -57,7 +57,6 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Create(Subtitle subtitle)
         {
-            if (subtitle == null) throw new ArgumentNullException(ERR_ARG_NULL_EXP);
             if (subtitle == null)
             {
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP);
@@ -74,7 +73,6 @@ namespace Lingva.DataAccessLayer.Repositories
 
         public override void Delete(Subtitle subtitle)
         {
-            if (_context.Entry(subtitle).State == EntityState.Detached) _context.Subtitles.Attach(subtitle);
             if (_context.Entry(subtitle).State == EntityState.Detached)
             {
                 _context.Subtitles.Attach(subtitle);

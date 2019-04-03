@@ -1,5 +1,8 @@
 import {Component} from 'react';
 import config from 'react-global-configuration';
+import CreateMovieProvider from './createMovieProvider';
+import UserInfoProvider from './userInfoProvider';
+import { authHeader } from '../Helpers';
 
 class CreateGroupProvider extends Component {
     
@@ -8,33 +11,47 @@ class CreateGroupProvider extends Component {
         responseStatus: undefined                  
     }
 
-    AddGroup = async (event) => {        
+    AddGroup = async (event) => {
         const inputGroupName = event.target.elements.groupName.value;
-        const groupDescription = event.target.elements.description.value        
+        const groupDescription = event.target.elements.description.value;
+        const movieName = event.target.elements.movieName.value;        
         const apiUrl = config.get('backendAPIUrlEvents');
+        const authToken = authHeader().Authorization;        
 
-        var response = await fetch(apiUrl, {
+        const newMovie = await this.AddNewMovie(movieName);        
+
+        await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': authToken
             },
             body: JSON.stringify({
                 title: inputGroupName,
-                description: groupDescription                
+                description: groupDescription,
+                filmId: newMovie.id,
+                picture: newMovie.poster                 
             })
-        })
+        }).then(res => {
+            this.state = {
+                groups : res.json(),
+                responseStatus: res.status         
+            }
+        }).catch(err => {console.log(err)});
 
-        console.log(response);
+        return this.state.groups;
+    }
 
-        const data = await response.json();
+    AddNewMovie = async (movieName) => {
+        const movieAdder = new CreateMovieProvider();
+        const newMovie = await movieAdder.AddMovie(movieName);
+        return newMovie;
+    }
 
-        this.state = {
-            groups : data,
-            responseStatus: response.status         
-        }
-
-        return this.state;
+    AutoJoinGroup = async (groupId) => {
+        const userInfoProvider = new UserInfoProvider();
+        await userInfoProvider.JoinGroup(groupId);
     }
 }
 

@@ -163,14 +163,14 @@ namespace Lingva.WebAPI.Controllers
         }
         
         //---Parsing only with Path
-        //POST: api/subtitle/parse
+        //POST: api/subtitle/parsesub
         /// <summary>
         /// Parsing subtitles.
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /subtitle/parse
+        ///     POST /subtitle/parsesub
         ///      { 
         ///         "Path" : "string"
         ///         "FilmId" : 123
@@ -220,8 +220,26 @@ namespace Lingva.WebAPI.Controllers
             }
         }
 
+        //POST: api/subtitle/parsepath
+        /// <summary>
+        /// Parse subtitle by Path.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /subltitle/parsepath
+        ///     { }
+        ///
+        /// </remarks>
+        /// <returns>Subtitles</returns>
+        /// <response code="200">Returns status code</response>
+        /// <response code="404">If the exception is handled</response> 
+        /// <param name="path">Path of Subtitle record needed to parse</param>
+        /// <returns>Status code and message</returns>
         [HttpPost]
         [Route("parsepath")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PostParsePath([FromBody]string path)
         {
             if (string.IsNullOrEmpty(path))
@@ -257,7 +275,7 @@ namespace Lingva.WebAPI.Controllers
             }
         }
 
-        //GET: api/subtitle/3
+        //DELETE: api/subtitle/3
         /// <summary>
         /// Getting subtitles by ID.
         /// </summary>

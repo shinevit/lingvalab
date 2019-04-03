@@ -1,3 +1,3 @@
 export const configuration = {    
-    url : 'http://localhost:44341'
+    url : 'http://localhost:5000'
 }

@@ -38,7 +38,6 @@ class CreateGroupProvider extends Component {
                 groups : res.json(),
                 responseStatus: res.status         
             }
-            this.AutoJoinGroup(this.state.groups.id);
         }).catch(err => {console.log(err)});
 
         return this.state.groups;

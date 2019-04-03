@@ -43,8 +43,16 @@ class UserProfilePage extends Component {
         console.log(data);
     }
 
+    GetUserGroups = async (userId) => {
+        const getter = new UserInfoProvider();
+        const data = await getter.GetUserGroups(userId);
+        console.log("UserPageStat");
+        console.log(data);
+    }
+
     componentDidMount() {
         this.GetUserData(this.state.localUserData.id);
+        this.GetUserGroups(this.state.localUserData.id);
     }
 
     render() {

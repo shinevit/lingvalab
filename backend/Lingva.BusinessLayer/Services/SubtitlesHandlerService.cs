@@ -78,7 +78,7 @@ namespace Lingva.BusinessLayer.Services
             return null;
         }
 
-        public IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle)
+        public void ParseSubtitle(Subtitle subtitle)
         {
             IEnumerable<SubtitleRow> rows;
 
@@ -87,8 +87,6 @@ namespace Lingva.BusinessLayer.Services
                 rows = ParseStream(sourceStream);
 
                 AddSubtitleWithRows(subtitle, rows);
-
-                return rows;
             }
         }
 
@@ -136,22 +134,16 @@ namespace Lingva.BusinessLayer.Services
                 throw new ArgumentNullException("Tried to operate with a null IEnumerable<SubtitleRow> object.");
             }
 
-            _unitOfWork.Subtitles.Create(subtitle);
-
-            int? subtitleId = _unitOfWork.Subtitles.Get(subtitle.Path);
-
-            if (subtitleId == null)
+            if(_unitOfWork.Subtitles.Get(s => s.Path == subtitle.Path ) == null)
             {
-                throw new ArgumentNullException("Returned null primary key value of the Subtitles table record.");
+                _unitOfWork.Subtitles.Create(subtitle);
+                _unitOfWork.Save();
             }
 
             foreach (SubtitleRow row in rows)
             {
-                row.SubtitleId = subtitleId;
-                _unitOfWork.SubtitleRows.Create(row);
+                AddRow(row);
             }
-
-            _unitOfWork.Save();
         }
 
         private IEnumerable<SubtitleRow> ParseStream(Stream subtitleStream)
@@ -185,6 +177,38 @@ namespace Lingva.BusinessLayer.Services
             return Encoding.GetEncoding(cdet.Charset);
         }
 
-           
+        public void AddSubtitleRows(int? subtitleId, IEnumerable<SubtitleRow> rows)
+        {
+            if (subtitleId == null || subtitleId <= 0 || rows == null)
+            {
+                throw new ArgumentNullException("Arguments are not correct.");
+            }
+
+            Subtitle subtitle = _unitOfWork.Subtitles.Get(subtitleId);
+
+            if (subtitle == null)
+            {
+                throw new ArgumentNullException($"Returned null primary key value of the Subtitles table record with Id={subtitleId}.");
+            }
+
+            string language = subtitle.LanguageName;
+
+            foreach (SubtitleRow row in rows)
+            {
+                AddRow(row);
+            }
+        }
+
+        public void AddRow(SubtitleRow row)
+        {
+            if (row == null)
+            {
+                throw new ArgumentNullException("SubtitleRow object is null.");
+            }
+
+            _unitOfWork.SubtitleRows.Create(row);
+
+            _unitOfWork.Save();
+        }
     }
 }

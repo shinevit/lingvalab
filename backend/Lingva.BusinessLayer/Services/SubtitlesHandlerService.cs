@@ -154,6 +154,18 @@ namespace Lingva.BusinessLayer.Services
             _unitOfWork.Save();
         }
 
+        public void UpdateSubtitle(Subtitle subtitle)
+        {
+            if (subtitle == null || string.IsNullOrEmpty(subtitle.Path))
+            {
+                throw new ArgumentNullException("Null Subtitle object or Subtitle with Path = null.");
+            }
+
+            _unitOfWork.Subtitles.Update(subtitle);
+
+            _unitOfWork.Save();
+        }
+
         private IEnumerable<SubtitleRow> ParseStream(Stream subtitleStream)
         {
             var parser = new SubtitlesParser.Classes.Parsers.SrtParser();

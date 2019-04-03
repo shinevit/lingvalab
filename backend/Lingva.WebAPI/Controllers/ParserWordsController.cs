@@ -179,9 +179,9 @@ namespace Lingva.WebAPI.Controllers
 
                 await Task.Run(() => _wordService.InsertOrUpdateParserWord(parserWord));
 
-                ParserWordDTO parserWordDto = _mapper.Map<ParserWordDTO>(parserWord);
+                word.CreateSuccess("Inserted or updated ParserWord record.");
 
-                return Ok(parserWordDto);
+                return Ok(word);
             }
             catch (Exception ex)
             {

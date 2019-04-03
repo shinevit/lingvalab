@@ -327,5 +327,50 @@ namespace Lingva.WebAPI.Controllers
                 });
             }
         }
+
+        // PUT: api/subtitle
+        ///<summary>
+        /// Updates Subtitles record.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     Post: /subtitle/update
+        ///     {        
+        ///        "Path" : "string"
+        ///        "FilmId": 123
+        ///        "LanguageName" : "languageName"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="subtitleDto"></param>
+        /// <response code="200">Returns OK if subtitle updated</response>
+        /// <response code="404">If the exception handled</response>
+        /// <returns>Subtitle DTO</returns>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateSubtitle([FromBody]SubtitleDTO subtitleDto)
+        {
+            if (!ModelState.IsValid || subtitleDto == null)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto("SubtitleDTO request object is not correct."));
+            }
+
+            try
+            {
+                Subtitle subtitle = _mapper.Map<Subtitle>(subtitleDto);
+
+                await Task.Run(() => _subtitleService.UpdateSubtitle(subtitle));
+
+                subtitleDto.CreateSuccess("Updated subtitle.");
+
+                return Ok(subtitleDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+        }
     }
 }

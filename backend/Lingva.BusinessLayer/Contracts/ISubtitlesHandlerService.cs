@@ -18,5 +18,7 @@ namespace Lingva.BusinessLayer.Contracts
         IEnumerable<SubtitleRow> ParseSubtitle(Subtitle subtitle);
 
         Subtitle DeleteSubtitle(int id);
+
+        void UpdateSubtitle(Subtitle word);
     }
 }

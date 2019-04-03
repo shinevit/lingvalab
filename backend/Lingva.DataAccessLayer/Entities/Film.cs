@@ -25,14 +25,14 @@ namespace Lingva.DataAccessLayer.Entities
 
         public string LanguageName { get; set; }
 
-        public int SubtitleId { get; set; }
+        public int? SubtitleId { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
-        public virtual ICollection<Subtitle> Subtitles { get; set; }
+        //public virtual ICollection<Subtitle> Subtitles { get; set; }
 
         public Film()
         {
-            Subtitles = new List<Subtitle>();
+            //Subtitles = new List<Subtitle>();
             Groups = new List<Group>();
         }
     }

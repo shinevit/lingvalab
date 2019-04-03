@@ -163,7 +163,7 @@ namespace Lingva.WebAPI.Controllers
             }
         }
         
-        //---Parsing only with Path
+        //---Parsing subtitle
         //POST: api/subtitle/parsesub
         /// <summary>
         /// Parsing subtitles.
@@ -202,13 +202,7 @@ namespace Lingva.WebAPI.Controllers
                     throw new NullReferenceException("AutoMapper with SubtitleDTO=>Subtitle failed.");
                 }
 
-                IEnumerable<SubtitleRow> rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
-
-                if (rows == null)
-                {
-                    return BadRequest(BaseStatusDto.CreateSuccessDto(
-                        "There are no any rows from parsing subtitle by the SubtitlesHandlerService."));
-                }
+                await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
 
                 return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
             }
@@ -241,29 +235,23 @@ namespace Lingva.WebAPI.Controllers
         [Route("parsepath")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> PostParsePath([FromBody]string path)
+        public async Task<IActionResult> PostParsePath([FromBody]PathDTO path)
         {
-            if (string.IsNullOrEmpty(path))
+            if (path == null || string.IsNullOrEmpty(path.Path))
             {
                 return BadRequest(BaseStatusDto.CreateErrorDto("Path string is not correct."));
             }
 
             try
             {
-                Subtitle subtitle = _subtitleService.GetSubtitleByPath(path);
+                Subtitle subtitle = _subtitleService.GetSubtitleByPath(path.Path);
 
                 if(subtitle == null)
                 {
                     return BadRequest(BaseStatusDto.CreateErrorDto($"There is not any Subtitle record with Path = {path}."));
                 }
 
-                IEnumerable<SubtitleRow> rows = await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
-
-                if (rows == null)
-                {
-                    return BadRequest(BaseStatusDto.CreateSuccessDto(
-                        "There are no any rows from parsing subtitle by the SubtitlesHandlerService."));
-                }
+                await Task.Run(() => _subtitleService.ParseSubtitle(subtitle));
 
                 return Ok(BaseStatusDto.CreateSuccessDto("Subtitle parsing operation is successful."));
             }

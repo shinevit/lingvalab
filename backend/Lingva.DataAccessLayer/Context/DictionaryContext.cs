@@ -62,11 +62,11 @@ namespace Lingva.DataAccessLayer.Context
 
             modelBuilder.Entity<Subtitle>()
                 .HasMany(c => c.SubtitlesRow)
-                .WithOne(t => t.Subtitles)
+                .WithOne(t => t.Subtitle)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<SubtitleRow>()
-                  .HasOne(c => c.Subtitles)
+                  .HasOne(c => c.Subtitle)
                   .WithMany(t => t.SubtitlesRow)
                   .OnDelete(DeleteBehavior.Restrict);
 

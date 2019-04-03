@@ -23,13 +23,8 @@ namespace Lingva.DataAccessLayer.Entities
 
         public int? FilmId { get; set; }
 
-        public virtual Film Film { get; set; }
-
         public string LanguageName { get; set; }
 
         public virtual IEnumerable<SubtitleRow> SubtitlesRow { get; set; }
-
-       // public virtual IEnumerable<Event> Events { get; set; }
-
     }
 }

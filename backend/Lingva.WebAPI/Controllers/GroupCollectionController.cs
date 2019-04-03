@@ -50,6 +50,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/groupcollection/5
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetGroup([FromRoute] int id)
         {
@@ -146,7 +147,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
-            Group newGroup = _groupsService.GetGroup(group.Id);
+            Group newGroup = _groupsService.GetGroup(group.Id);            
 
             return Ok(_mapper.Map<GroupViewDTO>(newGroup));
         }

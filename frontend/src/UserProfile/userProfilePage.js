@@ -6,6 +6,7 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import BootstrapTable from 'react-bootstrap-table-next';
 import EventProvider from '../Services/eventProvider';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis } from 'recharts';
+import UserInfoProvider from '../Services/userInfoProvider';
 
 const dummyImage100 = "https://via.placeholder.com/100x100.png";
 
@@ -25,11 +26,41 @@ const columns = [{
 }];
 
 class UserProfilePage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            localUserData:  JSON.parse(sessionStorage.user)            
+        };
+
+
+    }
+
+    GetUserData = async (userId) => {
+        const getter = new UserInfoProvider();
+        const data = await getter.GetUserDataById(userId);
+        console.log("UserPage");
+        console.log(data);
+    }
+
+    GetUserGroups = async (userId) => {
+        const getter = new UserInfoProvider();
+        const data = await getter.GetUserGroups(userId);
+        console.log("UserPageStat");
+        console.log(data);
+    }
+
+    componentDidMount() {
+        this.GetUserData(this.state.localUserData.id);
+        this.GetUserGroups(this.state.localUserData.id);
+    }
+
     render() {
-        return(
+        console.log();               
+        return(            
             <div>
-                <UserProfilePageHead />
-                <UserProfilePageBody />
+                <UserProfilePageHead localUserData = {this.state.localUserData}/>
+                <UserProfilePageBody localUserData = {this.state.localUserData}/>
             </div>            
         )
     }
@@ -47,7 +78,11 @@ class UserProfilePageHead extends Component {
                     </ButtonToolbar>
                 </Col>
                 <Col lg={3}>
-                    <h3 className="greeting-message">Hi, Ivanov Ivan!</h3>
+                    <h3 className="greeting-message">
+                        Hi,&nbsp;
+                        {this.props.localUserData.firstName}&nbsp;
+                        {this.props.localUserData.lastName}&nbsp;
+                    </h3>
                 </Col>
                 <Col lg={4} className="justify-content-md-center userpic-holder">
                     <img

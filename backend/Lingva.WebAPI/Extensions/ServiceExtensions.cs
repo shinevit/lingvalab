@@ -36,7 +36,7 @@ namespace Lingva.WebAPI.Extensions
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
 
             services.AddDbContext<DictionaryContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue),(ServiceLifetime.Transient));            
+                options.UseLazyLoadingProxies().UseSqlServer(connectionStringValue));            
         }
 
         public static void ConfigureSwagger(this IServiceCollection services, IConfiguration Configuration)

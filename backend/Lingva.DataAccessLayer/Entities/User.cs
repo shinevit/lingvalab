@@ -34,7 +34,6 @@ namespace Lingva.DataAccessLayer.Entities
 
         public User()
         {
-
             UserDictionaryRecords = new List<DictionaryRecord>();
             UserGroups = new List<UserGroup>();
         }

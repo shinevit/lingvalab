@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import config from 'react-global-configuration';
 import OMDBImageGetter from '../Services/OMDBImageGetter';
+import { authHeader } from '../Helpers';
 
 class CreateMovieProvider extends Component {
     
@@ -11,6 +12,7 @@ class CreateMovieProvider extends Component {
 
     AddMovie = async (movieName) => {
        const apiUrl = config.get('backendAPIUrlMovies');
+       const authToken = authHeader().Authorization;
 
        const infoGetter = new OMDBImageGetter();
        const infoResponse = await infoGetter.GetMovieDataByName(movieName);
@@ -20,6 +22,7 @@ class CreateMovieProvider extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': authToken
             },
             body: JSON.stringify({
                 title: infoResponse.movieInfo.Title,

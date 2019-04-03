@@ -64,11 +64,18 @@ namespace Lingva.WebAPI.Controllers
         public async Task<IActionResult> Authenticate([FromBody]SignUpUserDto userDto)
 
         {
-            var user = await Task.Run(() => _userService.Authenticate(userDto.Username, userDto.Password));
-
-            if (user == null)
+            User user;
+            try
             {
-                return BadRequest(new { message = "Username or password is incorrect" });
+                user = await Task.Run(() => _userService.Authenticate(userDto.Username, userDto.Password));
+            }
+            catch (UserServiceException ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
 
             string tokenString = _userService.GetUserToken(user, _appSettings.Secret);
@@ -226,23 +233,22 @@ namespace Lingva.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Deletes user by Id.
+        /// Deletes authenticated User
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     DELETE /user{id}
+        ///     DELETE /user
         ///     { }
         ///
         /// </remarks>
         /// <response code="200">Returns OK if deleted</response>
-        /// <response code="404">If exception is hendled</response> 
-        /// <param name="id"></param>
+        /// <response code="404">If exception is hendled</response>        
         /// <returns>Status of operation</returns>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete()
         {
-            await Task.Run(() => _userService.Delete(id));
+            await Task.Run(() => _userService.Delete(UserService.GetLoggedInUserId(this)));
 
             return Ok(BaseStatusDto.CreateSuccessDto());
         }

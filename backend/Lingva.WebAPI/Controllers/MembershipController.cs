@@ -26,16 +26,15 @@ namespace Lingva.WebAPI.Controllers
     {
         private IGroupService _groupService;
         private IMapper _mapper;
-        private readonly AppSettings _appSettings;
+
 
         public MembershipController(
             IGroupService groupService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IMapper mapper)
         {
             _groupService = groupService;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
+
         }
 
         // POST: /Membership
@@ -68,9 +67,9 @@ namespace Lingva.WebAPI.Controllers
             {
                 await Task.Run(() => _groupService.JoinGroup(UserService.GetLoggedInUserId(this), groupID));
             }
-            catch (LingvaException)
+            catch (LingvaException ex)
             {
-                return BadRequest(BaseStatusDto.CreateErrorDto());
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
             catch (Exception ex)
             {

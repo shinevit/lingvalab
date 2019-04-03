@@ -27,18 +27,18 @@ namespace Lingva.BusinessLayer.Services
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return null;
+                throw new UserServiceException("Username/Password is required");
             }
 
             var user = _unitOfWork.Users.Get(x => x.Username == username);
 
             if (user == null)
             {
-                return null;
+                throw new UserServiceException("User doesn't exist");
             }
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             {
-                return null;
+                throw new UserServiceException("Password is incorrect");
             }
 
             return user;
@@ -112,6 +112,7 @@ namespace Lingva.BusinessLayer.Services
         public void Delete(int id)
         {
             _unitOfWork.Users.Delete(_unitOfWork.Users.Get(id));
+            _unitOfWork.Save();
         }
 
         public static int GetLoggedInUserId(Microsoft.AspNetCore.Mvc.ControllerBase controllerBase)

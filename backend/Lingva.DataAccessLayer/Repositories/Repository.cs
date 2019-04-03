@@ -58,6 +58,7 @@ namespace Lingva.DataAccessLayer.Repositories
             }
 
             _entities.Add(entity);
+            _context.SaveChanges();
         }
 
         public virtual void Update(T entity)
@@ -69,6 +70,7 @@ namespace Lingva.DataAccessLayer.Repositories
 
             _entities.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public virtual void Delete(T entity)
@@ -88,6 +90,7 @@ namespace Lingva.DataAccessLayer.Repositories
                 _entities.Attach(entity);
             }
             _entities.Remove(entity);
+            _context.SaveChanges();
         }
     }
 }

@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 namespace Lingva.WebAPI.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]    
+    [Route("api/[controller]")]
     [ApiController]
     public class GroupCollectionController : ControllerBase
     {
@@ -46,7 +46,14 @@ namespace Lingva.WebAPI.Controllers
         {
             var groups = await Task.Run(() => _groupsService.GetGroupsList());
 
-            return Ok(_mapper.Map<IEnumerable<GroupViewDTO>>(groups));
+            var groupsToReturn = _mapper.Map<IEnumerable<GroupViewDTO>>(groups);
+
+            foreach (var group in groupsToReturn)
+            {
+                group.CreateSuccess();
+            }
+
+            return Ok(groupsToReturn);
         }
 
         // GET: api/groupcollection/5
@@ -95,6 +102,7 @@ namespace Lingva.WebAPI.Controllers
             }
 
             var groupToReturn = _mapper.Map<GroupViewDTO>(group);
+
             groupToReturn.CreateSuccess();
 
             return Ok(groupToReturn);
@@ -125,7 +133,6 @@ namespace Lingva.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PostGroup([FromBody] GroupCreatingDTO groupCreatingDTO)
         {
-
             Group group;
 
             try
@@ -140,14 +147,14 @@ namespace Lingva.WebAPI.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
 
-            Group newGroup = _groupsService.GetGroup(group.Id);            
+            Group newGroup = _groupsService.GetGroup(group.Id);
 
             return Ok(_mapper.Map<GroupViewDTO>(newGroup));
         }
@@ -185,13 +192,13 @@ namespace Lingva.WebAPI.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
-            return Ok();
+            return Ok(BaseStatusDto.CreateSuccessDto());
         }
 
         // DELETE: api/groupcollection/5
@@ -218,10 +225,10 @@ namespace Lingva.WebAPI.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
             }
 
-            return Ok();
+            return Ok(BaseStatusDto.CreateSuccessDto());
         }
     }
 }

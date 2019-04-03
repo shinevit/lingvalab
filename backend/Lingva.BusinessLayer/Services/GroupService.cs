@@ -23,12 +23,12 @@ namespace Lingva.BusinessLayer.Services
             try
             {
                 _unitOfWork.userGroup.Create(GetUserGroupEntity(userID, groupID));
+                _unitOfWork.Save();
             }
             catch (Exception)
             {
                 throw new LingvaException("Failed to join User to group");
-            }
-
+            }           
         }
 
         public void LeaveGroup(int userID, int groupID)
@@ -36,11 +36,12 @@ namespace Lingva.BusinessLayer.Services
             try
             {
                 _unitOfWork.userGroup.Delete(GetUserGroupEntity(userID, groupID));
+                _unitOfWork.Save();
             }
             catch (Exception)
             {
-                throw new LingvaException("Failed to join User to group");
-            }
+                throw new LingvaException("Failed to remove User from group");
+            }            
         }
 
         public IEnumerable<Group> GetGroupsList()

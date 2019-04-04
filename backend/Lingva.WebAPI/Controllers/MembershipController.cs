@@ -44,21 +44,14 @@ namespace Lingva.WebAPI.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST Membership/join/{groupID}
-        ///     {
-        ///        "Id" : 1
-        ///        "FirstName" : string
-        ///        "LastName" : string
-        ///        "Username" : string
-        ///        "Token" : string
-        ///     }
+        ///     POST me/membership/join/{groupID}
         ///
         /// </remarks> 
         /// <param name="groupID">Id of group to join</param>        
         /// <returns>Joining complete status</returns>
         /// <response code="200">Returns Ok status</response>
         /// <response code="404">If the exception handled</response> 
-        [HttpPost("join/{groupID}")]
+        [HttpPost("me/join/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> JoinGroup([FromRoute] int groupID)
@@ -85,21 +78,14 @@ namespace Lingva.WebAPI.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     DELETE membership/leave/{groupID}
-        ///     {
-        ///        "Id" : 1
-        ///        "FirstName" : string
-        ///        "LastName" : string
-        ///        "Username" : string
-        ///        "Token" : string
-        ///     }
-        ///
+        ///     DELETE me/membership/leave/{groupID}
+        ///     
         /// </remarks>      
         /// <returns>Leaving complete</returns>
         /// <param name="groupID">Id of group to leave</param> 
         /// <response code="200">Returns status</response>
         /// <response code="404">If the exception is handled</response> 
-        [HttpDelete("leave/{groupID}")]
+        [HttpDelete("me/leave/{groupID}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> LeaveGroup([FromRoute] int groupID)
@@ -107,6 +93,81 @@ namespace Lingva.WebAPI.Controllers
             try
             {
                 await Task.Run(() => _groupService.LeaveGroup(UserService.GetLoggedInUserId(this), groupID));
+                return Ok(BaseStatusDto.CreateSuccessDto());
+            }
+            catch (LingvaException ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Joins user into group.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST Membership/join/{groupID}
+        ///     {
+        ///        "Id" : 1
+        ///     }
+        ///
+        /// </remarks> 
+        /// <param name = "groupID" > Id of joining group</param>
+        /// <param name="user">User info to join</param>        
+        /// <returns>Joining complete status</returns>
+        /// <response code="200">Returns Ok status</response>
+        /// <response code="404">If the exception handled</response> 
+        [HttpPost("join/{groupID}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> JoinGroup([FromRoute] int groupID, [FromBody]UserStatisticsDto user)
+        {
+            try
+            {
+                await Task.Run(() => _groupService.JoinGroup(user.UserID, groupID));
+            }
+            catch (LingvaException ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(BaseStatusDto.CreateErrorDto(ex.Message));
+            }
+
+            return Ok(BaseStatusDto.CreateSuccessDto());
+        }
+
+        ///<summary>
+        /// Deletes user from group.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE membership/leave/{groupID}
+        ///     {
+        ///        "Id" : 1
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="groupID">Id of leaving group</param>
+        /// <param name="user">User info to leave</param>
+        /// <returns>Leaving complete</returns>
+        /// <response code="200">Returns Ok status</response>
+        /// <response code="404">If the exception handled</response>
+        [HttpDelete("leave/{groupID}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> LeaveGroup([FromRoute] int groupID, [FromBody]UserStatisticsDto user)
+        {
+            try
+            {
+                await Task.Run(() => _groupService.LeaveGroup(user.UserID, groupID));
                 return Ok(BaseStatusDto.CreateSuccessDto());
             }
             catch (LingvaException ex)

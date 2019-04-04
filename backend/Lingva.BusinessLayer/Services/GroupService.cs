@@ -10,7 +10,7 @@ namespace Lingva.BusinessLayer.Services
 {
     public class GroupService : IGroupService
     {
-     
+
         private IUnitOfWorkUserGroup _unitOfWork;
 
         public GroupService(IUnitOfWorkUserGroup unitOfWorkUserGroup)
@@ -20,6 +20,12 @@ namespace Lingva.BusinessLayer.Services
 
         public void JoinGroup(int userID, int groupID)
         {
+
+            if (_unitOfWork.userGroup.Get
+                (c => c.GroupId == groupID && c.UserId == userID)!=null)
+            {
+                throw new LingvaException("User have already participating in this group");
+            }            
             try
             {
                 _unitOfWork.userGroup.Create(GetUserGroupEntity(userID, groupID));
@@ -28,11 +34,17 @@ namespace Lingva.BusinessLayer.Services
             catch (Exception)
             {
                 throw new LingvaException("Failed to join User to group");
-            }           
+            }
         }
 
         public void LeaveGroup(int userID, int groupID)
         {
+
+            if (_unitOfWork.userGroup.Get
+               (c => c.GroupId == groupID && c.UserId == userID) == null)
+            {
+                throw new LingvaException("User haven't been participating in this group");
+            }
             try
             {
                 _unitOfWork.userGroup.Delete(GetUserGroupEntity(userID, groupID));
@@ -41,7 +53,7 @@ namespace Lingva.BusinessLayer.Services
             catch (Exception)
             {
                 throw new LingvaException("Failed to remove User from group");
-            }            
+            }
         }
 
         public IEnumerable<Group> GetGroupsList()
@@ -89,7 +101,7 @@ namespace Lingva.BusinessLayer.Services
         }
 
         private static UserGroup GetUserGroupEntity(int userID, int groupID)
-        {            
+        {
             UserGroup userGroup = new UserGroup();
             userGroup.UserId = userID;
             userGroup.GroupId = groupID;

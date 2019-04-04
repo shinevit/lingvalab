@@ -5,7 +5,7 @@ namespace Lingva.DataAccessLayer.Repositories
 {
     public class UnitOfWorkFilm : IUnitOfWorkFilm
     {
-        private static DictionaryContext _context;
+        private DictionaryContext _context;
 
         private bool disposed = false;
 

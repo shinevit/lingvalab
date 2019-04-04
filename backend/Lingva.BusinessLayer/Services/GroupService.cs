@@ -39,15 +39,15 @@ namespace Lingva.BusinessLayer.Services
 
         public void LeaveGroup(int userID, int groupID)
         {
-
-            if (_unitOfWork.userGroup.Get
-               (c => c.GroupId == groupID && c.UserId == userID) == null)
+            var userGroup = _unitOfWork.userGroup.Get
+               (c => c.GroupId == groupID && c.UserId == userID);
+            if (userGroup == null)
             {
                 throw new LingvaException("User haven't been participating in this group");
             }
             try
             {
-                _unitOfWork.userGroup.Delete(GetUserGroupEntity(userID, groupID));
+                _unitOfWork.userGroup.Delete(userGroup);
                 _unitOfWork.Save();
             }
             catch (Exception)

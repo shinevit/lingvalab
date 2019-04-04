@@ -58,6 +58,7 @@ namespace Lingva.DataAccessLayer.Repositories
             }
 
             _context.ParserWords.Add(word);
+            _context.SaveChanges();
             _logger.Debug("The ParserWord record is added to the database.");
         }
 

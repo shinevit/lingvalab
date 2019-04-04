@@ -244,14 +244,14 @@ namespace Lingva.WebAPI.Controllers
             }
         }
 
-        // POST: api/parser
+        // POST: api/parser/word
         /// <summary>
         /// Creates parsed words.
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     Post /ParserWords
+        ///     Post /parser/word
         ///     {
         ///         "Name" : "string"
         ///        "LanguageName" : "languageName"

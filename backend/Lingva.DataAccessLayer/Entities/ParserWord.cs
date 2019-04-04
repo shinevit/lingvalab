@@ -10,6 +10,7 @@ namespace Lingva.DataAccessLayer.Entities
         [Key]
         [StringLength(100)]
         public string Name { get; set; }
+
         [StringLength(3)]
         public string LanguageName { get; set; }
 

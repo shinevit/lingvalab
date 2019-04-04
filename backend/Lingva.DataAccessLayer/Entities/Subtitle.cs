@@ -10,7 +10,7 @@ namespace Lingva.DataAccessLayer.Entities
     {
         public Subtitle()
         {
-            SubtitlesRow = new List<SubtitleRow>();
+            //SubtitleRows = new List<SubtitleRow>();
             //Events = new List<Event>();
         }
 
@@ -27,6 +27,6 @@ namespace Lingva.DataAccessLayer.Entities
 
         public string LanguageName { get; set; }
 
-        public virtual IEnumerable<SubtitleRow> SubtitlesRow { get; set; }
+        //public virtual IEnumerable<SubtitleRow> SubtitleRows { get; set; }
     }
 }

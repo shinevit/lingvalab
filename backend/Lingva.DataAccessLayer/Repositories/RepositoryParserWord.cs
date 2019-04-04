@@ -89,7 +89,12 @@ namespace Lingva.DataAccessLayer.Repositories
                 throw new ArgumentNullException(ERR_ARG_NULL_EXP_CREATE_RANGE);
             }
 
-            _entities.AddRange(words);
+            foreach(ParserWord w in words)
+            {
+                _entities.Add(w);
+            }
+
+            _context.SaveChanges();
             _logger.Debug("The range of ParserWord records is added to the database.");
         }
 

@@ -9,7 +9,7 @@ namespace Lingva.DataAccessLayer.Entities
     public class SubtitleRow
     {
         [Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -24,13 +24,13 @@ namespace Lingva.DataAccessLayer.Entities
 
         public string LanguageName { get; set; }
 
-        public virtual Subtitle Subtitle { get; set; }
+        //public virtual Subtitle Subtitle { get; set; }
 
-        public virtual ICollection<ParserWord> ParserWords { get; set; }
+        //public virtual ICollection<ParserWord> ParserWords { get; set; }
 
-        public SubtitleRow()
-        {
-            ParserWords = new List<ParserWord>();
-        }
+        //public SubtitleRow()
+        //{
+        //    ParserWords = new List<ParserWord>();
+        //}
     }
 }
